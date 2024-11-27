@@ -7,7 +7,8 @@ import "../Css/banner.css"
 import { IoIosArrowForward, IoIosArrowBack, IoMdClose } from "react-icons/io";
 import { AddToCart, BuyItemDelete, userBuyItem } from '../Componat/slice/AllSlice';
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
-
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import "react-loading-skeleton/dist/skeleton.css";
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
@@ -203,13 +204,45 @@ const ProductDetails = () => {
           <div className="imgbox w-[100%] flex gap-[10px] lg:w-[55%]">
             <div onClick={handleImgSlick} className=" cursor-pointer leftImg flex flex-wrap gap-y-[10px] w-[23%]">
               <div className="w-[100%] ">
-              <img className='mb-[10px]' src={info2.productimg} alt="" />
-              <img className='my-[10px]' src={info2.productimg2} alt="" />
-              <img className='my-[10px]' src={info2.productimg3} alt="" />
+              {info2.productimg
+              ?
+              <img className=" mb-[10px] cursor-pointer w-[100%] " src={info2.productimg} alt="" />
+              :
+                 <SkeletonTheme baseColor="#f9f9f9" highlightColor="#fff">
+                  <Skeleton className="h-[150px] mb-4" />
+
+                </SkeletonTheme>
+              }
+              {info2.productimg2
+              ?
+              <img className=" my-[10px] cursor-pointer w-[100%] " src={info2.productimg2} alt="" />
+              :
+                 <SkeletonTheme baseColor="#f9f9f9" highlightColor="#fff">
+                  <Skeleton className="h-[150px] mb-4" />
+
+                </SkeletonTheme>
+              }
+              {info2.productimg3
+              ?
+              <img className=" my-[10px] cursor-pointer w-[100%] " src={info2.productimg3} alt="" />
+              :
+                 <SkeletonTheme baseColor="#f9f9f9" highlightColor="#fff">
+                  <Skeleton className="h-[150px] mb-4" />
+
+                </SkeletonTheme>
+              }
               </div>
             </div>
             <div onClick={handleImgSlick} className=" cursor-pointer overflow-hidden rightimg w-[77%]">
+              {info.imgurl
+              ?
               <img className=" hover:scale-125 duration-200 cursor-pointer w-[100%] " src={info.imgurl} alt="" />
+              :
+                 <SkeletonTheme baseColor="#f9f9f9" highlightColor="#fff">
+                  <Skeleton className="h-[490px] mb-4" />
+
+                </SkeletonTheme>
+              }
             </div>
           </div>
           <div className="details w-[100%] lg:w-[43%]">
