@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
-import _ from "lodash"; // Lodash for debounce
+import _, { set } from "lodash"; // Lodash for debounce
 import { TbLoader2 } from "react-icons/tb";
 
 const apiData = createContext();
@@ -13,6 +13,11 @@ const Context = ({children}) => {
     const [loadingMore, setLoadingMore] = useState(false);
     const [totalItems, setTotalItems] = useState(0);
     const [page, setPage] = useState(1);
+    let [ main_category_selet , setmain_category_selet ] = useState(false)
+    let [ main_category_selet_index , setmain_category_selet_index ] = useState('')
+    let [ subValue , setSubValue ] = useState('')
+    let [caT_Main , setcaT_Main ] = useState([])
+
     const itemsPerPage = 12;
 
     const getData = () => {
@@ -28,6 +33,7 @@ const Context = ({children}) => {
                     page * itemsPerPage
                 );
                 setInfo((prevInfo) => [...prevInfo, ...newItems]);
+                setcaT_Main([...new set(res.data.map((item) => item.category.main))])
                 setTotalItems(total);
                 setLoading(false);
                 setLoadingMore(false);
@@ -38,18 +44,49 @@ const Context = ({children}) => {
             });
     };
 
+    let handleSeletCate = (item) =>{
+      setmain_category_selet(true)
+      try {
+        axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json")
+          .then((res) => {
+            // Ensure `res.data` is an array
+            if ((res.data)) {
+              setSubValue([...new set(res.data.filter((itemx) =>
+                itemx.category.main === item?.category?.main).flatMap(item => item?.category?.sub))])
+    
+            } else {
+              console.log("Data is not an array:", res.data);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      } catch (error) {
+        console.error("Unexpected error:", error);
+      }
+      
+    }
+
     useEffect(() => {
         getData();
-    }, [page]);
-
+        if (info !== "") {
+          if (info === totalItems) {
+            setLoadingMore(true);
+            
+          }else{
+            setLoadingMore(false);
+          }
+        } else{
+          setLoadingMore(false);
+        }
+    },[page]);
     useEffect(() => {
         const handleScroll = () => {
             if (
                 window.innerHeight + document.documentElement.scrollTop >=
                 document.documentElement.offsetHeight - 50
             ) {
-                setLoadingMore(true);
-                setPage((prevPage) => prevPage + 1);
+              setPage((prevPage) => prevPage + 1);
             }
         };
 
@@ -78,8 +115,24 @@ const Context = ({children}) => {
           </div>
         );
       }
+      console.log(subValue);
+      
     return (
         <apiData.Provider value={info}>
+          <div className="box bg-[#f1efef] mb-[30px] rounded flex items-center container  mx-auto justify-around h-[40px]">
+          {info.map((item)=>(
+              <h5 onClick={()=>handleSeletCate(item)} className="text-[18px] text-[red] px-[20px] h-[25px] bg-[#fff] rounded flex items-center font-[700]">{item?.category?.main}</h5>
+          ))}
+          {subValue !== ""
+          ?
+          <div className="box bg-[#f1efef] rounded flex items-center container  mx-auto justify-around h-[40px]">
+            {subValue.map((item)=>(
+          <h5 className="text-[18px] text-[red] px-[20px] h-[25px] bg-[#fff] rounded flex items-center font-[700]">{item}</h5>
+            ))}
+          </div>
+          :""
+          }
+            </div>
             {children}
             {loadingMore && (
           <div className="flex justify-center my-8">

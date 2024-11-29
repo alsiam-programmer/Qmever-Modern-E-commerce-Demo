@@ -246,8 +246,19 @@ const ProductDetails = () => {
             </div>
           </div>
           <div className="details w-[100%] lg:w-[43%]">
-            <h2 className='text-[#000] font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h2>
-            <h2 className='text-[#000] font-[600] text-[20px] my-[5px]'>Price : <span className='text-[#cf0cbf] font-[500]'>{modlePrice !== "" ? modlePrice : info.Price}৳</span></h2>
+          <div className=" cursor-pointer overflow-hidden rightimg">
+              {info.Prodectname
+              ?
+              <h2 className='text-[#000] font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h2>
+              :
+                 <SkeletonTheme baseColor="#f9f9f9" className="w-[100%]" highlightColor="#fff">
+                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
+                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
+                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
+                </SkeletonTheme>
+              }
+            </div>
+            <h2 className='text-[#000] font-[600] text-[20px] my-[5px]'>Price : <span className='text-[#cf0cbf] font-[500]'>{modlePrice !== "" ? Number(modlePrice).toFixed(2) : (info?.Price != null ? Number(info.Price).toFixed(2) : "")}৳</span></h2>
             <h2 className='text-[#000] noselect font-[600] text-[20px] my-[5px]'>{info.ModelName}</h2>
 
             {
@@ -265,7 +276,22 @@ const ProductDetails = () => {
               <h2 onClick={handleAddTocart} className='cursor-pointer text-[#fff] bg-[#062919] h-[40px] rounded-[5px] justify-center flex items-center font-[600] w-[50%]'>{addsucess === true ? <h2 className='text-[24px] text-[#188918]'><IoCheckmarkDoneCircle /></h2> : <h2>Add To Cart</h2>} </h2>
             </div>
             <div className="description mt-[50px] border-t-[2px] border-t-[#fff]">
+            <div className=" cursor-pointer overflow-hidden rightimg">
+              {info.description
+              ?
               <p className='text-[#000000a4] text-[16px] font-[400] my-[30px]'>{info.description}</p>
+              :
+                 <SkeletonTheme baseColor="#f9f9f9" className="w-[100%]" highlightColor="#fff">
+                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
+                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
+                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
+                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
+                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
+                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
+                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
+                </SkeletonTheme>
+              }
+            </div>
               <iframe className=' w-[100%] sm:h-[315px]' src={info.VideoURL} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
           </div>

@@ -26,7 +26,7 @@ const AllProductsHome = () => {
               <div
                 key={item.ProdectId || index}
                 onClick={() => handleProDetails(item)}
-                className="group w-[50%] md:w-[33.333333%] lg:w-[20%] p-[4px]  md:p-4 rounded-lg cursor-pointer"
+                className="group w-[50%] md:w-[33.333333%] lg:w-[20%] p-[10px] rounded-lg cursor-pointer"
               >
                 <div className="w-full overflow-hidden rounded-lg">
                   <img
@@ -36,7 +36,7 @@ const AllProductsHome = () => {
                   />
                 </div>
                 <h2 className="text-lg font-semibold text-purple-700 mt-2">
-                  Price: {item.Price || "N/A"}
+                  Price: {Number(item.Price).toFixed(2) || "N/A"}
                 </h2>
                 <h3 className="text-md font-medium text-gray-800">
                   {item.Prodectname || "Unnamed Product"}
