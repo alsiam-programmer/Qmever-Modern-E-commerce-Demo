@@ -15,17 +15,20 @@ const Context = ({children}) => {
     const [page, setPage] = useState(1);
     let [ main_category_selet , setmain_category_selet ] = useState(false)
     let [ main_category_selet_index , setmain_category_selet_index ] = useState('')
-    let [ subValue , setSubValue ] = useState('')
+    let [ subValue , setSubValue ] = useState([])
     let [caT_Main , setcaT_Main ] = useState([])
 
     const itemsPerPage = 12;
 
+    console.log(caT_Main);
+    
     const getData = () => {
         axios
             .get(
                 "https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json"
             )
             .then((res) => {
+                setcaT_Main([...new Set(res.data.map((item) => item.category.main))])
                 const data = Object.values(res.data); // Convert object to array
                 const total = data.length;
                 const newItems = data.slice(
@@ -33,7 +36,6 @@ const Context = ({children}) => {
                     page * itemsPerPage
                 );
                 setInfo((prevInfo) => [...prevInfo, ...newItems]);
-                setcaT_Main([...new set(res.data.map((item) => item.category.main))])
                 setTotalItems(total);
                 setLoading(false);
                 setLoadingMore(false);
@@ -46,14 +48,15 @@ const Context = ({children}) => {
 
     let handleSeletCate = (item) =>{
       setmain_category_selet(true)
+      console.log(item);
+      
       try {
         axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json")
           .then((res) => {
             // Ensure `res.data` is an array
             if ((res.data)) {
-              setSubValue([...new set(res.data.filter((itemx) =>
-                itemx.category.main === item?.category?.main).flatMap(item => item?.category?.sub))])
-    
+              setSubValue([...new Set(res.data.filter((itemx) =>
+                itemx.category.main === item).flatMap(item => item?.category?.sub))])
             } else {
               console.log("Data is not an array:", res.data);
             }
@@ -119,15 +122,17 @@ const Context = ({children}) => {
       
     return (
         <apiData.Provider value={info}>
-          <div className="box bg-[#f1efef] mb-[30px] rounded flex items-center container  mx-auto justify-around h-[40px]">
-          {info.map((item)=>(
-              <h5 onClick={()=>handleSeletCate(item)} className="text-[18px] text-[red] px-[20px] h-[25px] bg-[#fff] rounded flex items-center font-[700]">{item?.category?.main}</h5>
+          <div className="box bg-[#f1efef] mb-[30px] rounded container  mx-auto justify-around p-[10px] ">
+            <div className="flex items-center w-[100%]">
+          {caT_Main.map((item)=>(
+            <h5 onClick={()=>handleSeletCate(item)} className="text-[18px] text-[red] px-[20px] h-[25px] bg-[#fff] rounded flex items-center font-[700]">{item}</h5>
           ))}
+          </div>
           {subValue !== ""
           ?
-          <div className="box bg-[#f1efef] rounded flex items-center container  mx-auto justify-around h-[40px]">
+          <div className="box bg-[#fff] w-[100%] mt-[10px] rounded flex items-center container  mx-auto justify-around h-[40px]">
             {subValue.map((item)=>(
-          <h5 className="text-[18px] text-[red] px-[20px] h-[25px] bg-[#fff] rounded flex items-center font-[700]">{item}</h5>
+          <h5 className="text-[18px] text-[red] px-[20px] h-[25px] bg-[#f1efef] rounded flex items-center font-[700]">{item}</h5>
             ))}
           </div>
           :""
