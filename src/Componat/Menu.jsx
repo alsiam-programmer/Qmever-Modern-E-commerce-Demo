@@ -113,7 +113,7 @@ const Menu = () => {
         }
       })
       .then(() => {
-        navigate('/')
+        navigate('/Login')
       })
       .catch((error) => {
         // Handle Errors here.
@@ -307,52 +307,52 @@ const Menu = () => {
     setYearSelet(false)
   }
 
-  let handleupData = () => {
-    let valid = true; // Start by assuming it's valid
+  // let handleupData = () => {
+  //   let valid = true; // Start by assuming it's valid
 
-    // Validation for Gender
-    if (userSEXdata.Gender === undefined) {
-      valid = false;
-      setErrorGen(`SORRY MY DEAR ${(userData.username).substring(0, 6) + "..."} SELECT YOU GENDER `)
-    }
+  //   // Validation for Gender
+  //   if (userSEXdata.Gender === undefined) {
+  //     valid = false;
+  //     setErrorGen(`SORRY MY DEAR ${(userData.username).substring(0, 6) + "..."} SELECT YOU GENDER `)
+  //   }
 
-    // Validation for dateOfBirth
-    if (`${userDaydata.day}/${userMounthdata.mounth}/${userYeardata}` === "undefined/undefined/") {
-      valid = false;
-      setErrorDateofbirth(`SORRY MY DEAR ${(userData.username).substring(0, 6) + "..."} SELECT YOU DATE OF BIRTH `)
-    }
+  //   // Validation for dateOfBirth
+  //   if (`${userDaydata.day}/${userMounthdata.mounth}/${userYeardata}` === "undefined/undefined/") {
+  //     valid = false;
+  //     setErrorDateofbirth(`SORRY MY DEAR ${(userData.username).substring(0, 6) + "..."} SELECT YOU DATE OF BIRTH `)
+  //   }
 
-    // If validation fails, do not continue to Firebase update
-    if (!valid) {
-      console.log("fuck");
-      return { valid }; // Return early if invalid
+  //   // If validation fails, do not continue to Firebase update
+  //   if (!valid) {
+  //     console.log("fuck");
+  //     return { valid }; // Return early if invalid
 
-    }
+  //   }
 
-    // If valid, update the data in Firebase
-    set(ref(db, 'users/' + `${useruid}/`), {
-      username: userData.username,
-      email: userData.email,
-      profile_picture: userIMG || userData.profile_picture,
-      uid: userData.uid,
-      gender: userSEXdata.Gender,
-      dateOfBirth: `${userDaydata.day}/${userMounthdata.mounth}/${userYeardata}`,
-      Delivery_address: {
-        username: userData.username,
-        email: userData.email,
-        Phone_Number: userDelivery.Phone_Number || "",  // Use default value if empty
-        Division: userDelivery.Division || "",
-        District: userDelivery.District || "",
-        unions: userDelivery.unions || "",
-        upazila: userDelivery.upazila || "",
-        local_address: userDelivery.local_address || "",
-      }
-    }).then(() => {
-      window.location.reload();  // Reload the page after the update
-    }).catch(error => {
-      console.error("Error updating user data: ", error);  // Handle any errors
-    });
-  };
+  //   // If valid, update the data in Firebase
+  //   set(ref(db, 'users/' + `${useruid}/`), {
+  //     username: userData.username,
+  //     email: userData.email,
+  //     profile_picture: userIMG || userData.profile_picture,
+  //     uid: userData.uid,
+  //     gender: userSEXdata.Gender,
+  //     dateOfBirth: `${userDaydata.day}/${userMounthdata.mounth}/${userYeardata}`,
+  //     Delivery_address: {
+  //       username: userData.username,
+  //       email: userData.email,
+  //       Phone_Number: userDelivery.Phone_Number || "",  // Use default value if empty
+  //       Division: userDelivery.Division || "",
+  //       District: userDelivery.District || "",
+  //       unions: userDelivery.unions || "",
+  //       upazila: userDelivery.upazila || "",
+  //       local_address: userDelivery.local_address || "",
+  //     }
+  //   }).then(() => {
+  //     window.location.reload();  // Reload the page after the update
+  //   }).catch(error => {
+  //     console.error("Error updating user data: ", error);  // Handle any errors
+  //   });
+  // };
 
   let handleUserImg = (e) => {
     let File = e.target.files[0]
@@ -372,7 +372,7 @@ const Menu = () => {
   return (
     <section>
       <section className='w-[100%] h-[100px] mb-[10px] sm:mb-[0px] sm:h-[120px] '>
-        {
+        {/* {
           userData.gender === "undefined" || userData.dateOfBirth === "undefined" ?
             <div className=" fixed left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-[#0000007e] flex justify-center items-center w-[100%] h-[100%] z-[999]">
               <div className=" relative w-[90%] rounded xl:w-[60%] xl:h-[55%] p-[20px] lg:flex flex-wrap bg-[#fff] ">
@@ -448,7 +448,7 @@ const Menu = () => {
               </div>
             </div>
             : ""
-        }
+        } */}
         <div className=' z-[990] px-[10px] bg-[#062919] fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
           <div className=" relative container mx-auto h-[60px] sm:h-[70px] md:h-[80px]">
             <div className="webLogo cursor-pointer w-[100%] flex justify-center items-center h-[60px] sm:h-[70px] md:h-[80px] lg:justify-start">
@@ -456,7 +456,7 @@ const Menu = () => {
             </div>
             <div className="Search rounded-l-[40px] shadow-2xl lg:shadow-none rounded-r-[40px] lg:my-[0px] w-[100%] lg:w-[70%] h-[40px] justify-center flex lg:top-[50%] relative lg:translate-y-[-50%] lg:left-[50%] lg:translate-x-[-50%] lg:absolute">
               <div className="Search rounded-l-[40px] shadow-2xl lg:shadow-none my-[10px] rounded-r-[40px] lg:my-[0px] w-[100%] lg:w-[50%] h-[40px] justify-center flex lg:top-[50%] relative lg:translate-y-[-50%] lg:left-[50%] lg:translate-x-[-50%] lg:absolute">
-                <input value={search} onKeyDown={GoSearchEnter} onChange={handleSearch} type="text" className=' w-[100%] px-[20px] outline-none rounded-l-[40px] lg:rounded-l-[5px] h-[40px]  text-[#000000a9] ' placeholder='Search Rupkotha' />
+                <input value={search} onKeyDown={GoSearchEnter} onChange={handleSearch} type="text" className=' w-[100%] px-[20px] outline-none rounded-l-[40px] lg:rounded-l-[5px] h-[40px]  text-[#000000a9] ' placeholder='what you need' />
                 <h5 onClick={valueDelet} className={` ${search !== "" ? "block" : "hidden"} h-[40px] w-[40px] top-0 right-[15%] lg:right-[10%] absolute z-[999] rounded-[50%] flex justify-center items-center text-[19px] bg-[#f0f0f0] text-[#000] font-[600] cursor-pointer`} ><IoCloseOutline /></h5>
                 <h5 onClick={GoSearchPage} className='h-[40px] rounded-r-[40px] lg:rounded-none w-[50px] flex justify-center items-center text-[19px] bg-[#f0f0f0] text-[#000] font-[600] cursor-pointer'><IoSearchOutline /></h5>
               </div>
