@@ -216,7 +216,7 @@ const Context = ({ children }) => {
         <div className="container mx-auto">
         <SkeletonTheme baseColor="#ffffff5d" highlightColor="#f9f9f9">
           <div className="flex flex-wrap">
-            {Array(20)
+            {Array(2)
               .fill(0)
               .map((_, index) => (
                 <div

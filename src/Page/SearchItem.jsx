@@ -8,22 +8,23 @@ const SearchItem = () => {
     
     let location = useLocation()
 
+    let [ loading , setloading ] = useState(false)
     
     
     const query = new URLSearchParams(location.search).get('query')
-    console.log(query);
     
     let [getDataSearch , setGetDataSearch] = useState([])
     
     let Data = () => {
             axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json").then((res)=>{
+                setGetDataSearch([])
                 setGetDataSearch(res?.data?.filter((item)=>item?.Prodectname?.toLowerCase().includes(query.toLowerCase())))
             })
       
     }
     useEffect(()=>{
-        setGetDataSearch([])
         Data()
+        console.log(getDataSearch);
     },[query])
     
     let navigate = useNavigate()
@@ -39,7 +40,7 @@ const SearchItem = () => {
         <div className="ProPraBox my-[40px] cursor-pointer w-[100%] flex flex-wrap gap-[4px] sm:gap-[12px]">
             {
                 getDataSearch.length > 0
-                ?
+?
                 getDataSearch.map((item)=>(
                     <div onClick={() => handleProDetails(item)} className="ProBox w-[49%] sm:w-[32%] lg:w-[24%] bg-[#fff] py-[6px] px-[6px] rounded-[20px]">
                 <div className="proImgBox w-[100%]  flex ">
@@ -49,9 +50,10 @@ const SearchItem = () => {
                 <h2 className=' text-[15px] font-[600] py-[3px] sm:text-[20px] lg:text-[25px]'>{item.Prodectname}</h2>
             </div>
             ))
-            : <div className=" fixed top-[50%] translate-x-[-50%] left-[50%] translate-y-[-50%] ">
-            <TbLoader2 className="w-10 h-10 animate-spin text-[#fff]" />
-             </div>
+            : <div className=" fixed top-[50%] translate-x-[-50%] flex gap-2 items-center left-[50%] translate-y-[-50%] ">
+                <TbLoader2 className="w-10 h-10 animate-spin text-[#fff]" />
+                <h5 className='text-[green] text-[20px] font-[600]' >{query}</h5>
+                </div> 
         }
         </div>
         </div>
