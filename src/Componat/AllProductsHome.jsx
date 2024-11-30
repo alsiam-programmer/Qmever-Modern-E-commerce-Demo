@@ -17,7 +17,7 @@ const AllProductsHome = () => {
     window.scrollTo(0, 0);
   }
   return (
-    <section className="py-10 px-4">
+    <section className="py-10 px-4 ">
       <div className="container mx-auto">
         <div className="flex flex-wrap ">
           {info.map((item, index) => (
@@ -38,14 +38,14 @@ const AllProductsHome = () => {
                 <h2 className="text-lg font-semibold text-purple-700 mt-2">
                   Price: {Number(item.Price).toFixed(2) || "N/A"}
                 </h2>
-                <h3 className="text-md font-medium text-gray-800">
+                <h3 className="text-md font-medium text-[#fff] ">
                   {item.Prodectname || "Unnamed Product"}
                 </h3>
               </div>
               : ""
           ))}
         </div>
-
+        {/* text-gray-800 */}
       </div>
     </section>
   );
