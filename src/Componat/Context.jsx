@@ -225,7 +225,7 @@ const Context = ({ children }) => {
                   className=" w-[50%] md:w-[33.333333%] lg:w-[20%] p-[4px]  md:p-4"
                 >
                   <Skeleton className="h-48 mb-4" />
-                  <Skeleton className="h-6 mb-2" />
+                  <Skeleton className="h-4 mb-2" />
                   <Skeleton className="h-6 mb-2" />
                 </div>
               ))}
