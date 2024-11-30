@@ -9,6 +9,8 @@ import { AddToCart, BuyItemDelete, userBuyItem } from '../Componat/slice/AllSlic
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
+import { Helmet } from 'react-helmet';
+
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
@@ -152,6 +154,18 @@ const ProductDetails = () => {
 
   return (
     <section>
+       <Helmet>
+        <title>{info.Prodectname} - Buy Online</title>
+        <meta name="description" content={`Buy ${info.Prodectname} online at the best price. Free shipping and amazing discounts. Get it now!`} />
+        <meta property="og:title" content={info.Prodectname} />
+        <meta property="og:description" content={`Buy ${info.Prodectname} online at the best price. Free shipping and amazing discounts. Get it now!`} />
+        <meta property="og:image" content={info.imgurl} />
+        <meta property="og:url" content={`https://www.yourwebsite.com/product/${productId.id}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={info.Prodectname} />
+        <meta name="twitter:description" content={`Buy ${info.Prodectname} online at the best price. Free shipping and amazing discounts. Get it now!`} />
+        <meta name="twitter:image" content={info.imgurl} />
+      </Helmet>
       <div className="container mx-auto px-[10px] py-[10px]">
         {
           modelselect === true
