@@ -19,7 +19,7 @@ const Context = ({ children }) => {
   let [caT_Main, setcaT_Main] = useState([])
   let [ SubsPRValue , setSubsPRValue ] = useState([])
 
-  const itemsPerPage = 20;
+  const itemsPerPage = 1;
 
   console.log(SubsPRValue);
 
@@ -124,11 +124,11 @@ const Context = ({ children }) => {
     
     const handleScroll = () => {
       if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 50
+        window.location.pathname === "/" && window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 50 
       ) {
         setPage((prevPage) => prevPage + 1);
-      }
+      } 
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -136,43 +136,26 @@ const Context = ({ children }) => {
   }, []);
 
   useEffect(()=>{
-    if (info !== "") {
-      if (info.length !== totalItems) {
-        setLoadingMore(true);
+    if ( window.location.pathname === "/") {
+      if (info !== "") {
+        if (info.length !== totalItems) {
+          setLoadingMore(true);
+        } else {
+          setLoadingMore(false);
+        }
       } else {
         setLoadingMore(false);
       }
     } else {
       setLoadingMore(false);
     }
-  })
-  if (loading && info.length === 0) {
-    return (
-      <div className="container mx-auto my-10">
-        <SkeletonTheme baseColor="#f1f1f1" highlightColor="#f9f9f9">
-          <div className="flex flex-wrap">
-            {Array(5)
-              .fill(0)
-              .map((_, index) => (
-                <div
-                  key={index}
-                  className=" w-[50%] md:w-[33.333333%] lg:w-[20%] p-[4px]  md:p-4"
-                >
-                  <Skeleton className="h-48 mb-4" />
-                  <Skeleton className="h-6 mb-2" />
-                  <Skeleton className="h-6 mb-2" />
-                </div>
-              ))}
-          </div>
-        </SkeletonTheme>
-      </div>
-    );
-  }
+  },[window.location.pathname])
+
   console.log(subValue);
 
   return (
     <apiData.Provider value={info}>
-      <div className="box bg-[#062919] mb-[30px] rounded container  mx-auto justify-around p-[10px] ">
+      {/* <div className="box bg-[#062919] mb-[30px] rounded container  mx-auto justify-around p-[10px] ">
         <div className="flex items-center w-[100%]">
           {caT_Main.map((item) => (
             <h5 onClick={() => handleSeletCate(item)} className="text-[18px] text-[red] px-[20px] h-[25px] bg-[#fff] rounded flex items-center font-[700]">{item}</h5>
@@ -232,9 +215,17 @@ const Context = ({ children }) => {
           <h5 className='text-[#fff]'>Loading...</h5>
           :""
         }
-      </div>
+      </div> */}
       {children}
-      {loadingMore && (
+      {
+        loading && info.length === 0 
+        ?
+        <div className="flex justify-center my-8">
+        <TbLoader2 className="w-10 h-10 animate-spin text-purple-700" />
+      </div>
+        :""
+      }
+      {loadingMore === true && (
         <div className="flex justify-center my-8">
           <TbLoader2 className="w-10 h-10 animate-spin text-purple-700" />
         </div>

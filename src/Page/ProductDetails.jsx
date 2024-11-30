@@ -208,7 +208,7 @@ const ProductDetails = () => {
               ?
               <img className=" mb-[10px] cursor-pointer w-[100%] " src={info2.productimg} alt="" />
               :
-                 <SkeletonTheme baseColor="#f9f9f9" highlightColor="#fff">
+                 <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
                   <Skeleton className="h-[150px] mb-4" />
 
                 </SkeletonTheme>
@@ -217,7 +217,7 @@ const ProductDetails = () => {
               ?
               <img className=" my-[10px] cursor-pointer w-[100%] " src={info2.productimg2} alt="" />
               :
-                 <SkeletonTheme baseColor="#f9f9f9" highlightColor="#fff">
+                 <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
                   <Skeleton className="h-[150px] mb-4" />
 
                 </SkeletonTheme>
@@ -226,7 +226,7 @@ const ProductDetails = () => {
               ?
               <img className=" my-[10px] cursor-pointer w-[100%] " src={info2.productimg3} alt="" />
               :
-                 <SkeletonTheme baseColor="#f9f9f9" highlightColor="#fff">
+                 <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
                   <Skeleton className="h-[150px] mb-4" />
 
                 </SkeletonTheme>
@@ -238,7 +238,7 @@ const ProductDetails = () => {
               ?
               <img className=" hover:scale-125 duration-200 cursor-pointer w-[100%] " src={info.imgurl} alt="" />
               :
-                 <SkeletonTheme baseColor="#f9f9f9" highlightColor="#fff">
+                 <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
                   <Skeleton className="h-[490px] mb-4" />
 
                 </SkeletonTheme>
@@ -249,9 +249,9 @@ const ProductDetails = () => {
           <div className=" cursor-pointer overflow-hidden rightimg">
               {info.Prodectname
               ?
-              <h2 className='text-[#000] font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h2>
+              <h2 className='lg:text-[#000] text-[#ffffffa4] font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h2>
               :
-                 <SkeletonTheme baseColor="#f9f9f9" className="w-[100%]" highlightColor="#fff">
+                 <SkeletonTheme baseColor="#ffffff5d" className="w-[100%]" highlightColor="#fff">
                   <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
                   <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
                   <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
@@ -277,20 +277,7 @@ const ProductDetails = () => {
             </div>
             <div className="description mt-[50px] border-t-[2px] border-t-[#fff]">
             <div className=" cursor-pointer overflow-hidden rightimg">
-              {info.description
-              ?
-              <p className='text-[#000000a4] text-[16px] font-[400] my-[30px]'>{info.description}</p>
-              :
-                 <SkeletonTheme baseColor="#f9f9f9" className="w-[100%]" highlightColor="#fff">
-                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
-                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
-                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
-                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
-                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
-                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
-                  <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
-                </SkeletonTheme>
-              }
+              <p className=' text-[16px] font-[500] my-[30px] lg:text-[#000] text-[#ffffffa4] '>{info.description}</p>
             </div>
               <iframe className=' w-[100%] sm:h-[315px]' src={info.VideoURL} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>

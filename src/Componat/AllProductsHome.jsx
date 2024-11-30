@@ -35,10 +35,10 @@ const AllProductsHome = () => {
                     alt={item.Prodectname || "Product Image"}
                   />
                 </div>
-                <h2 className="text-lg font-semibold text-purple-700 mt-2">
-                  Price: {Number(item.Price).toFixed(2) || "N/A"}
+                <h2 className="text-lg font-semibold text-[#cf0cbf] shadow-black mt-2">
+                  Price: {Number(item.Price).toFixed(2) || "N/A"}৳
                 </h2>
-                <h3 className="text-md font-medium text-gray-800">
+                <h3 className="text-md font-medium text-[#fff]">
                   {item.Prodectname || "Unnamed Product"}
                 </h3>
               </div>

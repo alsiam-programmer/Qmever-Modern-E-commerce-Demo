@@ -4,9 +4,12 @@ import './index.css'
 import {Provider} from "react-redux"
 import firebaseConfig from './firebase.config.js'
 import store from './store.js'
+import { Context } from './Componat/Context.jsx'
 
 createRoot(document.getElementById('root')).render(
+    <Context>
     <Provider store={store}>
     <App />
     </Provider>
+    </Context>
 )
