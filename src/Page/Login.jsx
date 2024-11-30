@@ -9,6 +9,7 @@ const Login = () => {
   let userLoginUid = useSelector((item)=>item.counter.user)
   const db = getDatabase();
   let [ userData , setUserdata ] = useState([])
+  let [ genderSelet , setgenderSelet ] = useState('')
   useEffect(()=>{
     userLoginUid.map((useruid)=>{
       return onValue(ref(db, '/users/' + useruid), (snapshot) => {
@@ -34,6 +35,61 @@ const Login = () => {
     console.log(e.target.value);
     
   }
+  let Gender = [
+    { "Gender": "Male", "Main_category": "man" },
+    { "Gender": "Female", "Main_category": "woman" },
+    { "Gender": "Transgender", "Main_category": "transgender" },
+  ]
+  let handleselectG = (item) => {
+    setgenderSelet(item.Gender)
+  }
+   // let handleupData = () => {
+  //   let valid = true; // Start by assuming it's valid
+
+  //   // Validation for Gender
+  //   if (userSEXdata.Gender === undefined) {
+  //     valid = false;
+  //     setErrorGen(`SORRY MY DEAR ${(userData.username).substring(0, 6) + "..."} SELECT YOU GENDER `)
+  //   }
+
+  //   // Validation for dateOfBirth
+  //   if (`${userDaydata.day}/${userMounthdata.mounth}/${userYeardata}` === "undefined/undefined/") {
+  //     valid = false;
+  //     setErrorDateofbirth(`SORRY MY DEAR ${(userData.username).substring(0, 6) + "..."} SELECT YOU DATE OF BIRTH `)
+  //   }
+
+  //   // If validation fails, do not continue to Firebase update
+  //   if (!valid) {
+  //     console.log("fuck");
+  //     return { valid }; // Return early if invalid
+
+  //   }
+
+  //   // If valid, update the data in Firebase
+  //   set(ref(db, 'users/' + `${useruid}/`), {
+  //     username: userData.username,
+  //     email: userData.email,
+  //     profile_picture: userIMG || userData.profile_picture,
+  //     uid: userData.uid,
+  //     gender: userSEXdata.Gender,
+  //     dateOfBirth: `${userDaydata.day}/${userMounthdata.mounth}/${userYeardata}`,
+  //     Delivery_address: {
+  //       username: userData.username,
+  //       email: userData.email,
+  //       Phone_Number: userDelivery.Phone_Number || "",  // Use default value if empty
+  //       Division: userDelivery.Division || "",
+  //       District: userDelivery.District || "",
+  //       unions: userDelivery.unions || "",
+  //       upazila: userDelivery.upazila || "",
+  //       local_address: userDelivery.local_address || "",
+  //     }
+  //   }).then(() => {
+  //     window.location.reload();  // Reload the page after the update
+  //   }).catch(error => {
+  //     console.error("Error updating user data: ", error);  // Handle any errors
+  //   });
+  // };
+
   return (
     <section>
       <div className="container mx-auto flex justify-center items-center px-[10px]">
@@ -48,7 +104,12 @@ const Login = () => {
           <input className=' w-[90%] h-[40px] bg-[#ffffff63] outline-none rounded-r px-[10px] font-[600] ' type="text" placeholder={`Enter You phone numer`} />
           </div>
           <input onChange={hs} className='w-[100%] h-[40px] bg-[#ffffff63] outline-none mb-[5px] rounded px-[10px] font-[600] ' type="date"  />
-          <h5 className='noselect w-[100%] h-[40px] bg-[green] flex items-center justify-center mt-[60px] my-[5px] text-[#fff] rounded px-[10px] font-[600] cursor-pointer' >Next</h5>
+          <div className="'w-[100%] h-[50px] bg-[#ffffff63] mb-[5px] rounded flex items-center gap-[10px] px-[10px] font-[600]">
+            {Gender.map((item)=>(
+              <h5 onClick={()=>handleselectG(item)} className={` ${genderSelet === item.Gender ? "bg-[green] text-[#fff]" :"text-[#000] border-[2px] border-[#000]"} noselect cursor-pointer px-[10px] rounded h-[35px] flex items-center`} >{item.Gender}</h5>
+            ))}
+          </div>
+          <h5 onClick={handleupData} className='noselect w-[100%] h-[40px] bg-[green] flex items-center justify-center mt-[60px] my-[5px] text-[#fff] rounded px-[10px] font-[600] cursor-pointer' >Next</h5>
           {/* <div className="imgBox flex relative justify-center my-[40px]">
             <img className=' absolute top-[50px] w-[300px] h-[300px]' src="https://i.ibb.co.com/42kqS9s/Picsart-24-09-13-20-42-41-421.png" alt="" />
           </div>
