@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { FaBars } from "react-icons/fa";
-
-import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { getDatabase, onValue, ref, set } from 'firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogout, userUidLogin } from './slice/AllSlice';
 import { IoIosArrowDropdownCircle } from "react-icons/io";
-
 import { IoSearchOutline, IoCloseOutline, IoCameraOutline } from "react-icons/io5";
 import axios from 'axios';
-
+import { useNavigate , Link } from 'react-router-dom';
 const Menu = () => {
   let userLoginUid = useSelector((item) => item.counter.user)
 
@@ -24,7 +21,6 @@ const Menu = () => {
   let MenuRef = useRef()
   let SupportRef = useRef()
   let [MenuShow, setMenuShow] = useState(false)
-  // let [SupportShow, setSuppoutShow] = useState(false)
   let [Year, setYear] = useState([])
   let [useruid, setUseruid] = useState('')
   let [SEXSelet, setSEXSelet] = useState(false)
