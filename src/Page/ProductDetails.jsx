@@ -164,7 +164,7 @@ const ProductDetails = () => {
         <meta property="og:title" content={info.Prodectname} />
         <meta property="og:description" content={`Buy ${info.Prodectname} online at the best price. Free shipping and amazing discounts. Get it now!`} />
         <meta property="og:image" content={info.imgurl} />
-        <meta property="og:url" content={`https://www.qmever.com/product/${productId.id}`} />
+        <meta property="og:url" content={`https://www.qmever.com/productDetails/${productId.id}`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={info.Prodectname} />
         <meta name="twitter:description" content={`Buy ${info.Prodectname} online at the best price. Free shipping and amazing discounts. Get it now!`} />
