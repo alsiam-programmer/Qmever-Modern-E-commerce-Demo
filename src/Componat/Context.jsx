@@ -19,7 +19,7 @@ const Context = ({ children }) => {
   let [caT_Main, setcaT_Main] = useState([])
   let [ SubsPRValue , setSubsPRValue ] = useState([])
 
-  const itemsPerPage = 1;
+  const itemsPerPage = 20;
 
   console.log(SubsPRValue);
 
@@ -47,72 +47,72 @@ const Context = ({ children }) => {
       });
   };
 
-  let handleSeletCate = (item) => {
-    setmain_category_selet(true)
-    try {
-      axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json")
-        .then((res) => {
-          // Ensure `res.data` is an array
-          if ((res.data)) {
-            setSubValue([...new Set(res.data.filter((itemx) =>
-              itemx.category.main === item).flatMap(item => item).flatMap(item => item?.category?.sub))])
-            setmain_category_selet(false)
+  // let handleSeletCate = (item) => {
+  //   setmain_category_selet(true)
+  //   try {
+  //     axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json")
+  //       .then((res) => {
+  //         // Ensure `res.data` is an array
+  //         if ((res.data)) {
+  //           setSubValue([...new Set(res.data.filter((itemx) =>
+  //             itemx.category.main === item).flatMap(item => item).flatMap(item => item?.category?.sub))])
+  //           setmain_category_selet(false)
 
-          } else {
-            console.log("Data is not an array:", res.data);
-            setmain_category_selet(false)
+  //         } else {
+  //           console.log("Data is not an array:", res.data);
+  //           setmain_category_selet(false)
 
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-          setmain_category_selet(false)
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching data:", error);
+  //         setmain_category_selet(false)
 
-        });
-    } catch (error) {
-      console.error("Unexpected error:", error);
-      setmain_category_selet(false)
+  //       });
+  //   } catch (error) {
+  //     console.error("Unexpected error:", error);
+  //     setmain_category_selet(false)
 
-    }
+  //   }
 
-  }
+  // }
 
-  let handleSeletSubCATE = (item) => {
-    setmain_category_selet(true)
-    try {
-    axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json").then((res)=>{
-      if (res.data) {
-          setSubsValue([...new Set(res.data.filter((ssitem)=>ssitem.category.sub === item).flatMap(item => item?.category?.subs))])
-          setmain_category_selet(false)
-        } else{
-          setmain_category_selet(false)
-        }
-      })
-    } catch (error) {
-      setmain_category_selet(false)
+  // let handleSeletSubCATE = (item) => {
+  //   setmain_category_selet(true)
+  //   try {
+  //   axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json").then((res)=>{
+  //     if (res.data) {
+  //         setSubsValue([...new Set(res.data.filter((ssitem)=>ssitem.category.sub === item).flatMap(item => item?.category?.subs))])
+  //         setmain_category_selet(false)
+  //       } else{
+  //         setmain_category_selet(false)
+  //       }
+  //     })
+  //   } catch (error) {
+  //     setmain_category_selet(false)
       
-    }
-  }
-  let handleSeletSUBSCATE = (item) =>{
-    setmain_category_selet(true)
-    setSubsPRValue([])
-    axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json").then((res)=>{
-      if (res.data) {
-        try {
-          setSubsPRValue(res.data.filter((ssitem)=>ssitem.category.subs === item))
-          setmain_category_selet(false)
-          console.log("i am ok");
+  //   }
+  // }
+  // let handleSeletSUBSCATE = (item) =>{
+  //   setmain_category_selet(true)
+  //   setSubsPRValue([])
+  //   axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json").then((res)=>{
+  //     if (res.data) {
+  //       try {
+  //         setSubsPRValue(res.data.filter((ssitem)=>ssitem.category.subs === item))
+  //         setmain_category_selet(false)
+  //         console.log("i am ok");
           
   
-        } catch (error) {
-          setmain_category_selet(false)
+  //       } catch (error) {
+  //         setmain_category_selet(false)
           
-        }
-      } else{
-        setmain_category_selet(false)
-      }
-    })
-  }
+  //       }
+  //     } else{
+  //       setmain_category_selet(false)
+  //     }
+  //   })
+  // }
 
 
 
@@ -125,10 +125,10 @@ const Context = ({ children }) => {
     const handleScroll = () => {
       if (
         window.location.pathname === "/" && window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 50 
+        document.documentElement.offsetHeight - 50
       ) {
         setPage((prevPage) => prevPage + 1);
-      } 
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -136,21 +136,16 @@ const Context = ({ children }) => {
   }, []);
 
   useEffect(()=>{
-    if ( window.location.pathname === "/") {
-      if (info !== "") {
-        if (info.length !== totalItems) {
-          setLoadingMore(true);
-        } else {
-          setLoadingMore(false);
-        }
+    if (info !== "") {
+      if (info.length !== totalItems) {
+        setLoadingMore(true);
       } else {
         setLoadingMore(false);
       }
     } else {
       setLoadingMore(false);
     }
-  },[window.location.pathname])
-
+  })
   console.log(subValue);
 
   return (
@@ -208,7 +203,6 @@ const Context = ({ children }) => {
         </div>
 
       </div>
-        
         {
           main_category_selet !== false 
           ?
@@ -218,14 +212,29 @@ const Context = ({ children }) => {
       </div> */}
       {children}
       {
-        loading && info.length === 0 
+        loading && info.length === 0
         ?
-        <div className="flex justify-center my-8">
-        <TbLoader2 className="w-10 h-10 animate-spin text-purple-700" />
+        <div className="container mx-auto my-10">
+        <SkeletonTheme baseColor="#ffffff5d" highlightColor="#f9f9f9">
+          <div className="flex flex-wrap">
+            {Array(5)
+              .fill(0)
+              .map((_, index) => (
+                <div
+                  key={index}
+                  className=" w-[50%] md:w-[33.333333%] lg:w-[20%] p-[4px]  md:p-4"
+                >
+                  <Skeleton className="h-48 mb-4" />
+                  <Skeleton className="h-6 mb-2" />
+                  <Skeleton className="h-6 mb-2" />
+                </div>
+              ))}
+          </div>
+        </SkeletonTheme>
       </div>
         :""
       }
-      {loadingMore === true && (
+      {loadingMore && (
         <div className="flex justify-center my-8">
           <TbLoader2 className="w-10 h-10 animate-spin text-purple-700" />
         </div>
