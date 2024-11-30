@@ -146,7 +146,6 @@ const Context = ({ children }) => {
       setLoadingMore(false);
     }
   })
-  console.log(subValue);
 
   return (
     <apiData.Provider value={info}>
@@ -214,15 +213,15 @@ const Context = ({ children }) => {
       {
         loading && info.length === 0
         ?
-        <div className="container mx-auto my-10">
+        <div className="container mx-auto">
         <SkeletonTheme baseColor="#ffffff5d" highlightColor="#f9f9f9">
           <div className="flex flex-wrap">
-            {Array(5)
+            {Array(20)
               .fill(0)
               .map((_, index) => (
                 <div
                   key={index}
-                  className=" w-[50%] md:w-[33.333333%] lg:w-[20%] p-[4px]  md:p-4"
+                  className=" w-[50%] md:w-[33.333333%] lg:w-[20%] px-[4px]  md:px-4"
                 >
                   <Skeleton className="h-48 mb-4" />
                   <Skeleton className="h-4 mb-2" />
@@ -236,7 +235,7 @@ const Context = ({ children }) => {
       }
       {loadingMore && (
         <div className="flex justify-center my-8">
-          <TbLoader2 className="w-10 h-10 animate-spin text-purple-700" />
+          <TbLoader2 className="w-10 h-10 animate-spin text-[#fff]" />
         </div>
       )}
     </apiData.Provider>
