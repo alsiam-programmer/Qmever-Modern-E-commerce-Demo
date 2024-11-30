@@ -38,14 +38,14 @@ const AllProductsHome = () => {
                 <h2 className="text-lg font-semibold text-purple-700 mt-2">
                   Price: {Number(item.Price).toFixed(2) || "N/A"}
                 </h2>
-                <h3 className="text-md font-medium text-[#fff] ">
+                <h3 className="text-md font-medium text-gray-800">
                   {item.Prodectname || "Unnamed Product"}
                 </h3>
               </div>
               : ""
           ))}
         </div>
-        {/* text-gray-800 */}
+
       </div>
     </section>
   );

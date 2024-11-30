@@ -19,7 +19,7 @@ const Context = ({ children }) => {
   let [caT_Main, setcaT_Main] = useState([])
   let [ SubsPRValue , setSubsPRValue ] = useState([])
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 20;
 
   console.log(SubsPRValue);
 
@@ -118,18 +118,10 @@ const Context = ({ children }) => {
 
   useEffect(() => {
     getData();
-    if (info !== "") {
-      if (info === totalItems) {
-        setLoadingMore(true);
-
-      } else {
-        setLoadingMore(false);
-      }
-    } else {
-      setLoadingMore(false);
-    }
+   
   }, [page]);
   useEffect(() => {
+    
     const handleScroll = () => {
       if (
         window.innerHeight + document.documentElement.scrollTop >=
@@ -142,17 +134,29 @@ const Context = ({ children }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(()=>{
+    if (info !== "") {
+      if (info.length !== totalItems) {
+        setLoadingMore(true);
+      } else {
+        setLoadingMore(false);
+      }
+    } else {
+      setLoadingMore(false);
+    }
+  })
   if (loading && info.length === 0) {
     return (
       <div className="container mx-auto my-10">
-        <SkeletonTheme baseColor="#f9f9f9" highlightColor="#fff">
+        <SkeletonTheme baseColor="#f1f1f1" highlightColor="#f9f9f9">
           <div className="flex flex-wrap">
             {Array(5)
               .fill(0)
               .map((_, index) => (
                 <div
                   key={index}
-                  className=" bg-white w-[50%] md:w-[33.333333%] lg:w-[20%] p-[4px]  md:p-4"
+                  className=" w-[50%] md:w-[33.333333%] lg:w-[20%] p-[4px]  md:p-4"
                 >
                   <Skeleton className="h-48 mb-4" />
                   <Skeleton className="h-6 mb-2" />

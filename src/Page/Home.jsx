@@ -8,10 +8,12 @@ const Home = () => {
     window.scrollTo(0, 0);
   });
   return (
-    <Context>
+    <>
     <Banner/>
+    <Context>
     <AllProductsHome/>
     </Context>
+    </>
   )
 }
 
