@@ -109,7 +109,7 @@ const Login = () => {
               <h5 onClick={()=>handleselectG(item)} className={` ${genderSelet === item.Gender ? "bg-[green] text-[#fff]" :"text-[#000] border-[2px] border-[#000]"} noselect cursor-pointer px-[10px] rounded h-[35px] flex items-center`} >{item.Gender}</h5>
             ))}
           </div>
-          <h5 onClick={handleupData} className='noselect w-[100%] h-[40px] bg-[green] flex items-center justify-center mt-[60px] my-[5px] text-[#fff] rounded px-[10px] font-[600] cursor-pointer' >Next</h5>
+          <h5 className='noselect w-[100%] h-[40px] bg-[green] flex items-center justify-center mt-[60px] my-[5px] text-[#fff] rounded px-[10px] font-[600] cursor-pointer' >Next</h5>
           {/* <div className="imgBox flex relative justify-center my-[40px]">
             <img className=' absolute top-[50px] w-[300px] h-[300px]' src="https://i.ibb.co.com/42kqS9s/Picsart-24-09-13-20-42-41-421.png" alt="" />
           </div>
