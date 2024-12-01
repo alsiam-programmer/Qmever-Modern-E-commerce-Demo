@@ -21,8 +21,6 @@ const Context = ({ children }) => {
 
   const itemsPerPage = 20;
 
-  console.log(SubsPRValue);
-
   const getData = () => {
     axios
       .get(

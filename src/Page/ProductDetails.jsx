@@ -152,8 +152,6 @@ const ProductDetails = () => {
   }
 
 
-  console.log(info.Prodectname);
-
   return (
     <section>
       <Helmet>

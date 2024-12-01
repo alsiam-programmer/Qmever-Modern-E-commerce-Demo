@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TbLoader2, TbMoodSad } from "react-icons/tb";
+import { Helmet } from 'react-helmet';
 
 const SearchItem = () => {
   // Hooks to handle location, navigation, and state
@@ -46,9 +47,13 @@ const SearchItem = () => {
     window.scrollTo(0, 0); // Scroll to the top
     navigate(`/productDetails/${item.ProdectId}`);
   };
-
   return (
     <section>
+      <Helmet>
+        <title>Qmever.com - {query}</title>
+        <meta name="description" content={`Buy ${query} online at the best price. Free shipping and amazing discounts. Get it now!`} />
+        <meta property="og:url" content={`https://qmever.com/search_query?query=${query}`} />
+            </Helmet>
       <div className="container mx-auto">
         {/* Product List */}
         <div className="ProPraBox my-[40px] cursor-pointer w-[100%] flex flex-wrap gap-[4px] sm:gap-[12px]">

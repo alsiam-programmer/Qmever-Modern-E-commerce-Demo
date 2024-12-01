@@ -22,7 +22,6 @@ const Login = () => {
     })
 
   },[userLoginUid])
-  console.log(userData);
   
   let Join = () =>{
     navigate('/')
@@ -93,15 +92,15 @@ const Login = () => {
   return (
     <section>
       <div className="container mx-auto flex justify-center items-center px-[10px]">
-        <div className="userLogin_Box w-[100%] xl:w-[550px] md:w-[80%] md:mt-[100px] lg:mt-[10px] lg:w-[60%] p-[20px] xl:h-[600px] md:border-[3px] rounded md:border-[#fff]">
+        <div className="userLogin_Box w-[100%] xl:w-[550px] md:w-[80%] md:mt-[100px] lg:mt-[10px] lg:w-[60%] p-[10px] md:p-[20px] xl:h-[600px] md:border-[3px] rounded md:border-[#fff]">
           <div className="w-[100%] flex justify-center mb-[10px]">
           <img className='w-[100px] rounded-[50%] h-[100px]' src={userData.profile_picture} alt="" />
           </div>
           <input className='w-[100%] h-[40px] bg-[#ffffffcc] outline-none my-[5px] rounded px-[10px] font-[600] ' type="text" placeholder={`${userData.username}`} />
-          <h5 className='w-[100%] h-[40px] bg-[#ffffff63] flex items-center justify-between my-[5px] text-pink-600 rounded px-[10px] font-[600]'>{userData.email} <span className='text-[40px] text-green-600 '><IoIosDoneAll/></span> </h5>
+          <h5 className='w-[100%] h-[40px] bg-[#ffffff63] flex items-center justify-between my-[5px] text-pink-600 rounded px-[10px] font-[600] overflow-hidden'>{userData.email} <span className='text-[40px] text-green-600 '><IoIosDoneAll/></span> </h5>
           <div className="flex items-center gap-1 w-[100%] mb-[5px] h-[40px]">
-          <h5 className='w-[10%] h-[40px] rounded-l bg-[#ffffff63] flex items-center justify-between my-[5px] text-pink-600 rounded px-[10px] font-[600]'>+880</h5>
-          <input className=' w-[90%] h-[40px] bg-[#ffffff63] outline-none rounded-r px-[10px] font-[600] ' type="text" placeholder={`Enter You phone numer`} />
+          <h5 className=' w-[20%] lg:w-[10%] h-[40px] rounded-l bg-[#ffffff63] flex items-center justify-center my-[5px] text-pink-600 rounded px-[10px] font-[600]'>+880</h5>
+          <input className=' w-[80%] lg:w-[90%] h-[40px] bg-[#ffffff63] outline-none rounded-r px-[10px] font-[600] ' type="text" placeholder={`Enter You phone numer`} />
           </div>
           <input onChange={hs} className='w-[100%] h-[40px] bg-[#ffffff63] outline-none mb-[5px] rounded px-[10px] font-[600] ' type="date"  />
           <div className="'w-[100%] h-[50px] bg-[#ffffff63] mb-[5px] rounded flex items-center gap-[10px] px-[10px] font-[600]">
