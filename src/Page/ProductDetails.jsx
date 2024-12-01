@@ -157,21 +157,18 @@ const ProductDetails = () => {
   return (
     <section>
       <Helmet>
-        {/* <link rel="icon" type="image/svg+xml" href={info.imgurl} /> */}
-
         <title>{info.Prodectname !== undefined ? info.Prodectname : ""} - Price in bangladesh</title>
         <meta name="description" content={`Buy ${info.Prodectname} online at the best price. Free shipping and amazing discounts. Get it now!`} />
         <meta property="og:title" content={info.Prodectname} />
         <meta property="og:description" content={`Buy ${info.Prodectname} online at the best price. Free shipping and amazing discounts. Get it now!`} />
         <meta property="og:image" content={info.imgurl} />
         <meta property="og:url" content={`https://www.qmever.com/productDetails/${productId.id}`} />
+        <meta property="og:image:width" content="1200"/>
+        <meta property="og:image:height" content="630"/>
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={info.Prodectname} />
         <meta name="twitter:description" content={`Buy ${info.Prodectname} online at the best price. Free shipping and amazing discounts. Get it now!`} />
         <meta name="twitter:image" content={info.imgurl} />
-        <meta property="og:image" content={info.imgurl}/>
-          <meta property="og:image:width" content="1200"/>
-            <meta property="og:image:height" content="630"/>
             </Helmet>
             <div className="container mx-auto px-[10px] py-[10px]">
               {
@@ -270,7 +267,7 @@ const ProductDetails = () => {
                   <div className=" cursor-pointer overflow-hidden rightimg">
                     {info.Prodectname
                       ?
-                      <h2 className='lg:text-[#000] text-[#ffffffa4] font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h2>
+                      <h2 className=' shadow-slate-900 text-[#ffffff] font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h2>
                       :
                       <SkeletonTheme baseColor="#ffffff5d" className="w-[100%]" highlightColor="#fff">
                         <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
@@ -279,15 +276,15 @@ const ProductDetails = () => {
                       </SkeletonTheme>
                     }
                   </div>
-                  <h2 className='text-[#000] font-[600] text-[20px] my-[5px]'>Price : <span className='text-[#cf0cbf] font-[500]'>{modlePrice !== "" ? Number(modlePrice).toFixed(2) : (info?.Price != null ? Number(info.Price).toFixed(2) : "")}৳</span></h2>
-                  <h2 className='text-[#000] noselect font-[600] text-[20px] my-[5px]'>{info.ModelName}</h2>
+                  <h2 className='text-[#fff] font-[600] text-[20px] my-[5px]'>Price : <span className='text-[#cf0cbf] font-[500]'>{modlePrice !== "" ? Number(modlePrice).toFixed(2) : (info?.Price != null ? Number(info.Price).toFixed(2) : "")}৳</span></h2>
+                  <h2 className='text-[#fff] noselect font-[600] text-[20px] my-[5px]'>{info.ModelName}</h2>
 
                   {
                     info3 !== ""
                       ?
                       <div className="modles noselect mb-[30px] flex-wrap flex gap-[10px]">
                         {info3.map((addModle, index) => (
-                          <h2 onClick={() => handleModel({ index, addModle })} className={` ${modelselect === true && "border-[red]"} flex border-[1px] py-[10px] px-[20px] rounded justify-center items-center cursor-pointer ${modleaddicon === addModle.Model ? "bg-[#000] text-[#fff]" : "border-[#000] text-[#000]"}  font-[600] text-[20px] my-[5px]`}>{addModle.Model}</h2>
+                          <h2 onClick={() => handleModel({ index, addModle })} className={` ${modelselect === true && "border-[red]"} flex border-[1px] py-[10px] px-[20px] rounded justify-center items-center cursor-pointer ${modleaddicon === addModle.Model ? "bg-[#000] text-[#fff]" : "border-[#fff] text-[#fff]"}  font-[600] text-[20px] my-[5px]`}>{addModle.Model}</h2>
                         ))}
                       </div>
                       : ""
@@ -298,7 +295,7 @@ const ProductDetails = () => {
                   </div>
                   <div className="description mt-[50px] border-t-[2px] border-t-[#fff]">
                     <div className=" cursor-pointer overflow-hidden rightimg">
-                      <p className=' text-[16px] font-[500] my-[30px] lg:text-[#000] text-[#ffffffa4] '>{info.description}</p>
+                      <p className=' text-[16px] font-[500] my-[30px] text-[#ffffffa4] '>{info.description}</p>
                     </div>
                     <iframe className=' w-[100%] sm:h-[315px]' src={info.VideoURL} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                   </div>

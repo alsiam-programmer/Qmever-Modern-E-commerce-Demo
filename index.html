@@ -30,13 +30,16 @@
 <style>
   @keyframes moveBackground {
     0% {
-      background-position: center top;
+      background-position: center ;
+      width: 100%;
     }
     50% {
       background-position: center bottom;
+      width: 105%;
     }
     100% {
-      background-position: center top;
+      background-position: center ;
+      width: 110%;
     }
   }
 </style>
@@ -44,6 +47,7 @@
   </head>
   <body
   style="
+    overflow-x: hidden;
     background-image: url('./src/assets/bgimg.jpg');
     background-repeat: no-repeat;
     background-size: cover;

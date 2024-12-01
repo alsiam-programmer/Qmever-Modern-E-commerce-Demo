@@ -206,11 +206,7 @@ const Menu = () => {
   let valueDelet = () => {
     setSearch("")
   }
-  let sex = [
-    { "Gender": "Male", "Main_category": "man" },
-    { "Gender": "Female", "Main_category": "woman" },
-    { "Gender": "Transgender", "Main_category": "transgender" },
-  ]
+
 
   let Day = [
     { "day": "01", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
@@ -307,53 +303,7 @@ const Menu = () => {
     setYearSelet(false)
   }
 
-  // let handleupData = () => {
-  //   let valid = true; // Start by assuming it's valid
-
-  //   // Validation for Gender
-  //   if (userSEXdata.Gender === undefined) {
-  //     valid = false;
-  //     setErrorGen(`SORRY MY DEAR ${(userData.username).substring(0, 6) + "..."} SELECT YOU GENDER `)
-  //   }
-
-  //   // Validation for dateOfBirth
-  //   if (`${userDaydata.day}/${userMounthdata.mounth}/${userYeardata}` === "undefined/undefined/") {
-  //     valid = false;
-  //     setErrorDateofbirth(`SORRY MY DEAR ${(userData.username).substring(0, 6) + "..."} SELECT YOU DATE OF BIRTH `)
-  //   }
-
-  //   // If validation fails, do not continue to Firebase update
-  //   if (!valid) {
-  //     console.log("fuck");
-  //     return { valid }; // Return early if invalid
-
-  //   }
-
-  //   // If valid, update the data in Firebase
-  //   set(ref(db, 'users/' + `${useruid}/`), {
-  //     username: userData.username,
-  //     email: userData.email,
-  //     profile_picture: userIMG || userData.profile_picture,
-  //     uid: userData.uid,
-  //     gender: userSEXdata.Gender,
-  //     dateOfBirth: `${userDaydata.day}/${userMounthdata.mounth}/${userYeardata}`,
-  //     Delivery_address: {
-  //       username: userData.username,
-  //       email: userData.email,
-  //       Phone_Number: userDelivery.Phone_Number || "",  // Use default value if empty
-  //       Division: userDelivery.Division || "",
-  //       District: userDelivery.District || "",
-  //       unions: userDelivery.unions || "",
-  //       upazila: userDelivery.upazila || "",
-  //       local_address: userDelivery.local_address || "",
-  //     }
-  //   }).then(() => {
-  //     window.location.reload();  // Reload the page after the update
-  //   }).catch(error => {
-  //     console.error("Error updating user data: ", error);  // Handle any errors
-  //   });
-  // };
-
+ 
   let handleUserImg = (e) => {
     let File = e.target.files[0]
     if (File) {

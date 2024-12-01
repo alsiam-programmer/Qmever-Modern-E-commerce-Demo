@@ -1,31 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://qmever.com/</loc>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://qmever.com/Login</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://qmever.com/productDetails/:id</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://qmever.com/CheckOut</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://qmever.com/CartPage</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://qmever.com/Orders</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://qmever.com/search_query</loc>
-    <priority>0.6</priority>
-  </url>
+<url>
+<loc>https://qmever.com/</loc>
+<priority>1.0</priority>
+</url>
+<url>
+<loc>https://qmever.com/Login</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://qmever.com/productDetails/:id</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://qmever.com/CheckOut</loc>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://qmever.com/CartPage</loc>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://qmever.com/Orders</loc>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=t-shirt</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=shirt</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=wallet</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=shoes</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=pant</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=underwear</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=jacket</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=watch</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=saree</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=three-piece</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=one-piece</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=bra</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=panty</loc>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://qmever.com/search_query?query=handbag</loc>
+<priority>0.6</priority>
+</url>
 </urlset>

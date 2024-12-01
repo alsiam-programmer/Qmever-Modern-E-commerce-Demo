@@ -213,7 +213,7 @@ const Context = ({ children }) => {
       {
         loading && info.length === 0
         ?
-        <div className="container mx-auto">
+        <div className="container px-[10px] mx-auto">
         <SkeletonTheme baseColor="#ffffff5d" highlightColor="#f9f9f9">
           <div className="flex flex-wrap">
             {Array(2)
