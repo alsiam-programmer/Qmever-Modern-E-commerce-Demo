@@ -23,19 +23,6 @@ const Menu = () => {
   let [MenuShow, setMenuShow] = useState(false)
   let [Year, setYear] = useState([])
   let [useruid, setUseruid] = useState('')
-  let [SEXSelet, setSEXSelet] = useState(false)
-  let [DaySelet, setDaySelet] = useState(false)
-  let [MounthSelet, setMounthSelet] = useState(false)
-  let [YearSelet, setYearSelet] = useState(false)
-  let [userSEXdata, setuserSEXdata] = useState({})
-  let [userDaydata, setuserDaydata] = useState({})
-  let [userMounthdata, setuserMounthdata] = useState({})
-  let [userYeardata, setuserYeardata] = useState('')
-  let [mounth_id_CODE, setmounth_id_CODE] = useState('')
-  let [userIMG, setUserIMG] = useState('')
-  let [Login_Boxclose, setLogin_Boxclose] = useState(true)
-  let [errorGen, setErrorGen] = useState('')
-  let [errorDateofbirth, setErrorDateofbirth] = useState('')
   let [getDataSearch , setGetDataSearch] = useState([])
   let [ searchItemIndex , setSearchItemIndex ] = useState(-1)
   
@@ -258,62 +245,7 @@ const Menu = () => {
 
   ]
 
-  let handleSelectSEX = () => {
-    if (SEXSelet !== true) {
-      setSEXSelet(true)
-    } else {
-      setSEXSelet(false)
-    }
-  }
 
-  let handleSEX = (item) => {
-    setSEXSelet(false)
-    setuserSEXdata(item)
-  }
-
-  let HandleSelectDay = () => {
-
-  }
-  let handleDay = (item) => {
-    setuserDaydata(item)
-    setDaySelet(false)
-    setmounth_id_CODE(item)
-
-  }
-  let HandleSelectMounth = () => {
-
-  }
-  let handleMounth = (item) => {
-    setuserMounthdata(item)
-    setMounthSelet(false)
-    setDaySelet(true)
-  }
-
-
-  let HandleSelectYear = () => {
-    if (YearSelet !== true) {
-      setYearSelet(true)
-    } else {
-      setYearSelet(false)
-    }
-  }
-  let handleYear = (item) => {
-    setuserYeardata(item)
-    setMounthSelet(true)
-    setYearSelet(false)
-  }
-
- 
-  let handleUserImg = (e) => {
-    let File = e.target.files[0]
-    if (File) {
-      let reader = new FileReader()
-      reader.onloadend = () => {
-        setUserIMG(reader.result)
-      }
-      reader.readAsDataURL(File)
-    }
-  }
   let handleItemName = ({item , index}) => {
     setSearch(item.Prodectname)
     console.log(index);
@@ -322,84 +254,7 @@ const Menu = () => {
   return (
     <section>
       <section className='w-[100%] h-[100px] mb-[10px] sm:mb-[0px] sm:h-[120px] '>
-        {/* {
-          userData.gender === "undefined" || userData.dateOfBirth === "undefined" ?
-            <div className=" fixed left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-[#0000007e] flex justify-center items-center w-[100%] h-[100%] z-[999]">
-              <div className=" relative w-[90%] rounded xl:w-[60%] xl:h-[55%] p-[20px] lg:flex flex-wrap bg-[#fff] ">
-                <div className=" lg:w-[70%] bg-[#062919] p-[20px] rounded-[10px] ">
-                  <div className="  relative mx-auto w-[170px] h-[170px] ">
-                    <label className=' absolute bottom-[5px] right-[5px] text-[#000] text-[18px] h-[40px] rounded-[50%] w-[40px] bg-[#fff] flex justify-center items-center ' htmlFor="fileInput"><IoCameraOutline /></label>
-                    <input onChange={handleUserImg} id='fileInput' className=' hidden ' type="file" />
-                    <div className="rounded-[50%]  mb-[30px] flex justify-center items-center overflow-hidden w-[170px] h-[170px] ">
-                      <img className=' w-[170px] ' src={userIMG || userData.profile_picture} alt="" />
-                    </div>
-                  </div>
-                  <h5 className='text-[#cf0cbf] text-[12px] md:text-[20px] my-[20px]' ><span className='text-[#f7f5f5] mr-[7px]' >Name :</span>{userData.username}</h5>
-                  <h5 className='text-[#cf0cbf] text-[12px] flex text-center md:text-[20px] my-[20px]' ><span className='text-[#f7f5f5] flex mr-[7px]' >Gmail :</span>{userData.email}</h5>
-                  <h5 className='text-[#cf0cbf] text-[12px] flex text-center md:text-[20px] my-[20px]' ><span className='text-[#f7f5f5] flex mr-[7px]' >Gender :</span>{userSEXdata.Gender}</h5>
-                  <h5 className='text-[#cf0cbf] text-[12px] flex text-center md:text-[20px] my-[20px]' ><span className='text-[#f7f5f5] flex mr-[7px]' >Gmail :</span>{`${userDaydata.day === undefined ? "" : userDaydata.day}/${userMounthdata.mounth === undefined ? "" : userMounthdata.mounth}/${userYeardata}`}</h5>
-                </div>
-                <div className="lg:w-[30%] mb-[40px] mt-[10px] lg:pl-[20px]">
-                  <div className="relative">
-                    <h5 onClick={handleSelectSEX} className={` ${SEXSelet !== false ? "!bg-[#062919] text-[#fffdf8]" : ""} bg-[#fffdf8] px-[20px] hover:text-[#fffdf8] flex justify-between text-[20px] items-center hover:bg-[#062919] py-[5px] rounded text-[#062919] `}>Gender {userSEXdata.Gender ? userSEXdata.Gender : "select"} <span className='text-[23px]'><IoIosArrowDropdownCircle /></span> </h5>
-                    {
-                      SEXSelet !== false
-                        ?
-                        <div className=" z-[901] absolute mt-[5px] left-[50%] translate-x-[-50%] bg-[#fff] w-[100%] ">
-                          {sex.map((item) => (
-                            <h5 onClick={() => handleSEX(item)} className='w-[100%] px-[20px] h-[30px] items-center my-[1px] bg-[#f3f3f3] flex justify-end text-[16px]' >{item.Gender}</h5>
-                          ))}
-                        </div>
-                        : ""
-                    }
-                  </div>
-                  <h5 className='text-[red] flex font-[600]' >{errorGen}</h5>
-                  <div className="dateOfBirth relative mt-[7px] flex gap-1 justify-between">
-
-                    <h5 onClick={HandleSelectYear} className=" bg-[#062919] w-[32%] px-[14px] text-[17px] flex justify-center py-[2px] rounded text-[#fffdf8] ">{userYeardata > 0 ? userYeardata : "Year"}</h5>
-                    {
-                      YearSelet !== false
-                        ?
-                        <div className=" absolute z-[900] h-[300px] overflow-scroll bg-[#fff]">
-                          {Year.map((item) => (
-                            <h5 onClick={() => handleYear(item)} className={` text-[#000] bg-[#f3f3f3] my-[1px] p-[6px] text-[16px]`} >{item}</h5>
-                          ))}
-                        </div>
-                        : ""
-                    }
-                    <h5 onClick={HandleSelectMounth} className=" bg-[#062919] w-[32%] px-[14px] text-[17px] flex justify-center py-[2px] rounded text-[#fffdf8] ">{userMounthdata.mounth ? userMounthdata.mounth_level : "Mounth"}</h5>
-                    {
-                      MounthSelet !== false
-                        ?
-                        <div className=" absolute z-[900] h-[300px] overflow-scroll bg-[#fff]">
-                          {Mounth.map((item) => (
-                            <h5 onClick={() => handleMounth(item)} className={` text-[#000] bg-[#f3f3f3] my-[1px] p-[6px] text-[16px]`} >{item.mounth}</h5>
-                          ))}
-                        </div>
-                        : ""
-                    }
-                    <h5 onClick={HandleSelectDay} className=" bg-[#062919] w-[32%] px-[14px] text-[17px] flex justify-center py-[2px] rounded text-[#fffdf8] ">{userDaydata.day ? userDaydata.day : "Day"}</h5>
-                    {
-                      DaySelet !== false
-                        ?
-                        <div className=" absolute z-[900] h-[300px] overflow-scroll bg-[#fff]">
-                          {Day.map((item) => (
-                            <h5 onClick={() => handleDay(item)} className={` ${item[userMounthdata.mounth] !== userMounthdata.mounth ? "hidden" : "block"} text-[#000] bg-[#f3f3f3] my-[1px] p-[6px] text-[16px]`} >{item.day}</h5>
-                          ))}
-                        </div>
-                        : ""
-                    }
-                  </div>
-                  <h5 className='text-[red] flex font-[600]' >{errorDateofbirth}</h5>
-                  <div className="absolute bottom-[20px] right-[20px]">
-                    <h5 onClick={handleupData} className='px-[20px] py-[3px] bg-[#062919] text-[17px] cursor-pointer flex justify-center rounded text-[#fffdf8]'>Done</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-            : ""
-        } */}
-        <div className=' z-[990] px-[10px] bg-[#062919] fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
+               <div className=' z-[990] px-[10px] bg-[#062919] fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
           <div className=" relative container mx-auto h-[60px] sm:h-[70px] md:h-[80px]">
             <div className="webLogo cursor-pointer w-[100%] flex justify-center items-center h-[60px] sm:h-[70px] md:h-[80px] lg:justify-start">
               <h1 className='text-[#fff] text-[30px] noselect font-[700]'>Qmever.com</h1>

@@ -32,8 +32,8 @@ const Banner = () => {
         autoplaySpeed: 2000,
       };
   return (
-    <section className=' px-[10px] py-[20px]'>
-        <div className="container flex mx-auto">
+    <section className=' '>
+        <div className="container py-[5px] px-[10px] md:py-[20px] 2xl:px-0 flex mx-auto">
       <div className="w-[100%]">
         <Slider {...settings}>
             <div className="imgBox w-[100%]">

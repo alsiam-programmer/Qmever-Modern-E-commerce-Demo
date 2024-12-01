@@ -227,7 +227,7 @@ const ProductDetails = () => {
                         <img className=" mb-[10px] cursor-pointer w-[100%] " src={info2.productimg} alt="" />
                         :
                         <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
-                          <Skeleton className="h-[150px] mb-4" />
+                          <Skeleton className=" h-[100px] lg:h-[150px] mb-3" />
 
                         </SkeletonTheme>
                       }
@@ -236,7 +236,7 @@ const ProductDetails = () => {
                         <img className=" my-[10px] cursor-pointer w-[100%] " src={info2.productimg2} alt="" />
                         :
                         <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
-                          <Skeleton className="h-[150px] mb-4" />
+                          <Skeleton className=" h-[100px] lg:h-[150px] mb-3" />
 
                         </SkeletonTheme>
                       }
@@ -245,7 +245,7 @@ const ProductDetails = () => {
                         <img className=" my-[10px] cursor-pointer w-[100%] " src={info2.productimg3} alt="" />
                         :
                         <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
-                          <Skeleton className="h-[150px] mb-4" />
+                          <Skeleton className=" h-[100px] lg:h-[150px] mb-3" />
 
                         </SkeletonTheme>
                       }
@@ -257,7 +257,7 @@ const ProductDetails = () => {
                       <img className=" hover:scale-125 duration-200 cursor-pointer w-[100%] " src={info.imgurl} alt="" />
                       :
                       <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
-                        <Skeleton className="h-[490px] mb-4" />
+                        <Skeleton className=" h-[330px] lg:h-[490px] mb-4" />
 
                       </SkeletonTheme>
                     }

@@ -211,7 +211,7 @@ const Context = ({ children }) => {
       </div> */}
       {children}
       {
-        loading && info.length === 0
+        loading && info.length === 0 && window.location.pathname === "/"
         ?
         <div className="container px-[10px] mx-auto">
         <SkeletonTheme baseColor="#ffffff5d" highlightColor="#f9f9f9">

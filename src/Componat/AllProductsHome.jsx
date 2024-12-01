@@ -17,8 +17,8 @@ const AllProductsHome = () => {
     window.scrollTo(0, 0);
   }
   return (
-    <section className="py-10 px-4 ">
-      <div className="container mx-auto">
+    <section className=" ">
+      <div className="container py-[5px] md:py-10 mx-auto">
         <div className="flex flex-wrap ">
           {info.map((item, index) => (
             item !== null
@@ -30,7 +30,7 @@ const AllProductsHome = () => {
               >
                 <div className="w-full overflow-hidden rounded-lg">
                   <img
-                    className="w-full md:h-[240px] object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-[190px] md:h-[240px] object-cover group-hover:scale-110 transition-transform duration-300"
                     src={item.imgurl}
                     alt={item.Prodectname || "Product Image"}
                   />
