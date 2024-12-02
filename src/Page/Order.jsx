@@ -1,5 +1,6 @@
 import { getDatabase, ref, set, onValue } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
+import { TbLoader2 } from 'react-icons/tb';
 import { useSelector } from 'react-redux'
 
 const Order = () => {
@@ -37,91 +38,82 @@ const Order = () => {
 
 
     return (
-        <div className='text-[#fff] container mx-auto ' >
-            <div className=" w-[100%] lg:h-[80px] bg-[#f8f6f6] rounded-[10px] my-[40px] flex flex-wrap justify-around items-center ">
-                <h5 className=' w-[100%] lg:w-[10%] px-[15px] border-[#000] border-[3px] h-[30px] lg:h-[40px] flex justify-start lg:justify-center my-[1px] items-center lg:rounded-[10px] bg-[#000] text-[14px] lg:text-[17px] font-[600] hover:text-[#000] hover:bg-[#fff] hover:border-[3px] cursor-pointer hover:border-[#000] ' >All</h5>
-                <h5 className=' w-[100%] lg:w-[10%] px-[15px] border-[#000] border-[3px] h-[30px] lg:h-[40px] flex justify-start lg:justify-center my-[1px] items-center lg:rounded-[10px] bg-[#000] text-[14px] lg:text-[17px] font-[600] hover:text-[#000] hover:bg-[#fff] hover:border-[3px] cursor-pointer hover:border-[#000] ' >Processing</h5>
-                <h5 className=' w-[100%] lg:w-[10%] px-[15px] border-[#000] border-[3px] h-[30px] lg:h-[40px] flex justify-start lg:justify-center my-[1px] items-center lg:rounded-[10px] bg-[#000] text-[14px] lg:text-[17px] font-[600] hover:text-[#000] hover:bg-[#fff] hover:border-[3px] cursor-pointer hover:border-[#000] ' >Confirmed</h5>
-                <h5 className=' w-[100%] lg:w-[10%] px-[15px] border-[#000] border-[3px] h-[30px] lg:h-[40px] flex justify-start lg:justify-center my-[1px] items-center lg:rounded-[10px] bg-[#000] text-[14px] lg:text-[17px] font-[600] hover:text-[#000] hover:bg-[#fff] hover:border-[3px] cursor-pointer hover:border-[#000] ' >Picking</h5>
-                <h5 className=' w-[100%] lg:w-[10%] px-[15px] border-[#000] border-[3px] h-[30px] lg:h-[40px] flex justify-start lg:justify-center my-[1px] items-center lg:rounded-[10px] bg-[#000] text-[14px] lg:text-[17px] font-[600] hover:text-[#000] hover:bg-[#fff] hover:border-[3px] cursor-pointer hover:border-[#000] ' >Shipped</h5>
-                <h5 className=' w-[100%] lg:w-[10%] px-[15px] border-[#000] border-[3px] h-[30px] lg:h-[40px] flex justify-start lg:justify-center my-[1px] items-center lg:rounded-[10px] bg-[#000] text-[14px] lg:text-[17px] font-[600] hover:text-[#000] hover:bg-[#fff] hover:border-[3px] cursor-pointer hover:border-[#000] ' >Delivered</h5>
-                <h5 className=' w-[100%] lg:w-[10%] px-[15px] border-[#000] border-[3px] h-[30px] lg:h-[40px] flex justify-start lg:justify-center my-[1px] items-center lg:rounded-[10px] bg-[#000] text-[14px] lg:text-[17px] text-[red] font-[600] hover:text-[red] hover:bg-[#fff] hover:border-[3px] cursor-pointer hover:border-[red] ' >Cancelled</h5>
+<div className="container mx-auto py-10">
+  {/* Order Status Filter */}
+  <div className="w-full bg-[#f4f4f4] rounded-[15px] my-8 flex flex-wrap justify-center items-center gap-4 py-6 px-4 shadow-xl border border-[#e0e0e0]">
+    {/* Status Buttons */}
+    {['All', 'Processing', 'Confirmed', 'Picking', 'Shipped', 'Delivered', 'Cancelled'].map((status, index) => (
+      <h5
+        key={index}
+        className={`text-xs sm:text-sm md:text-base font-medium py-3 px-6 rounded-full cursor-pointer transition-all duration-300 ease-in-out 
+          ${status === 'Cancelled' ? 'bg-red-600 text-white border-red-600 hover:bg-red-500' :
+          status === 'Delivered' ? 'bg-green-500 text-white border-green-500 hover:bg-green-400' :
+          status === 'Shipped' ? 'bg-blue-500 text-white border-blue-500 hover:bg-blue-400' :
+          status === 'Picking' ? 'bg-yellow-500 text-white border-yellow-500 hover:bg-yellow-400' :
+          status === 'Confirmed' ? 'bg-orange-500 text-white border-orange-500 hover:bg-orange-400' :
+          status === 'Processing' ? 'bg-gray-600 text-white border-gray-600 hover:bg-gray-500' :
+          'bg-black text-white border-black hover:bg-white hover:text-black hover:border-black'}`}
+      >
+        {status}
+      </h5>
+    ))}
+  </div>
+
+    {orderItems ? "" :
+  <div className="flex w-[100%] justify-center my-8">
+  <TbLoader2 className="w-10 h-10 animate-spin text-[#ff1586]" />
+  </div>}
+  {/* Order Items Section */}
+  {orderItems.map((item, index_M) => (
+    <div key={index_M} className="my-6">
+      <div className="flex flex-wrap justify-between items-start">
+
+        {/* Order Details */}
+        <div className="w-full lg:w-[75%] xl:w-[70%] bg-white rounded-lg shadow-2xl border border-[#f0f0f0] p-4 relative">
+
+          {/* Order Status Indicator */}
+          <div className="flex flex-col mb-[10px] space-y-4">
+            {OrderStatus.map((orderStatus, index) => (
+              <h2
+                key={index}
+                className={`text-lg font-bold py-3 px-8 rounded-full shadow-md 
+                ${index === index_M ? 'block' : 'hidden'} 
+                ${orderStatus === 'Delivered' && 'bg-green-600 text-white'}
+                ${orderStatus === 'Shipped' && 'bg-blue-600 text-white'}
+                ${orderStatus === 'Picking' && 'bg-yellow-600 text-white'}
+                ${orderStatus === 'Confirmed' && 'bg-orange-600 text-white'}
+                ${orderStatus === 'Processing' && 'bg-gray-600 text-white'}`}
+              >
+                {orderStatus}
+              </h2>
+            ))}
+          </div>
+
+          {/* Cart Items */}
+          {item.cartItem?.map((ItemPro, index) => (
+      
+            <div key={index} className="flex items-center gap-5 mb-6 flex-wrap justify-between">
+              <img className="w-32 h-32 object-cover rounded-xl shadow-md mb-4 sm:mb-0" src={ItemPro.imgurl} alt={ItemPro.Prodectname} />
+              
+              {/* Total Price */}
+              <h2 className="text-[15px] md:text-[22px] font-semibold text-[#ff1586] bg-[#ffffff1f] py-3 px-8 rounded-full shadow-xl">
+                {item.totalPrice.toFixed(2)}৳
+              </h2>
+
+              {/* Product Details */}
+              <div className="flex flex-col w-full sm:w-auto">
+                <h3 className="text-lg font-semibold text-[#000]">{ItemPro.Prodectname}</h3>
+                <p className="text-lg text-[#555]">{ItemPro.Price}৳</p>
+              </div>
             </div>
-            {
-                orderItems.map((item , index_M) => (
-                 
-                    item.cartItem !== undefined
-                        ?
-                        <div className=" my-[20px] ">
-                                <div className=" flex justify-between">
-                                    <div className="prode border-[#ffffff78] border-[2px] rounded relative w-[100%] lg:w-[80%]">
-                                        <div className="">
-                                            {OrderStatus.map((item , index)=>(
-                                                <h2 className='text-[#0d9e17] text-[17px] w-[120px] flex justify-center text-[600] absolute top-[10px] right-[10px] rounded-[30px] bg-[#ffffff60]  py-[5px]'>{index === index_M ? item : "" }</h2>
-                                            ))}
-                                            <h2 className='text-[#ff1586] text-[17px] w-[200px] flex justify-center text-[600] absolute top-[10px] right-[140px] rounded-[30px] bg-[#ffffff1f]  py-[5px]'>{item.totalPrice.toFixed(2)}৳</h2>
-                                        </div>
-                                        {item?.cartItem?.map((ItemPro) => (
-                                            <div className="m-[10px] flex gap-[20px] items-center">
-                                                <img className='md:w-[100px] w-[80px]' src={ItemPro.imgurl} alt="" />
-                                                <h2 className='text-[11px] md:text-[17px] text-[#000] ' >{ItemPro.Prodectname}</h2>
-                                                <h2 className='text-[11px] md:text-[17px] text-[#000] ' >{ItemPro.Price}৳</h2>
-                                            </div>
-
-                                        ))}
-                                    </div>
-                                    <div className="lg:w-[20%] w-[0px] flex items-center justify-end">
-                                    {
-                                                OrderStatus.map((orderStatus , index)=>(
-                                                     <div className=" hidden lg:block ">
-                                                        <h5 className={` ${index !== index_M ? "hidden" : "block" } flex justify-start rounded-[30px] mx-[10px] my-[5px] ${orderStatus === "Delivered" && " bg-[green] text-[#fff] "} ${orderStatus === "Shipped" && " bg-[green] text-[#fff] "} ${orderStatus  === "Dispatched" && " bg-[green] text-[#fff] "} ${orderStatus === "Picking" && " bg-[green] text-[#fff]"} ${orderStatus === "Confirmed" && "bg-[green] text-[#fff] "} ${orderStatus  === "Processing" && "bg-[green] text-[#fff]"} text-[#000] py-[10px] px-[30px] text-[17px] font-[600]`}>Processing</h5>
-                                                        <h5 className={` ${index !== index_M ? "hidden" : "block" } flex justify-start rounded-[30px] mx-[10px] my-[5px] ${orderStatus === "Delivered" && " bg-[green] text-[#fff] "} ${orderStatus === "Shipped" && " bg-[green] text-[#fff] "} ${orderStatus  === "Dispatched" && " bg-[green] text-[#fff] "} ${orderStatus === "Picking" && " bg-[green] text-[#fff]"} ${orderStatus === "Confirmed" && "bg-[green] text-[#fff] "} text-[#000] py-[10px] px-[30px] text-[17px] font-[600]`}>Confirmed</h5>
-                                                        <h5 className={` ${index !== index_M ? "hidden" : "block" } flex justify-start rounded-[30px] mx-[10px] my-[5px] ${orderStatus === "Delivered" && " bg-[green] text-[#fff] "} ${orderStatus === "Shipped" && " bg-[green] text-[#fff] "} ${orderStatus  === "Dispatched" && " bg-[green] text-[#fff] "} ${orderStatus === "Picking" && " bg-[green] text-[#fff]"}  text-[#000] py-[10px] px-[30px] text-[17px] font-[600]`}>Picking</h5>
-                                                        <h5 className={` ${index !== index_M ? "hidden" : "block" } flex justify-start rounded-[30px] mx-[10px] my-[5px] ${orderStatus === "Delivered" && " bg-[green] text-[#fff] "} ${orderStatus === "Shipped" && " bg-[green] text-[#fff] "} text-[#000] py-[10px] px-[30px] text-[17px] font-[600]`}>Shipped</h5>
-                                                        <h5 className={` ${index !== index_M ? "hidden" : "block" } flex justify-start rounded-[30px] mx-[10px] my-[5px] ${orderStatus === "Delivered" && " bg-[green] text-[#fff] "} text-[#000] py-[10px] px-[30px] text-[17px] font-[600]`}>Delivered</h5>
-                                                        </div> 
-                                                        ))
-                                                }
-                                    </div>
-                                </div>
-                            </div>
-                            :
-                            <div className=" my-[20px] ">
-                                <div className=" flex justify-between">
-                                    <div className="prode border-[#ffffff78] border-[2px] rounded relative w-[100%] lg:w-[80%]">
-                                        <div className="">
-                                        {OrderStatus.map((item , index)=>(
-                                                <h5 className='text-[#0d9e17] text-[17px] w-[120px] flex justify-center text-[600] absolute top-[10px] right-[10px] rounded-[30px] bg-[#ffffff60]  py-[5px]'>{index === index_M ? item : "" }</h5>
-                                            ))}
-                                            <h5 className='text-[#ff1586] text-[17px] w-[200px] flex justify-center text-[600] absolute top-[10px] right-[140px] rounded-[30px] bg-[#0000001f]  py-[5px]'>{item.Price}৳</h5>
-                                        </div>
-                                        <div className="m-[10px] flex gap-[20px] items-center">
-                                            <img className='md:w-[100px] w-[80px]' src={item.imgurl} alt="" />
-                                            <h5 className=' text-[11px] md:text-[17px] text-[#000] ' >{item.Prodectname}</h5>
-                                            <h5 className=' text-[11px] md:text-[17px] text-[#000] ' >{item.Price}৳</h5>
-                                        </div>
-                                    </div>
-                                    <div className="lg:w-[20%] w-[0px] flex items-center justify-end">
-                                        {
-                                                OrderStatus.map((orderStatus , index)=>(
-                                                     <div className=" hidden lg:block ">
-                                                        <h5 className={` ${index !== index_M ? "hidden" : "block" } flex justify-start rounded-[30px] mx-[10px] my-[5px] ${orderStatus === "Delivered" && " bg-[green] text-[#fff] "} ${orderStatus === "Shipped" && " bg-[green] text-[#fff] "} ${orderStatus  === "Dispatched" && " bg-[green] text-[#fff] "} ${orderStatus === "Picking" && " bg-[green] text-[#fff]"} ${orderStatus === "Confirmed" && "bg-[green] text-[#fff] "} ${orderStatus  === "Processing" && "bg-[green] text-[#fff]"} text-[#000] py-[10px] px-[30px] text-[17px] font-[600]`}>Processing</h5>
-                                                        <h5 className={` ${index !== index_M ? "hidden" : "block" } flex justify-start rounded-[30px] mx-[10px] my-[5px] ${orderStatus === "Delivered" && " bg-[green] text-[#fff] "} ${orderStatus === "Shipped" && " bg-[green] text-[#fff] "} ${orderStatus  === "Dispatched" && " bg-[green] text-[#fff] "} ${orderStatus === "Picking" && " bg-[green] text-[#fff]"} ${orderStatus === "Confirmed" && "bg-[green] text-[#fff] "} text-[#000] py-[10px] px-[30px] text-[17px] font-[600]`}>Confirmed</h5>
-                                                        <h5 className={` ${index !== index_M ? "hidden" : "block" } flex justify-start rounded-[30px] mx-[10px] my-[5px] ${orderStatus === "Delivered" && " bg-[green] text-[#fff] "} ${orderStatus === "Shipped" && " bg-[green] text-[#fff] "} ${orderStatus  === "Dispatched" && " bg-[green] text-[#fff] "} ${orderStatus === "Picking" && " bg-[green] text-[#fff]"}  text-[#000] py-[10px] px-[30px] text-[17px] font-[600]`}>Picking</h5>
-                                                        <h5 className={` ${index !== index_M ? "hidden" : "block" } flex justify-start rounded-[30px] mx-[10px] my-[5px] ${orderStatus === "Delivered" && " bg-[green] text-[#fff] "} ${orderStatus === "Shipped" && " bg-[green] text-[#fff] "} text-[#000] py-[10px] px-[30px] text-[17px] font-[600]`}>Shipped</h5>
-                                                        <h5 className={` ${index !== index_M ? "hidden" : "block" } flex justify-start rounded-[30px] mx-[10px] my-[5px] ${orderStatus === "Delivered" && " bg-[green] text-[#fff] "} text-[#000] py-[10px] px-[30px] text-[17px] font-[600]`}>Delivered</h5>
-                                                        </div> 
-                                                        ))
-                                                }
-                                    </div>
-                                </div>
-                            </div>
-                    
-                ))
-
-            }
-
+          ))}
         </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+
     )
 }
 

@@ -66,6 +66,8 @@ const Menu = () => {
     setYear(yearArray); // Set the state
   }, []); // Empty dependency array, so this runs only once after the component mounts
 
+  // unions: `${userDelivery.unions !== "" ? userDelivery.unions : ""}`,
+  // upazila: `${userDelivery.upazila !== "" ? userDelivery.upazila : ""}`,
 
   let handleLogin = () => {
     signInWithPopup(auth, provider)
@@ -88,8 +90,6 @@ const Menu = () => {
               Phone_Number: `${userDelivery.Phone_Number !== "" ? userDelivery.Phone_Number : ""}`,
               Division: `${userDelivery.Division !== "" ? userDelivery.Division : ""}`,
               District: `${userDelivery.District !== "" ? userDelivery.District : ""}`,
-              unions: `${userDelivery.unions !== "" ? userDelivery.unions : ""}`,
-              upazila: `${userDelivery.upazila !== "" ? userDelivery.upazila : ""}`,
               local_address: `${userDelivery.local_address !== "" ? userDelivery.local_address : ""}`,
             }
           });

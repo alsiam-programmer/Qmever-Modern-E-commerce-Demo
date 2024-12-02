@@ -15,6 +15,8 @@ const CheckOut = () => {
   const BuyItem = useSelector((state) => state.counter.BuyItem);
   const cartItem = useSelector((state) => state.counter.cartItem);
 
+  console.log(cartItem);
+  
   const [userDelivery, setUserDelivery] = useState({});
   const [sendOTP, setSendOTP] = useState(false);
   const [otpInput, setOtpInput] = useState('');
@@ -55,44 +57,35 @@ const CheckOut = () => {
       valid = false;
       seterrorItem("Invalid phone number");
     } else{
-      seterrorItem("puss phone number");
+      seterrorItem("")
     }
     if ( userDelivery.Division === "") {
       valid = false;
       seterrorItem1("Division is required");
     } else{
-      seterrorItem1("Division is quired");
+      seterrorItem1("")
     }
     if ( userDelivery.District === "") {
       valid = false;
       seterrorItem2("District is required");
     } else{
-      seterrorItem2("District is quired");
-    }
-    if ( userDelivery.upazila === "") {
-      valid = false;
-      seterrorItem3("upazila is required");
-    } else{
-      seterrorItem3("upazila is quired");
-    }
-    if ( userDelivery.union === "") {
-      valid = false;
-      seterrorItem4("union is required");
-    } else {
-      seterrorItem4("union is quired");
+      seterrorItem2("")
+
     }
     if ( userDelivery.local_address === "") {
       valid = false;
       seterrorItem5("Local address is required");
     } else{
-      seterrorItem5("Local address is quired");
+      seterrorItem5("")
+
     }
     if ( userDelivery.username === "") {
       valid = false;
       seterrorItem6("Username is required");
     } else{
-      seterrorItem6("Username is quired");
+      seterrorItem6("")
     }
+
     setTimeout(()=>{
       settest(false)
     },[1000])
@@ -185,25 +178,37 @@ const CheckOut = () => {
   
   return (
     <section>
-      <div className="container px-[10px] my-[30px] mx-auto flex flex-wrap">
-        {
-          test !== false 
-          ?
-          <div className=" rounded-[20px] fixed w-[80%] bg-[#000] md:w-[50%] py-[30px] px-[20px] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-           {[errorItem, errorItem1, errorItem2, errorItem3, errorItem4, errorItem5, errorItem6].map(
+      <div className="container px-[10px] my-[30px] flex justify-center mx-auto">
+
+        <div className="w-[100%] lg:w-[80%]">
+        <UserContact userDelivery={userDelivery} />
+        <BuyProDucts HandleSendOTP={HandleSendOTP} building_data={building_data} TotalBuild={TotalBuild} BuyItem={BuyItem} />
+        </div>
+        {test && (
+  <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[80%] md:w-[50%] bg-[#1a1a1a] text-[#f5f5f5] py-[20px] px-[30px] rounded-[15px] shadow-lg border border-[#d32f2f]">
+    <h3 className="text-[20px] font-bold text-center mb-[10px] text-[#ff6f61]">
+      Error Notification
+    </h3>
+    {[errorItem, errorItem1, errorItem2, errorItem3 , errorItem6].map(
       (item, index) => (
-        <h5
+        item !== "" &&
+        <div
           key={index}
-          className="text-[#fff] my-[3px] text-[17px] font-extralight"
+          className="bg-[#282828] my-[5px] px-[10px] py-[5px] rounded text-[15px] font-medium border border-[#555]"
         >
           {item}
-        </h5>
+        </div>
       )
     )}
-          </div>
-          : ""
-        }
-        <UserContact userDelivery={userDelivery} />
+    <button
+      onClick={() => setTest(false)}
+      className="mt-[20px] w-full py-[10px] bg-[#d32f2f] text-[#fff] text-[16px] rounded hover:bg-[#a00000] transition duration-300"
+    >
+      Close
+    </button>
+  </div>
+)}
+
         {sendOTP && (
           <div className="p-[30px] rounded OTPInput fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[300px] h-[200px] sm:w-[500px] sm:h-[300px] bg-[#fff]">
             <h2 className="flex justify-center mb-[20px] text-[18px] font-[600]">Please check your message box</h2>
@@ -227,7 +232,6 @@ const CheckOut = () => {
           </div>
         )}
         <div id="recaptcha-container"></div>
-        <BuyProDucts HandleSendOTP={HandleSendOTP} building_data={building_data} TotalBuild={TotalBuild} BuyItem={BuyItem} />
       </div>
     </section>
   );
