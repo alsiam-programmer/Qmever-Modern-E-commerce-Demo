@@ -7,6 +7,7 @@ import CheckOut from "./Page/CheckOut"
 import Cartpage from "./Page/Cartpage"
 import Order from "./Page/Order"
 import SearchItem from "./Page/SearchItem"
+import UserProfile from "./Page/UserProfile"
 function App() {
 
   let router = createBrowserRouter(createRoutesFromElements(
@@ -18,6 +19,7 @@ function App() {
       <Route path="/CartPage" element={<Cartpage/>} ></Route>
       <Route path="/Orders" element={<Order/>} ></Route>
       <Route path="/search_query" element={<SearchItem />} />
+      <Route path="/user-profile" element={<UserProfile />} />
     </Route>
   ))
   return (

@@ -196,58 +196,6 @@ const Menu = () => {
     setSearch("")
   }
 
-
-  let Day = [
-    { "day": "01", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "02", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "03", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "04", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "05", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "06", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "07", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "08", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "09", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "10", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "11", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "12", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "13", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "14", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "15", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "16", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "17", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "18", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "19", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "20", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "21", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "22", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "23", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "24", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "25", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "26", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "27", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "28", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "29", "mounth_id": "0", "January": "January", "February": "February", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "30", "mounth_id": "0", "January": "January", "March": "March", "April": "April", "May": "May", "June": "June", "July": "July", "August": "August", "September": "September", "October": "October", "November": "November", "December": "December" },
-    { "day": "31", "mounth_id": "0", "January": "January", "March": "March", "May": "May", "July": "July", "August": "August", "October": "October", "December": "December" },
-  ]
-
-  let Mounth = [
-    { "mounth": "January", "mounth_id": "0", "mounth_level": "01" },
-    { "mounth": "February", "mounth_id": "1", "mounth_level": "02" },
-    { "mounth": "March", "mounth_id": "2", "mounth_level": "03" },
-    { "mounth": "April", "mounth_id": "3", "mounth_level": "04" },
-    { "mounth": "May", "mounth_id": "4", "mounth_level": "05" },
-    { "mounth": "June", "mounth_id": "5", "mounth_level": "06" },
-    { "mounth": "July", "mounth_id": "6", "mounth_level": "07" },
-    { "mounth": "August", "mounth_id": "7", "mounth_level": "08" },
-    { "mounth": "September", "mounth_id": "8", "mounth_level": "09" },
-    { "mounth": "October", "mounth_id": "9", "mounth_level": "10" },
-    { "mounth": "November", "mounth_id": "10", "mounth_level": "11" },
-    { "mounth": "December", "mounth_id": "11", "mounth_level": "12" },
-
-  ]
-
-
   let handleItemName = ({item , index}) => {
     setSearch(item.Prodectname)
     console.log(index);
@@ -302,10 +250,13 @@ const Menu = () => {
             {
               useruid === ""
                 ? <li className=' font-sans text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] flex justify-between font-[700]'>Nice to meet you.will you be my friend</li>
-                : <div className=' bg-[#062919] cursor-pointer py-[30px] gap-[10px] items-center font-sans h-[50px] flex text-[22px] px-[20px] rounded-[10px] m-[10px] group font-[700]'>
+                : <Link to={'/user-profile'} >
+                  <div className=' bg-[#062919] cursor-pointer py-[30px] gap-[10px] items-center font-sans h-[50px] flex text-[22px] px-[20px] rounded-[10px] m-[10px] group font-[700]'>
                   <img className=' rounded-[50%] w-[45px] border-[3px] border-[gold] h-[45px]' src={userData.profile_picture} alt="" />
                   <h2 className=' group-hover:underline text-[15px] text-[gold] font-[600]'>{userData.username}</h2>
                 </div>
+                </Link> 
+                
             }
 
             {

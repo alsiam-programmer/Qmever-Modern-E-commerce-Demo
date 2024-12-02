@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import Slider from "react-slick";
 import "../Css/banner.css"
-import { IoIosArrowForward, IoIosArrowBack, IoMdClose } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowBack, IoMdClose, IoIosWarning } from "react-icons/io";
 import { AddToCart, BuyItemDelete, userBuyItem } from '../Componat/slice/AllSlice';
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
@@ -203,19 +203,32 @@ const ProductDetails = () => {
                   </Slider>
                 </div>
               }
-              {
-                logErr === true ?
-                  <div className="logerr fixed top-[50%] left-[50%] duration-150 translate-x-[-50%] translate-y-[-50%] w-[100%] rounded h-[100%] bg-[#0000008a]">
-                    <div className="mes absolute px-[20px] py-[10px] top-[50%] left-[50%] duration-150 translate-x-[-50%] translate-y-[-50%] w-[60%] rounded h-[60%] bg-[#fff]">
-                      <icon onClick={handleErrCodeClose} className=" cursor-pointer justify-end flex text-[red] text-[30px]"><IoMdClose /></icon>
-                      <h2 className='text-[red] text-[20px] font-[600]'>error</h2>
-                      <p className='pt-[20px] capitalize '>you have not an account</p>
-                      <h2 className='mt-[30px] text-[green] text-[16px] font-[600]'><u>login now</u></h2>
-                    </div>
-                  </div>
-                  :
-                  <div className="logerr fixed top-[-100%] duration-150 left-[50%] translate-x-[-50%] w-[100%] rounded h-[100%] bg-[#00000059]"></div>
-              }
+          {
+            logErr === true ? 
+            <div className="logerr fixed inset-0 bg-[#0000008a] flex items-center justify-center z-50">
+  <div className="mes relative w-[90%] max-w-[450px] p-8 bg-white rounded-lg shadow-lg">
+    <button
+      onClick={handleErrCodeClose}
+      className="absolute top-4 right-4 text-red-500 text-3xl hover:text-red-700 transition-colors"
+    >
+      <IoMdClose />
+    </button>
+    <div className="flex items-center justify-center space-x-3">
+      <IoIosWarning className="text-red-500 text-4xl" />
+      <h2 className="text-red-500 text-2xl font-bold">Error</h2>
+    </div>
+    <p className="pt-4 text-center text-lg text-gray-700">
+      You do not have an account.
+    </p>
+    <h3 className="mt-6 text-green-500 text-xl font-medium text-center">
+      <u className="cursor-pointer hover:text-green-700 transition-colors">Go MENU/Login now</u>
+    </h3>
+  </div>
+</div>
+             : 
+              <div className="logerr fixed top-[-100%] duration-150 left-[50%] translate-x-[-50%] w-[100%] h-[100%] bg-[#00000059]"></div>
+            
+          }
               <div className="productdetailsBox gap-[20px] flex flex-wrap">
                 <div className="imgbox w-[100%] flex gap-[10px] lg:w-[55%]">
                   <div onClick={handleImgSlick} className=" cursor-pointer leftImg flex flex-wrap gap-y-[10px] w-[23%]">

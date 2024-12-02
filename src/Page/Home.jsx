@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import AllProductsHome from '../Componat/AllProductsHome'
 import Banner from '../Componat/Banner'
+import WorkInProgressNotification from '../Componat/WorkInProgressNotification';
 
 const Home = () => {
   useEffect(() => {
@@ -8,6 +9,7 @@ const Home = () => {
   });
   return (
     <>
+    <WorkInProgressNotification/>
     <Banner/>
     <AllProductsHome/>
     </>
