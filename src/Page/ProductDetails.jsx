@@ -153,7 +153,7 @@ const ProductDetails = () => {
 
 
   return (
-    <section>
+<section>
       <Helmet>
         <title>{info.Prodectname !== undefined ? info.Prodectname : ""} - Price in bangladesh</title>
         <meta name="description" content={`Buy ${info.Prodectname} online at the best price. Free shipping and amazing discounts. Get it now!`} />
@@ -189,16 +189,16 @@ const ProductDetails = () => {
                   <icon onClick={handleSlickClose} className=" m-[30px] cursor-pointer justify-end flex p-[10px] text-[#fff] text-[30px]"><IoMdClose /></icon>
                   <Slider className='w-[90%] flex items-center md:w-[60%] lg:w-[50%] xl:w-[600px] top-[50%] absolute left-[50%] translate-x-[-50%] translate-y-[-50%] ' {...settings}>
                     <div className="imgBox w-[100%]">
-                      <img className='w-[100%]' src={info.imgurl} alt="" />
+                      <img className='w-[100%]' src={info.imgurl} alt={`${info.Prodectname} main`} />
                     </div>
                     <div className="imgBox w-[100%]">
-                      <img className='w-[100%]' src={info2.productimg} alt="" />
+                      <img className='w-[100%]' src={info2.productimg} alt={`${info.Prodectname} Thumbnail 1`} />
                     </div>
                     <div className="imgBox w-[100%]">
-                      <img className='w-[100%]' src={info2.productimg2} alt="" />
+                      <img className='w-[100%]' src={info2.productimg2} alt={`${info.Prodectname} Thumbnail 2`} />
                     </div>
                     <div className="imgBox w-[100%]">
-                      <img className='w-[100%]' src={info2.productimg3} alt="" />
+                      <img className='w-[100%]' src={info2.productimg3} alt={`${info.Prodectname} Thumbnail 3`} />
                     </div>
                   </Slider>
                 </div>
@@ -265,7 +265,7 @@ const ProductDetails = () => {
                   <div className=" cursor-pointer overflow-hidden rightimg">
                     {info.Prodectname
                       ?
-                      <h2 className=' shadow-slate-900 text-[#ffffff] font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h2>
+                      <h1 className=' shadow-slate-900 text-[#ffffff] font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h1>
                       :
                       <SkeletonTheme baseColor="#ffffff5d" className="w-[100%]" highlightColor="#fff">
                         <Skeleton className="h-[18px] mb-[4px] w-[100%]" />

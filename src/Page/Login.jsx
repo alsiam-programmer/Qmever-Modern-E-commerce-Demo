@@ -1,122 +1,167 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { IoIosDoneAll } from "react-icons/io";
 
 const Login = () => { 
-  let navigate = useNavigate()
-  let userLoginUid = useSelector((item)=>item.counter.user)
+  const navigate = useNavigate();
+  const userLoginUid = useSelector((item) => item.counter.user);
   const db = getDatabase();
-  let [ userData , setUserdata ] = useState([])
-  let [ genderSelet , setgenderSelet ] = useState('')
-  useEffect(()=>{
-    userLoginUid.map((useruid)=>{
-      return onValue(ref(db, '/users/' + useruid), (snapshot) => {
-        const userDetails = snapshot.val()
+  const [userData, setUserdata] = useState({});
+  const [Delivery_address, setDelivery_address] = useState({});
+  const [genderSelet, setGenderSelet] = useState('');
+  const [userDaydata, setUserDaydata] = useState('');
+  const [userPH_Num, setUserPH_Num] = useState('');
+
+  // Fetch user data
+  useEffect(() => {
+    userLoginUid.forEach((useruid) => {
+      onValue(ref(db, '/users/' + useruid), (snapshot) => {
+        const userDetails = snapshot.val();
         setUserdata(userDetails);
-      }, {
-        onlyOnce: true
-      })
+      }, { onlyOnce: true });
+    });
+  }, [userLoginUid]);
 
-    })
+  // Fetch delivery address data
+  useEffect(() => {
+    userLoginUid.forEach((useruid) => {
+      onValue(ref(db, '/users/' + useruid + '/Delivery_address/'), (snapshot) => {
+        const address = snapshot.val();
+        setDelivery_address(address);
+      }, { onlyOnce: true });
+    });
+  }, [userLoginUid]);
 
-  },[userLoginUid])
+  const Gender = [
+    { "Gender": "Male" },
+    { "Gender": "Female" },
+    { "Gender": "Transgender" },
+  ];
+
+  // Handle gender selection
+  const handleGenderSelect = (item) => {
+    setGenderSelet(item.Gender);
+  };
+
+  // Handle phone number change with validation for Bangladeshi format
+  const handlePhoneChange = (e) => {
+    let phoneNumber = e.target.value;
+
+    // Allow only numbers and enforce +880 as the starting sequence
+    if (/^01[3-9][0-9]{8}$/.test(phoneNumber)) {
+      setUserPH_Num(phoneNumber);
+    }
+  };
+
+  // Update user data in Firebase
+  const handleUpdateData = () => {
+    if (!userPH_Num) {
+      alert("Please enter a valid Bangladeshi phone number");
+      return;
+    }
+    if (!userDaydata) {
+      alert("You not 12 Year old");
+      return;
+    }
+    if (!genderSelet) {
+      alert("select Gender");
+      return;
+    }
+
+    set(ref(db, `users/${userData.uid}`), {
+      ...userData,
+      gender: genderSelet || userData.gender,
+      dateOfBirth: userDaydata || userData.dateOfBirth,
+      Delivery_address: {
+        ...Delivery_address,
+        Phone_Number: `+88${userPH_Num}`,
+      }
+    }).then(() => {
+      navigate("/")
+    }).catch(error => {
+      console.error("Error updating user data: ", error);
+    });
+  };
+
+  // Handle date input
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value;
+    const currentDate = new Date();
+    const birthDate = new Date(selectedDate);
   
-  let Join = () =>{
-    navigate('/')
-  }
+    // Calculate age in years
+    let age = currentDate.getFullYear() - birthDate.getFullYear();
+    const monthDifference = currentDate.getMonth() - birthDate.getMonth();
+  
+    // If the current month is before the birth month, or the month is the same but the current date is before the birth date, subtract 1 from the age
+    if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < birthDate.getDate())) {
+      age--;
+    }
+  
+    // If the user is less than 12 years old
+    if (age < 12) {
+      alert("You must be at least 12 years old.");
+    } else {
+      setUserDaydata(selectedDate);
+    }
+  };
+
+  // Scroll to top on load
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
-
-  let hs = (e) =>{
-    console.log(e.target.value);
-    
-  }
-  let Gender = [
-    { "Gender": "Male", "Main_category": "man" },
-    { "Gender": "Female", "Main_category": "woman" },
-    { "Gender": "Transgender", "Main_category": "transgender" },
-  ]
-  let handleselectG = (item) => {
-    setgenderSelet(item.Gender)
-  }
-   // let handleupData = () => {
-  //   let valid = true; // Start by assuming it's valid
-
-  //   // Validation for Gender
-  //   if (userSEXdata.Gender === undefined) {
-  //     valid = false;
-  //     setErrorGen(`SORRY MY DEAR ${(userData.username).substring(0, 6) + "..."} SELECT YOU GENDER `)
-  //   }
-
-  //   // Validation for dateOfBirth
-  //   if (`${userDaydata.day}/${userMounthdata.mounth}/${userYeardata}` === "undefined/undefined/") {
-  //     valid = false;
-  //     setErrorDateofbirth(`SORRY MY DEAR ${(userData.username).substring(0, 6) + "..."} SELECT YOU DATE OF BIRTH `)
-  //   }
-
-  //   // If validation fails, do not continue to Firebase update
-  //   if (!valid) {
-  //     console.log("fuck");
-  //     return { valid }; // Return early if invalid
-
-  //   }
-
-  //   // If valid, update the data in Firebase
-  //   set(ref(db, 'users/' + `${useruid}/`), {
-  //     username: userData.username,
-  //     email: userData.email,
-  //     profile_picture: userIMG || userData.profile_picture,
-  //     uid: userData.uid,
-  //     gender: userSEXdata.Gender,
-  //     dateOfBirth: `${userDaydata.day}/${userMounthdata.mounth}/${userYeardata}`,
-  //     Delivery_address: {
-  //       username: userData.username,
-  //       email: userData.email,
-  //       Phone_Number: userDelivery.Phone_Number || "",  // Use default value if empty
-  //       Division: userDelivery.Division || "",
-  //       District: userDelivery.District || "",
-  //       unions: userDelivery.unions || "",
-  //       upazila: userDelivery.upazila || "",
-  //       local_address: userDelivery.local_address || "",
-  //     }
-  //   }).then(() => {
-  //     window.location.reload();  // Reload the page after the update
-  //   }).catch(error => {
-  //     console.error("Error updating user data: ", error);  // Handle any errors
-  //   });
-  // };
+  }, []);
 
   return (
     <section>
-      <div className="container mx-auto flex justify-center items-center px-[10px]">
-        <div className="userLogin_Box w-[100%] xl:w-[550px] md:w-[80%] md:mt-[100px] lg:mt-[10px] lg:w-[60%] p-[10px] md:p-[20px] xl:h-[600px] md:border-[3px] rounded md:border-[#fff]">
-          <div className="w-[100%] flex justify-center mb-[10px]">
-          <img className='w-[100px] rounded-[50%] h-[100px]' src={userData.profile_picture} alt="" />
+      <div className="container mx-auto flex justify-center items-center px-4">
+        <div className="userLogin_Box w-full xl:w-[550px] md:w-4/5 md:mt-24 lg:mt-10 lg:w-3/5 p-4 md:p-8 xl:h-[600px] border-3 rounded border-white">
+          <div className="flex justify-center mb-4">
+            <img className="w-24 h-24 rounded-full" src={userData.profile_picture} alt="Profile" />
           </div>
-          <input className='w-[100%] h-[40px] bg-[#ffffffcc] outline-none my-[5px] rounded px-[10px] font-[600] ' type="text" placeholder={`${userData.username}`} />
-          <h5 className='w-[100%] h-[40px] bg-[#ffffff63] flex items-center justify-between my-[5px] text-pink-600 rounded px-[10px] font-[600] overflow-hidden'>{userData.email} <span className='text-[40px] text-green-600 '><IoIosDoneAll/></span> </h5>
-          <div className="flex items-center gap-1 w-[100%] mb-[5px] h-[40px]">
-          <h5 className=' w-[20%] lg:w-[10%] h-[40px] rounded-l bg-[#ffffff63] flex items-center justify-center my-[5px] text-pink-600 rounded px-[10px] font-[600]'>+880</h5>
-          <input className=' w-[80%] lg:w-[90%] h-[40px] bg-[#ffffff63] outline-none rounded-r px-[10px] font-[600] ' type="text" placeholder={`Enter You phone numer`} />
+          <input 
+            className="w-full h-10 bg-[#ffffffcc] outline-none my-2 rounded px-4 font-semibold" 
+            type="text" 
+            placeholder={userData.username} 
+            disabled 
+          />
+          <h5 className="w-full h-10 bg-[#ffffff63] flex items-center justify-between my-2 text-pink-600 rounded px-4 font-semibold overflow-hidden">
+            {userData.email} <span className="text-4xl text-green-600"><IoIosDoneAll /></span>
+          </h5>
+          <div className="flex items-center gap-1 w-full mb-2 h-10">
+            <h5 className="w-1/5 lg:w-1/10 h-10 rounded-l bg-[#ffffff63] flex items-center justify-center my-2 text-pink-600 rounded px-4 font-semibold">+880</h5>
+            <input 
+              onChange={handlePhoneChange} 
+              className="w-4/5 lg:w-9/10 h-10 bg-[#ffffff63] outline-none rounded-r px-4 font-semibold"
+              type="text" 
+              placeholder="Enter Your phone number"
+            />
           </div>
-          <input onChange={hs} className='w-[100%] h-[40px] bg-[#ffffff63] outline-none mb-[5px] rounded px-[10px] font-[600] ' type="date"  />
-          <div className="'w-[100%] h-[50px] bg-[#ffffff63] mb-[5px] rounded flex items-center gap-[10px] px-[10px] font-[600]">
-            {Gender.map((item)=>(
-              <h5 onClick={()=>handleselectG(item)} className={` ${genderSelet === item.Gender ? "bg-[green] text-[#fff]" :"text-[#000] border-[2px] border-[#000]"} noselect cursor-pointer px-[10px] rounded h-[35px] flex items-center`} >{item.Gender}</h5>
+          <input 
+            onChange={handleDateChange} 
+            className="w-full h-10 bg-[#ffffff63] outline-none mb-2 rounded px-4 font-semibold" 
+            type="date" 
+          />
+          <div className="w-full h-12 bg-[#ffffff63] mb-2 rounded flex items-center gap-2 px-4 font-semibold">
+            {Gender.map((item) => (
+              <h5
+                key={item.Gender}
+                onClick={() => handleGenderSelect(item)}
+                className={`${
+                  genderSelet === item.Gender ? "bg-green-600 text-white" : "text-black border-2 border-black"
+                } cursor-pointer px-4 rounded h-9 flex items-center`}
+              >
+                {item.Gender}
+              </h5>
             ))}
           </div>
-          <h5 className='noselect w-[100%] h-[40px] bg-[green] flex items-center justify-center mt-[60px] my-[5px] text-[#fff] rounded px-[10px] font-[600] cursor-pointer' >Next</h5>
-          {/* <div className="imgBox flex relative justify-center my-[40px]">
-            <img className=' absolute top-[50px] w-[300px] h-[300px]' src="https://i.ibb.co.com/42kqS9s/Picsart-24-09-13-20-42-41-421.png" alt="" />
-          </div>
-          <div className="welcome relative text-center ">
-            <h1 className='  text-[#000] text-[30px] sm:text-[40px] md:text-[50px] lg:text-[60px] font-[700] font-sans'>Welcome to Rupkotha</h1>
-            <h2 className='text-[#000] text-[30px] sm:text-[40px] md:text-[50px] lg:text-[60px] font-[700] font-sans'>Dear {userData.username}</h2>
-          </div>
-          <h2 onClick={Join} className='px-[20px] py-[7px] absolute bottom-[60px] left-[50%] translate-x-[-50%] bg-[#43af43] text-[18px] text-[#fff] font-[600] rounded-[10px] uppercase ' >Join Now</h2> */}
+          <h5 
+            onClick={handleUpdateData} 
+            className="noselect w-full h-10 bg-green-600 flex items-center justify-center mt-14 my-2 text-white rounded px-4 font-semibold cursor-pointer"
+          >
+            Next
+          </h5>
         </div>
       </div>
     </section>
