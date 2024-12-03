@@ -85,11 +85,15 @@ const ProductDetails = () => {
         }
       } else {
         dispatch(BuyItemDelete({ ...info, size: modleaddicon, Pricesub: modlePrice, ProdectQun }))
+        setLodingOn(true)
+        setTimeout(() => {
+          setLoding(true)
+        }, 30);
         setTimeout(() => {
           dispatch(userBuyItem({ ...info, ProdectQun }))
           window.scrollTo(0, 0)
           navigate('/CheckOut')
-        }, 500);
+        }, 1000);
       }
     } else {
       setLogErr(true)
@@ -171,8 +175,8 @@ const ProductDetails = () => {
             <div className="container mx-auto px-[10px] py-[10px]">
               {
                 modelselect === true
-                  ? <div className="bg-[#d31212] text-[#fff] text-[18px] w-[200px] rounded duration-500 h-[34px] fixed top-[100px] left-[50%] translate-x-[-50%] flex justify-center items-center">{info.ModelName} not select </div>
-                  : <div className="bg-[#d31212] text-[#fff] text-[18px] w-[200px] rounded duration-500 h-[34px] fixed top-0 left-[50%] translate-x-[-50%] flex justify-center items-center">you can do it</div>
+                  ? <div className="bg-[#d31212] text-[#fff] text-[18px] w-[200px] rounded duration-500 h-[34px] fixed top-[200px] left-[50%] translate-x-[-50%] flex justify-center items-center">{info.ModelName} not select </div>
+                  : <div className="bg-[#d31212] text-[#fff] text-[18px] w-[200px] rounded duration-500 h-[34px] fixed top-0 left-[50%] translate-x-[-50%] flex justify-center items-center ">{info.ModelName} not select</div>
               }
              <div className={`loging fixed ${Lodingon === true ? "block" : "hidden"} border-4 border-white rounded-lg shadow-lg z-50 duration-300 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[250px] h-[50px] bg-[#ffffff]`}>
   {
