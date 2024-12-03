@@ -8,6 +8,7 @@ import Cartpage from "./Page/Cartpage"
 import Order from "./Page/Order"
 import SearchItem from "./Page/SearchItem"
 import UserProfile from "./Page/UserProfile"
+import ProductPage from "./Page/ProductPage"
 function App() {
 
   let router = createBrowserRouter(createRoutesFromElements(
@@ -20,6 +21,7 @@ function App() {
       <Route path="/Orders" element={<Order/>} ></Route>
       <Route path="/search_query" element={<SearchItem />} />
       <Route path="/user-profile" element={<UserProfile />} />
+      <Route path="/ProductPage" element={<ProductPage />} />
     </Route>
   ))
   return (

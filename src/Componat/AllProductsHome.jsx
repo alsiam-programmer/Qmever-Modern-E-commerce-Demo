@@ -30,7 +30,7 @@ const AllProductsHome = () => {
               >
                 <div className="w-full overflow-hidden rounded-lg">
                   <img
-                    className="w-full h-[190px] md:h-[240px] object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-[190px] md:h-[240px] xl:h-[350px] object-cover group-hover:scale-110 transition-transform duration-300"
                     src={item.imgurl}
                     alt={item.Prodectname || "Product Image"}
                   />
