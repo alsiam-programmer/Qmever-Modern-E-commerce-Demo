@@ -174,13 +174,22 @@ const ProductDetails = () => {
                   ? <div className="bg-[#d31212] text-[#fff] text-[18px] w-[200px] rounded duration-500 h-[34px] fixed top-[100px] left-[50%] translate-x-[-50%] flex justify-center items-center">{info.ModelName} not select </div>
                   : <div className="bg-[#d31212] text-[#fff] text-[18px] w-[200px] rounded duration-500 h-[34px] fixed top-0 left-[50%] translate-x-[-50%] flex justify-center items-center">you can do it</div>
               }
-              <div className={`loging fixed ${Lodingon === true ? " block " : "hidden"} border-[4px] border-[#fff] rounded z-[999] duration-100 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[200px] h-[40px] bg-[#fff]`}>
-                {
-                  Loding === true
-                    ? <div className="bg-[#00ff00] w-[100%] rounded duration-500 h-[34px] absolute top-0 left-0 text-[16px] flex justify-center items-center">Processing...</div>
-                    : <div className="bg-[#00ff00] w-[1%] rounded h-[34px] duration-500 absolute top-0 left-0"></div>
-                }
-              </div>
+             <div className={`loging fixed ${Lodingon === true ? "block" : "hidden"} border-4 border-white rounded-lg shadow-lg z-50 duration-300 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[250px] h-[50px] bg-[#ffffff]`}>
+  {
+    Loding === true
+      ? (
+        <div className="relative w-full h-full bg-gray-200 rounded-lg overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full bg-[#062919] rounded-lg transition-all duration-500" style={{ width: '100%' }} />
+          <div className="absolute inset-0 flex justify-center items-center text-lg font-semibold text-white">Processing...</div>
+        </div>
+      )
+      : (
+        <div className="relative w-full h-full bg-gray-200 rounded-lg overflow-hidden">
+          <div className="absolute top-0 left-0 w-0 h-full bg-[#062919] rounded-lg transition-all duration-500" />
+        </div>
+      )
+  }
+</div>
 
 
               {
