@@ -1,33 +1,45 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { apiData } from "../Componat/Context";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ProductPage = () => {
   const navigate = useNavigate();
   const info = useContext(apiData) || []; // Fallback to an empty array if `info` is null/undefined.
 
+  let location = useLocation()
   // State for selected categories
-  const [selectedMainCategory, setSelectedMainCategory] = useState("All");
+  const [selectedMainCategory, setSelectedMainCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] = useState("All");
   const [selectedSubsCategory, setSelectedSubsCategory] = useState("All");
 
   // Extract unique categories
+  
+  const query = new URLSearchParams(location.search).get("query")
+
   const categoriesMain = ["All", ...new Set(info.map((item) => item?.category?.main || "Uncategorized"))];
   const categoriesSub = ["All", ...new Set(info.map((item) => item?.category?.sub || "Uncategorized"))];
   const categoriesSubs = ["All", ...new Set(info.map((item) => item?.category?.subs || "Uncategorized"))];
 
   // Filter products based on selected categories
   const filteredProducts = info.filter((item) => {
-    const matchesMain = selectedMainCategory === "All" || item?.category?.main === selectedMainCategory 
+    const matchesMain = query || item?.category?.main === query 
     const matchesSub = selectedSubCategory === "All" || item?.category?.sub === selectedSubCategory;
     const matchesSubs = selectedSubsCategory === "All" || item?.category?.subs === selectedSubsCategory;
     return matchesMain && matchesSub && matchesSubs;
   });
-
+  useEffect(()=>{
+    setSelectedMainCategory(query)
+    navigate(`?query=${encodeURIComponent(query)}`)
+  },[selectedMainCategory , query])
   const handleProDetails = (item) => {
     navigate(`/productDetails/${item.ProdectId}`);
     window.scrollTo(0, 0);
   };
+
+  let MainCategory = (e) =>{
+    navigate(`?query=${encodeURIComponent(e.target.value)}`)
+  }
+ 
 
   return (
     <div className="container flex py-[5px] md:py-10 mx-auto">
@@ -38,7 +50,7 @@ const ProductPage = () => {
           <label className="block mb-2 text-sm font-medium text-white">Main Category</label>
           <select
             value={selectedMainCategory}
-            onChange={(e) => setSelectedMainCategory(e.target.value)}
+            onChange={MainCategory}
             className="w-full px-4 py-2 border rounded-md text-black"
           >
             {categoriesMain.map((category, index) => (

@@ -156,7 +156,7 @@ const Menu = () => {
   let [ searchBoxShow , setSearchBoxShow ] = useState(false)
   const handleSearch = (e) => {
     setSearch(e.target.value)
-    axios.get("https://rupkotha-a706e-default-rtdb.asia-southeast1.firebasedatabase.app/products.json").then((res) => {
+    axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase/products.json").then((res) => {
       setGetDataSearch(res?.data?.filter((item) => item?.Prodectname?.toLowerCase().includes(e?.target?.value.toLowerCase())))
       setSearchBoxShow(true)
     })
@@ -226,7 +226,7 @@ const Menu = () => {
                 <h5 onClick={valueDelet} className={` ${search !== "" ? "block" : "hidden"} h-[40px] w-[40px] top-0 right-[15%] lg:right-[10%] absolute z-[999] rounded-[50%] flex justify-center items-center text-[19px] bg-[#f0f0f0] text-[#000] font-[600] cursor-pointer`} ><IoCloseOutline /></h5>
                 <h5 onClick={GoSearchPage} className='h-[40px] rounded-r-[40px] lg:rounded-none w-[50px] flex justify-center items-center text-[19px] bg-[#f0f0f0] text-[#000] font-[600] cursor-pointer'><IoSearchOutline /></h5>
               </div>
-              {
+              {/* {
                 search.length >= 1 && searchBoxShow !== false
                   ?
                   <div className=" w-[100%] h-[300px] lg:h-[500px] absolute z-[999] bg-[#fff] top-[60px] ">
@@ -235,7 +235,7 @@ const Menu = () => {
                     ))}
                   </div>
                   : ""
-              }
+              } */}
             </div>
             <div ref={MenuRef} onKeyDown={handleKeysystem} className="MenuBar cursor-pointer absolute top-[50%] right-[0px] translate-y-[-50%]">
               <icon className='text-[38px] text-[#fff]' ><FaBars /></icon>

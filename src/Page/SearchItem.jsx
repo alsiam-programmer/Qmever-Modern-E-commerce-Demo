@@ -59,24 +59,24 @@ const SearchItem = () => {
         <div className="ProPraBox my-[40px] cursor-pointer w-[100%] flex flex-wrap gap-[4px] sm:gap-[12px]">
           { getDataSearch.length > 0 ?  getDataSearch.map((item) => (
             <div
-              key={item.ProdectId}
-              onClick={() => handleProDetails(item)}
-              className="ProBox w-[49%] sm:w-[32%] lg:w-[24%] bg-[#fff] py-[6px] px-[6px] rounded-[20px]"
-            >
-              <div className="proImgBox w-[100%] flex">
-                <img
-                  className="w-[100%] rounded-[20px]"
-                  src={item.imgurl}
-                  alt={item.Prodectname}
-                />
-              </div>
-              <h2 className="text-[15px] font-[600] py-[3px] sm:text-[20px] lg:text-[25px] text-[#9a0ec5]">
-                Price: <span>{item.Price}</span>
-              </h2>
-              <h2 className="text-[15px] font-[600] py-[3px] sm:text-[20px] lg:text-[25px]">
-                {item.Prodectname}
-              </h2>
+            key={item.ProdectId}
+            onClick={() => handleProDetails(item)}
+            className="group w-[50%] md:w-[33.333333%] lg:w-[20%] p-[10px] rounded-lg cursor-pointer"
+          >
+            <div className="w-full overflow-hidden rounded-lg">
+              <img
+                className="w-full h-[190px] md:h-[240px] xl:h-[350px] object-cover group-hover:scale-110 transition-transform duration-300"
+                src={item.imgurl}
+                alt={item.Prodectname || "Product Image"}
+              />
             </div>
+            <h2 className="text-lg font-semibold text-[#cf0cbf] shadow-black mt-2">
+              Price: {Number(item.Price).toFixed(2) || "N/A"}৳
+            </h2>
+            <h3 className="text-md font-medium text-[#fff]">
+              {item.Prodectname || "Unnamed Product"}
+            </h3>
+          </div>
           )): failedSearch !== true ?
           <div className="flex w-[100%] justify-center my-8">
           <TbLoader2 className="w-10 h-10 animate-spin text-[#fff]" />
