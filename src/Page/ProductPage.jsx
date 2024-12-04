@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiData } from "../Componat/Context";
 import { useLocation, useNavigate } from "react-router-dom";
+import { TbLoader2 } from "react-icons/tb";
 
 const ProductPage = () => {
   const navigate = useNavigate();
@@ -22,7 +23,9 @@ const ProductPage = () => {
 
   // Filter products based on selected categories
   const filteredProducts = info.filter((item) => {
-    const matchesMain = query || item?.category?.main === query 
+    const matchesMain = query === "All" || item?.category?.main === query 
+    console.log(matchesMain);
+    
     const matchesSub = selectedSubCategory === "All" || item?.category?.sub === selectedSubCategory;
     const matchesSubs = selectedSubsCategory === "All" || item?.category?.subs === selectedSubsCategory;
     return matchesMain && matchesSub && matchesSubs;
@@ -96,37 +99,45 @@ const ProductPage = () => {
 
       {/* Product Grid */}
       <div className="w-[75%]">
+          {
+            filteredProducts.length > 0 
+            ?
         <div className="flex flex-wrap">
-          {filteredProducts.map((item, index) => (
-            item !== null && (
-              <div
-                key={item.ProdectId || index}
-                onClick={() => handleProDetails(item)}
-                className="group w-[50%] md:w-[33.333333%] lg:w-[20%] p-[10px] rounded-lg cursor-pointer"
-              >
-                {/* Product Image */}
-                <div className="w-full overflow-hidden rounded-lg">
-                  <img
-                    className="w-full h-[190px] md:h-[240px] object-cover group-hover:scale-110 transition-transform duration-300"
-                    src={item.imgurl}
-                    alt={item.Prodectname || "Product Image"}
-                  />
+            {filteredProducts.map((item, index) => (
+              item !== null && (
+                <div
+                  key={item.ProdectId || index}
+                  onClick={() => handleProDetails(item)}
+                  className="group w-[50%] md:w-[33.333333%] lg:w-[20%] p-[10px] rounded-lg cursor-pointer"
+                >
+                  {/* Product Image */}
+                  <div className="w-full overflow-hidden rounded-lg">
+                    <img
+                      className="w-full h-[190px] md:h-[240px] object-cover group-hover:scale-110 transition-transform duration-300"
+                      src={item.imgurl}
+                      alt={item.Prodectname || "Product Image"}
+                    />
+                  </div>
+  
+                  {/* Product Price */}
+                  <h2 className="text-lg font-semibold text-[#cf0cbf] shadow-black mt-2">
+                    Price: {Number(item.Price).toFixed(2) || "N/A"}৳
+                  </h2>
+  
+                  {/* Product Name */}
+                  <h3 className="text-md font-medium text-[#fff]">
+                    {item.Prodectname || "Unnamed Product"}
+                  </h3>
                 </div>
-
-                {/* Product Price */}
-                <h2 className="text-lg font-semibold text-[#cf0cbf] shadow-black mt-2">
-                  Price: {Number(item.Price).toFixed(2) || "N/A"}৳
-                </h2>
-
-                {/* Product Name */}
-                <h3 className="text-md font-medium text-[#fff]">
-                  {item.Prodectname || "Unnamed Product"}
-                </h3>
-              </div>
-            )
-          ))}
-        </div>
-      </div>
+              )
+            ))}
+          </div>
+            :
+            <div className="flex  justify-center my-8">
+            <TbLoader2 className="w-10 h-10 animate-spin text-[#fff]" />
+          </div>
+          }
+          </div>
     </div>
   );
 };

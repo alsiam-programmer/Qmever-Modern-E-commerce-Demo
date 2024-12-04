@@ -31,8 +31,8 @@ const UserContact = ({ userDelivery }) => {
     let [upazilsID, setupazilsID] = useState('undefended')
     let [divisions, setdivisions] = useState([])
     let [district, setdistrict] = useState([])
-    let [upazila, setupazila] = useState([])
-    let [unions, setunions] = useState([])
+    // let [upazila, setupazila] = useState([])
+    // let [unions, setunions] = useState([])
 
     useEffect(() => {
         setuserNumber(userDelivery.Phone_Number)
@@ -41,7 +41,8 @@ const UserContact = ({ userDelivery }) => {
         setuserAddress(userDelivery.local_address)
     }, [userDelivery, db])
 
-
+            // upazila: userupazilaup === "" ? userDelivery.upazila : userupazilaup,
+            // unions: userunionsup === "" ? userDelivery.unions : userunionsup,
     let Handleupload = () => {
         set(ref(db, 'users/' + `${userUid}/` + 'Delivery_address/'), {
             username: userNameup === "" ? userDelivery.username : userNameup,
@@ -50,8 +51,6 @@ const UserContact = ({ userDelivery }) => {
             email: userDelivery.email,
             Division: userDivisionup === "" ? userDelivery.Division : userDivisionup,
             District: userCityup === "" ? userDelivery.District : userCityup,
-            upazila: userupazilaup === "" ? userDelivery.upazila : userupazilaup,
-            unions: userunionsup === "" ? userDelivery.unions : userunionsup,
         })
             .then(() => {
                 console.log(userDelivery);
@@ -84,13 +83,13 @@ const UserContact = ({ userDelivery }) => {
         setuserCityup(item.name)
         setdistrictid(item.id)
     }
-    let HandleUpa = ({ item, index }) => {
-        setupazilsID(item.id)
-        setuserupazilaup(item.name)
-    }
-    let HandleUni = ({ item, index }) => {
-        setuserunionsup(item.name)
-    }
+    // let HandleUpa = ({ item, index }) => {
+    //     setupazilsID(item.id)
+    //     setuserupazilaup(item.name)
+    // }
+    // let HandleUni = ({ item, index }) => {
+    //     setuserunionsup(item.name)
+    // }
     useEffect(() => {
         if (window.location.pathname === "/CheckOut") {
             const starCountRef = ref(db, 'bangladesharea/');
@@ -116,16 +115,16 @@ const UserContact = ({ userDelivery }) => {
             } else {
                 SetDisSelect(false)
             }
-            if (upaSelect !== true) {
-                SetupaSelect(selectupaRef.current.contains(e.target))
-            } else {
-                SetupaSelect(false)
-            }
-            if (uniSelect !== true) {
-                setuniSelect(selectuniRef.current.contains(e.target))
-            } else {
-                setuniSelect(false)
-            }
+            // if (upaSelect !== true) {
+            //     SetupaSelect(selectupaRef.current.contains(e.target))
+            // } else {
+            //     SetupaSelect(false)
+            // }
+            // if (uniSelect !== true) {
+            //     setuniSelect(selectuniRef.current.contains(e.target))
+            // } else {
+            //     setuniSelect(false)
+            // }
         }
         document.addEventListener("click", HandleSel);
         return () => document.removeEventListener("click", HandleSel);
