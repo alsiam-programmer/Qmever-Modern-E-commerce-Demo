@@ -138,7 +138,7 @@ const CheckOut = () => {
           console.log("Order placed successfully.");
           setTimeout(() => {
             navigate("/orders");
-          }, 200);
+          }, 100);
         });
     } catch (error) {
       console.error("Error placing order:", error);
