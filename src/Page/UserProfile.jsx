@@ -39,7 +39,7 @@ const UserProfile = () => {
           <h1 className="text-3xl font-semibold text-gray-800">{userData.username}</h1>
           {userData?.username && (
             <p className="text-lg text-gray-600 lowercase">
-              qmever.com?@{userData.username.replace(/\s+/g, '').toLowerCase()}--bangladesh
+              qmever.com?@{userData.username.replace(/\s+/g, '').toLowerCase()}-$$-bangladesh
             </p>
           )}
           <p className="mt-2 text-gray-700">{userData.email}</p>
