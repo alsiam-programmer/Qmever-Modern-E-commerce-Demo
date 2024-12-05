@@ -93,7 +93,6 @@ const ProductPage = () => {
             </select>
           </div>
 
-          {/* Subs Category */}
           <div>
             <label className="block mb-2 text-sm font-medium text-white">Subs Category</label>
             <select
