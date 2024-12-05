@@ -99,11 +99,12 @@ const ProductDetails = () => {
       setLogErr(true)
     }
   }
+  
   let handleAddTocart = () => {
     if (userUID !== "") {
       if (info3 !== "") {
         if (modleaddicon !== "") {
-          dispatch(AddToCart({ ...info, size: modleaddicon, Pricesub: modlePrice, ProdectQun }))
+          dispatch(AddToCart({ ...{ Prodectname : info.Prodectname , Price : info.Price , ProdectId : info.ProdectId , imgurl : info.imgurl , PCU : info.PCU , category : info.category}, size: modleaddicon, Pricesub: modlePrice, ProdectQun }))
           setaddsucess(true)
           setTimeout(() => {
             setaddsucess(false)
@@ -115,7 +116,7 @@ const ProductDetails = () => {
           }, 1000);
         }
       } else {
-        dispatch(AddToCart({ ...info, ProdectQun }))
+        dispatch(AddToCart({ ...{ Prodectname : info.Prodectname , Price : info.Price , ProdectId : info.ProdectId , imgurl : info.imgurl , PCU : info.PCU , category : info.category}, ProdectQun }))
         console.log(info);
         setaddsucess(true)
         setTimeout(() => {

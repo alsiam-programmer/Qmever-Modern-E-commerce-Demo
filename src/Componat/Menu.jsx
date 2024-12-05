@@ -13,6 +13,8 @@ import { FaSnowflake } from "react-icons/fa";
 const Menu = () => {
   let userLoginUid = useSelector((item) => item.counter.user)
 
+  console.log(userLoginUid);
+  
   let [userData, setUserdata] = useState([])
   let dispatch = useDispatch()
   let navigate = useNavigate()

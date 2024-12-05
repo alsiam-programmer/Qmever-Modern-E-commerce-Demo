@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 const Cartpage = () => {
   const cartItem = useSelector((item)=>item.counter.cartItem)
   const BuyItem = useSelector((item)=>item.counter.BuyItem)
+  console.log(cartItem);
+  
   let dispatch = useDispatch()
   let navigate = useNavigate()
   let [Lodingon, setLodingOn] = useState(false)
@@ -43,7 +45,9 @@ const Cartpage = () => {
   
   console.log(totalQun);
   console.log();
-  
+  let goDetails_page = (id) => {
+    navigate(`/productDetails/${id}`)
+  }
   return (
     <section>
       <div className="container mx-auto">
@@ -66,19 +70,19 @@ const Cartpage = () => {
               </div>
               </div>
         {cartItem.map((cartItemx , index)=>(
-              <div className="">
+              <div className=" cursor-pointer ">
                 <div className="box justify-between w-[97%] mx-auto lg:w-[100%] my-[10px] rounded flex flex-wrap p-[10px] bg-[#fff] items-center gap-[10px]">
                   <div className=" w-[100%] sm:w-[30%] flex justify-between sm:pr-[30px]">
                   <div className="img relative">
                   <h2 onClick={()=>HandleRemoveCartIn(index)} className=' text-[16px] text-[#f00] absolute top-[-5px] left-[-5px] z-[99]'><FaCircleXmark/></h2>
                   <img className='h-[70px]' src={cartItemx.imgurl} alt="" />
                   </div>
-                  <h2 className=' sm:pr-[10px] flex items-center h-[70px] text-[#062919] font-[600] text-[17px]'>{cartItemx.Prodectname}</h2>
+                  <h2 onClick={()=>goDetails_page(cartItemx.ProdectId)} className=' hover:underline sm:pr-[10px] flex items-center h-[70px] text-[#062919] font-[600] text-[17px]'>{cartItemx.Prodectname}</h2>
                   </div>
                   <h2 className=' justify-start sm:w-[20%] pr-[10px] flex items-center h-[70px] text-[#062919] font-[600] text-[17px]'>
                     {
-                      cartItemx.ModelName
-                      ? <h2 className='text-[#062919] font-[600] text-[17px]'>{cartItemx.ModelName} : {cartItemx.size}</h2>
+                      cartItemx.size
+                      ? <h2 className='text-[#062919] font-[600] text-[17px]'>{cartItemx.size}</h2>
                       : <h2 className='text-[#062919] font-[600] text-[17px]'>Regulear</h2>
                     }
                   

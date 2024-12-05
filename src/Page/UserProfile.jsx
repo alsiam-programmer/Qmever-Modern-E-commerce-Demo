@@ -1,6 +1,26 @@
-import { FaUserEdit } from 'react-icons/fa'; // Importing an edit icon
+import { getDatabase, onValue, ref } from 'firebase/database';
+import { useEffect, useState } from 'react';
+import { FaUserEdit } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 const UserProfile = () => {
+  const userUID = useSelector((item) => item.counter.user)
+  let db = getDatabase()
+  let [userData, setUserData] = useState({})
+  let user_data = () => {
+    let user_dateRef = ref(db, '/users/' + userUID)
+    onValue(user_dateRef, (snapshot) => {
+      let data = snapshot.val()
+      setUserData(data)
+
+    })
+  }
+
+  useEffect(() => {
+    user_data()
+  }, [userUID])
+  console.log(userData);
+
   return (
     <div className="container mx-auto p-6 bg-gray-100 min-h-screen">
       {/* Profile Header */}
@@ -8,7 +28,7 @@ const UserProfile = () => {
         {/* Avatar */}
         <div className="avatar mb-4">
           <img
-            src="https://via.placeholder.com/150" // Example avatar image
+            src={userData.profile_picture} // Example avatar image
             alt="User Avatar"
             className="rounded-full w-36 h-36 object-cover border-4 border-white shadow-lg"
           />
@@ -16,9 +36,13 @@ const UserProfile = () => {
 
         {/* User Info */}
         <div className="text-center">
-          <h1 className="text-3xl font-semibold text-gray-800">John Doe</h1>
-          <p className="text-lg text-gray-600">@johndoe</p>
-          <p className="mt-2 text-gray-700">Web Developer & Designer | Passionate about code and creativity</p>
+          <h1 className="text-3xl font-semibold text-gray-800">{userData.username}</h1>
+          {userData?.username && (
+            <p className="text-lg text-gray-600 lowercase">
+              qmever.com?@{userData.username.replace(/\s+/g, '').toLowerCase()}--bangladesh
+            </p>
+          )}
+          <p className="mt-2 text-gray-700">{userData.email}</p>
         </div>
 
         {/* Edit Button */}

@@ -9,13 +9,13 @@ const ProductPage = () => {
 
   let location = useLocation()
   // State for selected categories
-  const [selectedMainCategory, setSelectedMainCategory] = useState("");
+  const [selectedMainCategory, setSelectedMainCategory] = useState("All");
   const [selectedSubCategory, setSelectedSubCategory] = useState("All");
   const [selectedSubsCategory, setSelectedSubsCategory] = useState("All");
 
   // Extract unique categories
   
-  const query = new URLSearchParams(location.search).get("query")
+  const query = new URLSearchParams(location.search).get("category")
 
   const categoriesMain = ["All", ...new Set(info.map((item) => item?.category?.main || "Uncategorized"))];
   const categoriesSub = ["All", ...new Set(info.map((item) => item?.category?.sub || "Uncategorized"))];
@@ -31,8 +31,12 @@ const ProductPage = () => {
     return matchesMain && matchesSub && matchesSubs;
   });
   useEffect(()=>{
-    setSelectedMainCategory(query)
-    navigate(`?query=${encodeURIComponent(query)}`)
+    if (query !== null) {
+      setSelectedMainCategory(query)
+      navigate(`?category=${encodeURIComponent(query)}`)
+    } else {
+      navigate(`?category=${encodeURIComponent("All")}`)
+    }
   },[selectedMainCategory , query])
   const handleProDetails = (item) => {
     navigate(`/productDetails/${item.ProdectId}`);
@@ -40,7 +44,7 @@ const ProductPage = () => {
   };
 
   let MainCategory = (e) =>{
-    navigate(`?query=${encodeURIComponent(e.target.value)}`)
+    navigate(`?category=${encodeURIComponent(e.target.value)}`)
   }
  
 
@@ -99,7 +103,7 @@ const ProductPage = () => {
 
       {/* Product Grid */}
       <div className="w-[75%]">
-          {
+           {
             filteredProducts.length > 0 
             ?
         <div className="flex flex-wrap">

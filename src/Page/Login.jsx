@@ -130,7 +130,7 @@ const Login = () => {
             {userData.email} <span className="text-4xl text-green-600"><IoIosDoneAll /></span>
           </h5>
           <div className="flex items-center gap-1 w-full mb-2 h-10">
-            <h5 className="w-1/5 lg:w-1/10 h-10 rounded-l bg-[#ffffff63] flex items-center justify-center my-2 text-pink-600 rounded px-4 font-semibold">+880</h5>
+            <h5 className="w-1/5 lg:w-1/10 h-10 rounded-l bg-[#ffffff63] flex items-center justify-center my-2 text-pink-600 rounded px-4 font-semibold">+88</h5>
             <input 
               onChange={handlePhoneChange} 
               className="w-4/5 lg:w-9/10 h-10 bg-[#ffffff63] outline-none rounded-r px-4 font-semibold"
