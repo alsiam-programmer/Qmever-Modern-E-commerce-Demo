@@ -10,34 +10,47 @@ const Order = () => {
   const [orderStatusx, setorderStatusx] = useState([])
   const userUid = useSelector((state) => state.counter.user);
   const [loading, setLoading] = useState(true);
+  const [ OS_selectX , setOS_selectX ] = useState('')
 
-  console.log(orderStatusx);
+  console.log(orderItems);
 
   useEffect(() => {
+    setLoading(true); // Reset loading state
+
     axios
       .get(
         `https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${userUid}.json`
       )
       .then((res) => {
-        if (Array.isArray(res?.data)) {
-          const validOrders = res.data.filter((order) => order !== null).reverse();
+        const Data = res?.data
+        if (Array.isArray(Data)) {
+          const validOrders =
+          OS_selectX !== "All"
+          ? Data.filter((order) => order?.orderStatus?.orderStatus === OS_selectX ).reverse()
+          : Data.filter((order) => order !== null).reverse();
+          setOrderItems(validOrders);
           const orderStatusc = validOrders.map((item) => item?.orderStatus)
           setorderStatusx(orderStatusc)
-          setOrderItems(validOrders);
           console.log(validOrders);
 
         } else {
           console.error("Unexpected data format:", res?.data);
+          setOrderItems([])
         }
       })
       .catch((error) => {
         console.error("Error fetching orders:", error);
       })
       .finally(() => setLoading(false));
-  }, [userUid]);
+  }, [userUid , OS_selectX]);
 
+  const handleSelectOS = (itemx) => {
+    setOS_selectX(itemx)
+  }
+  // useEffect(()=>{
+  // },[orderItems])
   return (
-    <div className="container mx-auto py-10">
+    <div className=" container text-center md:py-10 py-[5px] px-[10px] mx-auto">
       {/* Order Status Filter */}
       <div className="w-full bg-[#f4f4f4] rounded-[15px] my-8 flex flex-wrap justify-center items-center gap-4 py-6 px-4 shadow-xl border border-[#e0e0e0]">
         {[
@@ -49,7 +62,7 @@ const Order = () => {
           "Delivered",
           "Cancelled",
         ].map((status, index) => (
-          <h5
+          <h5 onClick={()=>handleSelectOS(status)}
             key={index}
             className={`text-xs sm:text-sm md:text-base font-medium py-3 px-6 rounded-full cursor-pointer transition-all duration-300 ease-in-out 
             ${status === "Cancelled"
@@ -92,7 +105,8 @@ const Order = () => {
                       {console.log(item.orderStatus)
                       }
                       {index === orderIndex ?  // Replace `orderIndex` with the actual variable that matches status
-                        <h2
+                        <h2 
+                          
                           className={`text-lg font-bold py-3 px-8 rounded-full shadow-md ${item.orderStatus === "Delivered"
                               ? "bg-green-600 text-white"
                               : item.orderStatus === "Shipped"
