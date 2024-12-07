@@ -25,13 +25,12 @@ const Order = () => {
         const Data = res?.data
         if (Array.isArray(Data)) {
           const validOrders =
-          OS_selectX !== "All"
+          OS_selectX !== "All" && OS_selectX !== ""
           ? Data.filter((order) => order?.orderStatus?.orderStatus === OS_selectX ).reverse()
-          : Data.filter((order) => order !== null).reverse();
+          : Data.filter((order) => order !== null).reverse()
           setOrderItems(validOrders);
           const orderStatusc = validOrders.map((item) => item?.orderStatus)
           setorderStatusx(orderStatusc)
-          console.log(validOrders);
 
         } else {
           console.error("Unexpected data format:", res?.data);
@@ -47,6 +46,7 @@ const Order = () => {
   const handleSelectOS = (itemx) => {
     setOS_selectX(itemx)
   }
+  
   // useEffect(()=>{
   // },[orderItems])
   return (
@@ -102,8 +102,6 @@ const Order = () => {
                 {
                   orderStatusx.map((item, index) => (
                     <div key={index}>
-                      {console.log(item.orderStatus)
-                      }
                       {index === orderIndex ?  // Replace `orderIndex` with the actual variable that matches status
                         <h2 
                           

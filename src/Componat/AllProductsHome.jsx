@@ -38,7 +38,7 @@ const AllProductsHome = () => {
                 <h2 className="text-lg font-semibold text-[#cf0cbf] shadow-black mt-2">
                   Price: {Number(item.Price).toFixed(2) || "N/A"}৳
                 </h2>
-                <h3 className="text-md font-medium text-[#fff]">
+                <h3 className="text-md italic font-medium text-customized ">
                   {item.Prodectname || "Unnamed Product"}
                 </h3>
               </div>

@@ -212,7 +212,7 @@ const Context = ({ children }) => {
         loading && info.length === 0 && window.location.pathname === "/"
         ?
         <div className="container px-[10px] mx-auto">
-        <SkeletonTheme baseColor="#ffffff5d" highlightColor="#f9f9f9">
+        <SkeletonTheme >
           <div className="flex flex-wrap">
             {Array(2)
               .fill(0)

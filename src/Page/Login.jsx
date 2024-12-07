@@ -116,7 +116,7 @@ const Login = () => {
   return (
     <section>
       <div className="container mx-auto flex justify-center items-center px-4">
-        <div className="userLogin_Box w-full xl:w-[550px] md:w-4/5 md:mt-24 lg:mt-10 lg:w-3/5 p-4 md:p-8 xl:h-[600px] border-3 rounded border-white">
+        <div className="userLogin_Box w-full xl:w-[550px] bg-[#00000036] md:w-4/5 md:mt-24 lg:mt-10 lg:w-3/5 p-4 md:p-8 xl:h-[600px] border-3 rounded border-white">
           <div className="flex justify-center mb-4">
             <img className="w-24 h-24 rounded-full" src={userData.profile_picture} alt="Profile" />
           </div>

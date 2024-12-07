@@ -9,6 +9,9 @@ export default {
       fontFamily :{
         "sans": ["Noto Sans", "sans-serif"],
       },
+      textColor:{
+        "customized" : "#000"
+      }
     },
   },
   plugins: [],

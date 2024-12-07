@@ -56,7 +56,7 @@ const BuyProDucts = ({ BuyItem , building_data , TotalBuild , HandleSendOTP }) =
           <h2 className="pl-[10px] flex items-center h-[30px]">Total build: {TotalBuild} ৳</h2>
           <h2
             onClick={HandleSendOTP}
-            className="pay w-[100%] my-[40px] md:mx-[10px] h-[40px] text-[#fff] font-[700] flex justify-center items-center text-[18px] bg-[#d32f2f] rounded hover:bg-[#a00000]"
+            className="pay w-[100%] noselect my-[40px] md:mx-[10px] h-[40px] cursor-pointer text-[#fff] font-[700] flex justify-center items-center text-[18px] bg-[#d32f2f] rounded hover:bg-[#a00000]"
           >
             Buy Now {Buyitemuser.Pricesub || Buyitemuser.Price}৳
           </h2>

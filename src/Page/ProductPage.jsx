@@ -58,12 +58,12 @@ const ProductPage = () => {
         <meta property="og:url" content={`https://qmever.com/ProductPage?category=${query}`} />
         <meta property="og:image" content="https://qmever.com/images/your-default-image.jpg" />
       </Helmet>
-      <div className="container flex py-[5px] md:py-10 mx-auto">
+      <div className="container sm:flex py-[5px] md:py-10 mx-auto">
         {/* Sidebar for Categories */}
-        <div className="w-[25%] p-4">
+        <div className="sm:w-[25%] p-4">
           {/* Main Category */}
-          <div className="mb-4">
-            <label className="block mb-2 text-sm font-medium text-white">Main Category</label>
+          <div className="mb-4 w-[100%]">
+            {/* <label className="block mb-2 text-sm font-medium text-white">Main Category</label> */}
             <select
               value={selectedMainCategory}
               onChange={MainCategory}
@@ -78,8 +78,8 @@ const ProductPage = () => {
           </div>
 
           {/* Sub Category */}
-          <div className="mb-4">
-            <label className="block mb-2 text-sm font-medium text-white">Sub Category</label>
+          <div className="mb-4 w-[100%]">
+            {/* <label className="block mb-2 text-sm font-medium text-white">Sub Category</label> */}
             <select
               value={selectedSubCategory}
               onChange={(e) => setSelectedSubCategory(e.target.value)}
@@ -93,8 +93,8 @@ const ProductPage = () => {
             </select>
           </div>
 
-          <div>
-            <label className="block mb-2 text-sm font-medium text-white">Subs Category</label>
+          <div className="w-[100%]">
+            {/* <label className="block mb-2 text-sm font-medium text-white">Subs Category</label> */}
             <select
               value={selectedSubsCategory}
               onChange={(e) => setSelectedSubsCategory(e.target.value)}
@@ -110,7 +110,7 @@ const ProductPage = () => {
         </div>
 
         {/* Product Grid */}
-        <div className="w-[75%]">
+        <div className="sm:w-[75%]">
           {filteredProducts.length > 0 ? (
             <div className="flex flex-wrap">
               {filteredProducts.map((item, index) => (
@@ -135,7 +135,7 @@ const ProductPage = () => {
                     </h2>
 
                     {/* Product Name */}
-                    <h3 className="text-md font-medium text-[#fff]">
+                    <h3 className="text-md font-medium italic text-customized">
                       {item.Prodectname || "Unnamed Product"}
                     </h3>
                   </div>

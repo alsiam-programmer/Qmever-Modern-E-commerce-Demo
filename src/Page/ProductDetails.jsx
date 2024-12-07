@@ -116,7 +116,7 @@ const ProductDetails = () => {
           }, 1000);
         }
       } else {
-        dispatch(AddToCart({ ...{ Prodectname : info.Prodectname , Price : info.Price , ProdectId : info.ProdectId , imgurl : info.imgurl , PCU : info.PCU , category : info.category}, ProdectQun }))
+        dispatch(AddToCart({ ...{ Prodectname : info.Prodectname , Price : info.Price , ProdectId : info.ProdectId , imgurl : info.imgurl , PCU : info.PCU , category : info.category} , ProdectQun }))
         console.log(info);
         setaddsucess(true)
         setTimeout(() => {
@@ -251,7 +251,7 @@ const ProductDetails = () => {
                         ?
                         <img className=" mb-[10px] cursor-pointer w-[100%] " src={info2.productimg} alt="" />
                         :
-                        <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
+                        <SkeletonTheme >
                           <Skeleton className=" h-[100px] lg:h-[150px] mb-3" />
 
                         </SkeletonTheme>
@@ -260,7 +260,7 @@ const ProductDetails = () => {
                         ?
                         <img className=" my-[10px] cursor-pointer w-[100%] " src={info2.productimg2} alt="" />
                         :
-                        <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
+                        <SkeletonTheme >
                           <Skeleton className=" h-[100px] lg:h-[150px] mb-3" />
 
                         </SkeletonTheme>
@@ -269,7 +269,7 @@ const ProductDetails = () => {
                         ?
                         <img className=" my-[10px] cursor-pointer w-[100%] " src={info2.productimg3} alt="" />
                         :
-                        <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
+                        <SkeletonTheme >
                           <Skeleton className=" h-[100px] lg:h-[150px] mb-3" />
 
                         </SkeletonTheme>
@@ -281,7 +281,7 @@ const ProductDetails = () => {
                       ?
                       <img className=" hover:scale-125 duration-200 cursor-pointer w-[100%] " src={info.imgurl} alt="" />
                       :
-                      <SkeletonTheme baseColor="#ffffff5d" highlightColor="#fff">
+                      <SkeletonTheme >
                         <Skeleton className=" h-[330px] lg:h-[490px] mb-4" />
 
                       </SkeletonTheme>
@@ -292,17 +292,17 @@ const ProductDetails = () => {
                   <div className=" cursor-pointer overflow-hidden rightimg">
                     {info.Prodectname
                       ?
-                      <h1 className=' shadow-slate-900 text-[#ffffff] font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h1>
+                      <h1 className=' shadow-slate-900 text-customized font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h1>
                       :
-                      <SkeletonTheme baseColor="#ffffff5d" className="w-[100%]" highlightColor="#fff">
+                      <SkeletonTheme className="w-[100%]" >
                         <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
                         <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
                         <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
                       </SkeletonTheme>
                     }
                   </div>
-                  <h2 className='text-[#fff] font-[600] text-[20px] my-[5px]'>Price : <span className='text-[#cf0cbf] font-[500]'>{modlePrice !== "" ? Number(modlePrice).toFixed(2) : (info?.Price != null ? Number(info.Price).toFixed(2) : "")}৳</span></h2>
-                  <h2 className='text-[#fff] noselect font-[600] text-[20px] my-[5px]'>{info.ModelName}</h2>
+                  <h2 className='text-customized font-[600] text-[20px] my-[5px]'>Price : <span className='text-[#cf0cbf] font-[500]'>{modlePrice !== "" ? Number(modlePrice).toFixed(2) : (info?.Price != null ? Number(info.Price).toFixed(2) : "")}৳</span></h2>
+                  <h2 className='text-customized noselect font-[600] text-[20px] my-[5px]'>{info.ModelName}</h2>
 
                   {
                     info3 !== ""
@@ -320,7 +320,7 @@ const ProductDetails = () => {
                   </div>
                   <div className="description mt-[50px] border-t-[2px] border-t-[#fff]">
                     <div className=" cursor-pointer overflow-hidden rightimg">
-                      <p className=' text-[16px] font-[500] my-[30px] text-[#ffffffa4] '>{info.description}</p>
+                      <p className=' text-[16px] font-[600] italic my-[30px]  text-[#0000008a] '>{info.description}</p>
                     </div>
                     <iframe className=' w-[100%] sm:h-[315px]' src={info.VideoURL} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                   </div>

@@ -73,13 +73,13 @@ const SearchItem = () => {
             <h2 className="text-lg font-semibold text-[#cf0cbf] shadow-black mt-2">
               Price: {Number(item.Price).toFixed(2) || "N/A"}৳
             </h2>
-            <h3 className="text-md font-medium text-[#fff]">
+            <h3 className="text-md font-medium italic text-customized">
               {item.Prodectname || "Unnamed Product"}
             </h3>
           </div>
           )): failedSearch !== true ?
           <div className="flex w-[100%] justify-center my-8">
-          <TbLoader2 className="w-10 h-10 animate-spin text-[#fff]" />
+          <TbLoader2 className="w-10 h-10 animate-spin text-pink-500" />
         </div>:""}
         </div>
 
@@ -87,14 +87,14 @@ const SearchItem = () => {
         {failedSearch && (
            <div className="flex flex-col items-center justify-center">
            <div className="text-[#ffffffcb]">
-             <TbMoodSad className="text-7xl md:text-9xl" />
+             <TbMoodSad className="text-7xl text-customized md:text-9xl" />
            </div>
            <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mt-4">
              No Products Found
            </h1>
-           <p className="text-[#ffffffa6] text-center mt-2">
+           <p className="italic text-customized text-center mt-2">
              We couldn't find any results for{' '}
-             <span className="text-indigo-500 font-bold">{query}</span>. <br />
+             <span className="text-red-500 font-bold">{query}</span>. <br />
              Please try searching with a different keyword.
            </p>
          </div>
