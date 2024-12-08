@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<!-- <style>
+<style>
   @keyframes moveBackground {
     0% {
       background-position: center top;
@@ -39,24 +39,23 @@
       background-position: center top;
     }
   }
-</style> -->
+</style>
 
   </head>
   <body
+  style="
+  background-color: rgb(255, 255, 255);
+    overflow-x: hidden;
+    background-image: url('./src/assets/bgimg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    animation: moveBackground 300s linear infinite;
+  "
 >
 <div id="root"></div>
 <script type="module" src="/src/main.jsx"></script>
 </body>
 
 </html>
-
-<!-- style="
-background-color: black;
-  overflow-x: hidden;
-  background-image: url('./src/assets/bgimg.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  animation: moveBackground 300s linear infinite;
-" -->
