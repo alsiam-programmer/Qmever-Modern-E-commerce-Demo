@@ -21,7 +21,17 @@ const Context = ({ children }) => {
       const res = await axios.get(
         "https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json"
       );
-      const data = Object.values(res.data); // Convert object to array
+
+      const data = Object.values(res?.data || {}).map((item)=>
+        ({
+          "Prodectname": item?.Prodectname,
+          "imgurl": item?.imgurl,
+          "ProdectId": item?.ProdectId,
+          "Price": item?.Price,
+        })
+      )
+      console.log(data);
+      
       const total = data.length;
       const newItems = data.slice(
         (page - 1) * itemsPerPage,
@@ -66,6 +76,7 @@ const Context = ({ children }) => {
     }
   }, [info, totalItems]);
 
+  
   return (
     <apiData.Provider value={info}>
       {children}
