@@ -3,114 +3,118 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IoAddOutline } from "react-icons/io5";
 import { CgMathMinus } from "react-icons/cg";
 import { FaCircleXmark } from "react-icons/fa6";
-import { BuyItemDelete, qunDecrement, qunIncrement, removeCartPro, userBuyItem } from '../Componat/slice/AllSlice';
+import {
+  BuyItemDelete,
+  qunDecrement,
+  qunIncrement,
+  removeCartPro,
+  userBuyItem
+} from '../Componat/slice/AllSlice';
 import { useNavigate } from 'react-router-dom';
 
 const Cartpage = () => {
-  const cartItem = useSelector((item)=>item.counter.cartItem)
-  const BuyItem = useSelector((item)=>item.counter.BuyItem)
-  
-  let dispatch = useDispatch()
-  let navigate = useNavigate()
-  let [Lodingon, setLodingOn] = useState(false)
-  let [Loding, setLoding] = useState(false)
-  let HandleRemoveCartIn = (index) => {
-    dispatch(removeCartPro(index))
-  }
-  let handleIncre = (index) => {
-    dispatch(qunIncrement(index))
-  }
-  let handleDecre = (index) => {
-    dispatch(qunDecrement(index))
-  }
-  let HandleCheckoutGo = () => {
+  const cartItem = useSelector((item) => item.counter.cartItem)
+  const BuyItem = useSelector((item) => item.counter.BuyItem)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const [Lodingon, setLodingOn] = useState(false)
+  const [Loding, setLoding] = useState(false)
+
+  const HandleRemoveCartIn = (index) => dispatch(removeCartPro(index))
+  const handleIncre = (index) => dispatch(qunIncrement(index))
+  const handleDecre = (index) => dispatch(qunDecrement(index))
+
+  const HandleCheckoutGo = () => {
     dispatch(BuyItemDelete(BuyItem))
     setLodingOn(true)
     setTimeout(() => {
-      dispatch(userBuyItem({cartItem , totalPrice , totalQun }))
+      dispatch(userBuyItem({ cartItem, totalPrice, totalQun }))
       navigate('/CheckOut')
-    }, 500);
-    setTimeout(() => {
-      setLoding(true)
-    }, 100);
+    }, 500)
+    setTimeout(() => setLoding(true), 100)
   }
-  let { totalPrice , totalQun } = cartItem.reduce((acc , item)=>{
+
+  const { totalPrice, totalQun } = cartItem.reduce((acc, item) => {
     acc.totalPrice += item.Price * item.ProdectQun
     acc.totalQun += item.ProdectQun
-    return (
-      acc
-    )
-  },{totalPrice:0 , totalQun:0} )
-  
+    return acc
+  }, { totalPrice: 0, totalQun: 0 })
 
-  let goDetails_page = (id) => {
+  const goDetails_page = (id) => {
     navigate(`/productDetails/${id}`)
   }
+
   return (
-<section className="min-h-screen bg-gray-100 py-8">
-  <div className="container mx-auto px-4">
-    {cartItem.length > 0 ? (
-      <div className="relative">
-        {/* Loading Overlay */}
-        <div className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center ${Lodingon ? 'block' : 'hidden'}`}>
-          {Loding && <div className="text-white text-2xl font-semibold animate-pulse">Processing...</div>}
-        </div>
+    <section className="min-h-screen bg-gray-50 py-10">
+      <div className="max-w-5xl mx-auto px-4">
+        {cartItem.length > 0 ? (
+          <div className="relative">
+            {/* Loading Overlay */}
+            <div className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center ${Lodingon ? 'block' : 'hidden'}`}>
+              {Loding && <div className="text-white text-xl font-semibold animate-pulse">Processing...</div>}
+            </div>
 
-        {/* Header Row */}
-        <div className="bg-white rounded-xl shadow-md p-4 mb-4 hidden md:flex">
-          <div className="w-1/3 font-semibold text-lg text-gray-800">Product</div>
-          <div className="w-1/4 font-semibold text-lg text-gray-800">Model</div>
-          <div className="w-1/4 font-semibold text-lg text-gray-800">Quantity</div>
-          <div className="w-1/6 font-semibold text-lg text-right text-gray-800">Price</div>
-        </div>
+            {/* Cart List */}
+            <div className="space-y-4">
+              {cartItem.map((item, index) => (
+                <div key={index} className="bg-white p-4 rounded-xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                  {/* Left */}
+                  <div className="flex items-center gap-4 w-full md:w-1/3 relative">
+                    <button onClick={() => HandleRemoveCartIn(index)} className="absolute -top-2 -left-2 text-red-500 hover:text-red-700 text-lg z-10">
+                      <FaCircleXmark />
+                    </button>
+                    <img src={item.imgurl} alt="" className="h-[70px] w-[70px] rounded-md object-cover border" />
+                    <div onClick={() => goDetails_page(item.ProdectId)} className="cursor-pointer hover:underline text-gray-800 font-medium text-base">
+                      {(item.Prodectname).slice(0 , 20)+"..."}
+                    </div>
+                  </div>
 
-        {/* Cart Items */}
-        {cartItem.map((cartItemx, index) => (
-          <div key={index} className="bg-white rounded-xl shadow-sm p-4 mb-3 flex flex-col md:flex-row items-center md:justify-between gap-4">
-            <div className="flex items-center w-full md:w-1/3 relative">
-              <button onClick={() => HandleRemoveCartIn(index)} className="absolute -top-2 -left-2 text-red-500 hover:text-red-700 text-lg z-10">
-                <FaCircleXmark />
+                  {/* Size / Model */}
+                  <div className="w-full md:w-1/4 text-gray-600 text-sm font-medium">
+                    {item.size || 'Regular'}
+                  </div>
+
+                  {/* Quantity Controls */}
+                  <div className="w-full md:w-1/4 flex items-center justify-center gap-3 text-gray-700">
+                    <button onClick={() => handleIncre(index)} className="bg-green-100 p-2 rounded hover:bg-green-200">
+                      <IoAddOutline className="text-green-600" />
+                    </button>
+                    <span className="font-semibold text-base">{item.ProdectQun}</span>
+                    <button onClick={() => handleDecre(index)} className="bg-red-100 p-2 rounded hover:bg-red-200">
+                      <CgMathMinus className="text-red-500" />
+                    </button>
+                  </div>
+
+                  {/* Price */}
+                  <div className="w-full md:w-1/6 text-right text-gray-800 font-semibold text-base">
+                    {item.Pricesub ? item.Pricesub * item.ProdectQun : item.Price * item.ProdectQun}৳
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Total & Checkout */}
+            <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="text-gray-700 text-lg font-medium">
+                Total: <span className="font-bold">{totalPrice}৳</span> | Quantity: <span className="font-bold">{totalQun}</span>
+              </div>
+              <button
+                onClick={HandleCheckoutGo}
+                className="bg-green-600 text-[13px] xl:text-[16px] hover:bg-green-700 text-white w-[100%] sm:w-[30%] px-3 py-2 xl:px-6 xl:py-2 rounded-lg font-semibold shadow-md transition"
+              >
+                Proceed to Checkout
               </button>
-              <img src={cartItemx.imgurl} alt="" className="h-[70px] w-[70px] object-contain rounded-md" />
-              <h2 onClick={() => goDetails_page(cartItemx.ProdectId)} className="ml-4 font-semibold text-gray-700 hover:underline cursor-pointer text-[16px]">
-                {cartItemx.Prodectname}
-              </h2>
-            </div>
-
-            <div className="w-full md:w-1/4 text-gray-600 font-medium">
-              {cartItemx.size ? cartItemx.size : 'Regular'}
-            </div>
-
-            <div className="w-full md:w-1/4 flex items-center space-x-3 text-gray-700">
-              <button onClick={() => handleIncre(index)} className="text-green-600 hover:text-green-800 text-lg"><IoAddOutline /></button>
-              <span className="font-semibold">{cartItemx.ProdectQun}</span>
-              <button onClick={() => handleDecre(index)} className="text-red-500 hover:text-red-700 text-lg"><CgMathMinus /></button>
-            </div>
-
-            <div className="w-full md:w-1/6 text-right font-semibold text-gray-800">
-              Price: {cartItemx.Pricesub ? cartItemx.Pricesub * cartItemx.ProdectQun : cartItemx.Price * cartItemx.ProdectQun}৳
             </div>
           </div>
-        ))}
-
-        {/* Checkout Button */}
-        <div className="flex justify-end mt-6">
-          <button
-            onClick={HandleCheckoutGo}
-            className="bg-green-600 hover:bg-green-700 transition text-white text-lg font-semibold px-6 py-3 rounded-lg shadow-md"
-          >
-            Proceed to Checkout
-          </button>
-        </div>
+        ) : (
+          <div className="text-center py-20">
+            <h5 className="text-2xl font-semibold text-gray-700">You have no items in your cart.</h5>
+          </div>
+        )}
       </div>
-    ) : (
-      <div className="text-center py-20">
-        <h5 className="text-2xl font-semibold text-gray-700">You have no items in your cart.</h5>
-      </div>
-    )}
-  </div>
-</section>
-
+    </section>
   )
 }
 

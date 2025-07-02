@@ -20,6 +20,7 @@ const CheckOut = () => {
   const [otpInput, setOtpInput] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [ids, setids] = useState(1);
+  const [Qty , setQty] = useState('')
   let [ errorItem , seterrorItem ] = useState('') 
   let [ errorItem1 , seterrorItem1 ] = useState('') 
   let [ errorItem2 , seterrorItem2 ] = useState('') 
@@ -160,7 +161,7 @@ const CheckOut = () => {
           const total = BuyItem.flatMap(item => item || []);
           const total_Cart = BuyItem.flatMap(item => item.totalPrice || []);
           const total_cartItem = BuyItem.flatMap(item => item.cartItem || []);
-          
+          setQty(total_cartItem)
           if (total_cartItem.length >= 1) {
             const total_B_C_Cart = Number(total_Cart) +
             Number(building_data?.delivery_charges) +
@@ -198,6 +199,7 @@ const CheckOut = () => {
       <BuyProDucts 
         HandleSendOTP={HandleSendOTP} 
         building_data={building_data} 
+        Qty={Qty}
         TotalBuild={TotalBuild} 
         BuyItem={BuyItem} 
       />

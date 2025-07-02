@@ -243,68 +243,124 @@ const Menu = () => {
           </div>
         </div>
       </section>
-      {MenuShow === true ?
-        <div className="fixed w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] h-[100%] bg-[#fff] duration-300 right-0 top-0 z-[999]">
+     {
+  MenuShow ? (
+    <div className="fixed top-0 right-0 z-[999] h-full w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] bg-white shadow-xl duration-300">
+      <ul className="w-full mt-16 px-4 space-y-3">
+        {
+          useruid === "" ? (
+            <div className=" w-full flex justify-center">
 
-          <ul className='w-[100%] mt-[60px]'>
-            {
-              useruid === ""
-                ? <li className=' font-sans text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] flex justify-between font-[700]'>Nice to meet you.will you be my friend</li>
-                : <Link to={'/user-profile'} >
-                  <div className=' bg-[#062919] cursor-pointer py-[30px] gap-[10px] items-center font-sans h-[50px] flex text-[22px] px-[20px] rounded-[10px] m-[10px] group font-[700]'>
-                  <img className=' rounded-[50%] w-[45px] border-[3px] border-[gold] h-[45px]' src={userData.profile_picture} alt="" />
-                  <h2 className=' group-hover:underline text-[15px] text-[gold] font-[600]'>{userData.username}</h2>
-                </div>
-                </Link> 
-                
-            }
-
-            {
-              useruid === ""
-                ? <li onKeyDown={handleKeysystem} onClick={handleLogin} className=' font-sans absolute left-[50%] translate-x-[-50%] bottom-[200px] text-[22px] px-[20px] py-[5px] text-[#fff] bg-[green] rounded-[10px] font-[700]'>Login</li>
-                : <div className="">
-                  <Link to={'/'}><li className=' font-sans text-[17px] md:text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] font-[700]'>Home</li></Link>
-                  <Link to={'/ProductPage'} >
-                  <li className=' font-sans text-[17px] md:text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] font-[700]'>Products</li>
-                  </Link>
-                  <li className=' font-sans text-[17px] md:text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] font-[700]'>Notification</li>
-                  <Link to={'/Orders'}><li className=' font-sans text-[17px] md:text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] font-[700]'>My Order</li></Link>
-                  <Link to={'/CartPage'}><li className=' font-sans text-[17px] md:text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] font-[700]'>Cart</li></Link>
-                  <li onClick={handleLogout} className=' font-sans absolute left-[50%] translate-x-[-50%] bottom-[200px] text-[17px] md:text-[22px] px-[20px] py-[5px] text-[#fff] bg-[red] rounded-[10px] font-[700]'>Logout</li>
-                </div>
-            }
-          </ul>
+      <img
+        src="https://i.ibb.co/vC8zmqHv/low-self-esteem-1-1.jpg"
+        alt="Nice to meet you"
+        className=" w-[80%] h-auto object-contain"
+        />
         </div>
-        :
-        <div className="fixed w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] h-[100%] bg-[#fff] duration-300 right-[-60%] top-0 z-[999]">
+      
 
-          <ul className='w-[100%] mt-[60px]'>
-            {
-              useruid === ""
-                ? <li className=' font-sans text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] flex justify-between font-[700]'>Nice to meet you.will you be my friend</li>
-                : <div className=' bg-[#081939] cursor-pointer py-[30px] gap-[10px] items-center font-sans h-[50px] flex text-[22px] px-[20px] rounded-[10px] m-[10px] group font-[700]'>
-                  <img className=' rounded-[50%] w-[45px] border-[3px] border-[gold] h-[45px]' src={userData.profile_picture} alt="" />
-                  <h2 className=' group-hover:underline text-[15px] text-[gold] font-[600]'>{userData.username}</h2>
-                </div>
-            }
+          ) : (
+            <Link to={'/user-profile'}>
+              <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
+                <img
+                  src={userData.profile_picture}
+                  alt="User"
+                  className="w-12 h-12 rounded-full border-4 border-yellow-400"
+                />
+                <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData.username}</h2>
+              </div>
+            </Link>
+          )
+        }
 
-            {
-              useruid === ""
-                ? <li onClick={handleLogin} className=' font-sans absolute left-[50%] translate-x-[-50%] bottom-[200px] text-[22px] px-[20px] py-[5px] text-[#fff] bg-[green] rounded-[10px] font-[700]'>Login</li>
-                : <div className="">
-                  <Link to={'/'}><li className=' font-sans text-[17px] md:text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] font-[700]'>Home</li></Link>
-                  <Link to={'/ProductPage'} >
-                  <li className=' font-sans text-[17px] md:text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] font-[700]'>Products</li>
-                  </Link>
-                  <li className=' font-sans text-[17px] md:text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] font-[700]'>Notification</li>
-                  <Link to={'/Orders'}><li className=' font-sans text-[17px] md:text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] font-[700]'>My Order</li></Link>
-                  <Link to={'/CartPage'}><li className=' font-sans text-[17px] md:text-[22px] px-[20px] py-[5px] rounded-[10px] m-[10px] hover:bg-[#00000013] font-[700]'>Cart</li></Link>
-                  <li onClick={handleLogout} className=' font-sans absolute left-[50%] translate-x-[-50%] bottom-[200px] text-[17px] md:text-[22px] px-[20px] py-[5px] text-[#fff] bg-[red] rounded-[10px] font-[700]'>Logout</li>
-                </div>
-            }
-          </ul>
+        {
+          useruid === "" ? (
+            <li
+              onKeyDown={handleKeysystem}
+              onClick={handleLogin}
+              className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-green-600 text-white px-6 py-3 text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
+            >
+              Login
+            </li>
+          ) : (
+            <div className="space-y-2">
+              <Link to="/"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Home</li></Link>
+              <Link to="/ProductPage"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Products</li></Link>
+              <li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Notification</li>
+              <Link to="/Orders"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">My Order</li></Link>
+              <Link to="/CartPage"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Cart</li></Link>
+
+              <li
+                onClick={handleLogout}
+                className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-red-600 text-white px-6 py-3 text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
+              >
+                Logout
+              </li>
+            </div>
+          )
+        }
+      </ul>
+    </div>
+  ) : (
+    <div className="fixed top-0 right-[-60%] z-[999] h-full w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] bg-white shadow-xl duration-300">
+      <ul className="w-full mt-16 px-4 space-y-3">
+     {
+          useruid === "" ? (
+            <div className=" w-full flex justify-center">
+
+      <img
+        src="https://i.ibb.co/vC8zmqHv/low-self-esteem-1-1.jpg"
+        alt="Nice to meet you"
+        className=" w-[80%] h-auto object-contain"
+        />
         </div>
-      }
+      
+
+          ) : (
+            <Link to={'/user-profile'}>
+              <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
+                <img
+                  src={userData.profile_picture}
+                  alt="User"
+                  className="w-12 h-12 rounded-full border-4 border-yellow-400"
+                />
+                <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData.username}</h2>
+              </div>
+            </Link>
+          )
+        }
+
+
+        {
+          useruid === "" ? (
+            <li
+              onClick={handleLogin}
+              className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-green-600 text-white px-6 py-3 text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
+            >
+              Login
+            </li>
+          ) : (
+            <div className="space-y-2">
+              <Link to="/"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Home</li></Link>
+              <Link to="/ProductPage"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Products</li></Link>
+              <li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Notification</li>
+              <Link to="/Orders"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">My Order</li></Link>
+              <Link to="/CartPage"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Cart</li></Link>
+
+              <li
+                onClick={handleLogout}
+                className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-red-600 text-white px-6 py-3 text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
+              >
+                Logout
+              </li>
+            </div>
+          )
+        }
+      </ul>
+    </div>
+  )
+}
+
     </section>
   )
 }
