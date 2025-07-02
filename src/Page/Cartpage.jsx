@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 const Cartpage = () => {
   const cartItem = useSelector((item)=>item.counter.cartItem)
   const BuyItem = useSelector((item)=>item.counter.BuyItem)
-  console.log(cartItem);
   
   let dispatch = useDispatch()
   let navigate = useNavigate()
@@ -43,68 +42,75 @@ const Cartpage = () => {
     )
   },{totalPrice:0 , totalQun:0} )
   
-  console.log(totalQun);
-  console.log();
+
   let goDetails_page = (id) => {
     navigate(`/productDetails/${id}`)
   }
   return (
-    <section>
-      <div className="container mx-auto">
-        {cartItem.length > 0 
-        ?
-        <div className="">
-              <div className={`loging ${Lodingon === true ? " block " : "hidden"} `}>
-            {
-              Loding === true
-              ? <div className={` fixed z-[999] duration-100 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] h-[100%] bg-[#0000008e]`}>Processing...</div>
-              : <div className={` fixed z-[999] duration-100 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[0%] h-[100%] bg-[#0000008e]`}></div>
-            }
-          </div>
-        <div className=" bg-[#ffff] rounded-[20px] flex items-center h-[60px] ">
-                <div className="box justify-between w-[100%] my-[10px] md:m-[10px] flex flex-wrap p-[10px] items-center gap-[10px]">
-                  <h2 className='w-[30%] pr-[10px] flex items-center text-[20px] font-[600] text-[#062919] h-[60px]'>Product</h2>
-                  <h2 className=' justify-start w-[20%] pr-[10px] flex items-center text-[20px] font-[600] text-[#062919] h-[60px]'>Model</h2>
-                  <h2 className=' justify-start w-[20%] pr-[10px] flex items-center h-[60px] text-[#062919]'>Quntite</h2>
-                  <h2 className=' justify-end w-[20%] pr-[10px] flex items-center text-[20px] font-[600] text-[#062919] h-[60px]'>Price</h2>
-              </div>
-              </div>
-        {cartItem.map((cartItemx , index)=>(
-              <div className=" cursor-pointer ">
-                <div className="box justify-between w-[97%] mx-auto lg:w-[100%] my-[10px] rounded flex flex-wrap p-[10px] bg-[#fff] items-center gap-[10px]">
-                  <div className=" w-[100%] sm:w-[30%] flex justify-between sm:pr-[30px]">
-                  <div className="img relative">
-                  <h2 onClick={()=>HandleRemoveCartIn(index)} className=' text-[16px] text-[#f00] absolute top-[-5px] left-[-5px] z-[99]'><FaCircleXmark/></h2>
-                  <img className='h-[70px]' src={cartItemx.imgurl} alt="" />
-                  </div>
-                  <h2 onClick={()=>goDetails_page(cartItemx.ProdectId)} className=' hover:underline sm:pr-[10px] flex items-center h-[70px] text-[#062919] font-[600] text-[17px]'>{cartItemx.Prodectname}</h2>
-                  </div>
-                  <h2 className=' justify-start sm:w-[20%] pr-[10px] flex items-center h-[70px] text-[#062919] font-[600] text-[17px]'>
-                    {
-                      cartItemx.size
-                      ? <h2 className='text-[#062919] font-[600] text-[17px]'>{cartItemx.size}</h2>
-                      : <h2 className='text-[#062919] font-[600] text-[17px]'>Regulear</h2>
-                    }
-                  
-                  </h2>
-                  <div className=' justify-start sm:w-[20%] pr-[10px] flex items-center h-[70px] text-[#062919]'>
-                    <h2 onClick={()=>handleIncre(index)} className='px-[5px] font-[600] text-[17px]'><IoAddOutline/></h2>
-                    <h2 className='px-[5px] text-[green] font-[600] text-[17px]'>{cartItemx.ProdectQun}</h2>
-                    <h2 onClick={()=>handleDecre(index)} className='px-[5px] font-[600] text-[17px]'><CgMathMinus/></h2>  
-                  </div>
-                  <h2 className=' justify-end sm:w-[20%] pr-[10px] font-[600] text-[17px] flex items-center h-[70px] text-[#000]'>Price : {cartItemx.Pricesub !== "" && cartItemx.Pricesub ? cartItemx.Pricesub * cartItemx.ProdectQun : cartItemx.Price * cartItemx.ProdectQun}৳</h2>
-              </div>
-              </div>
-          ))}
-          
-          <div className="TotalBillbox my-[30px] mx-[10px] flex justify-end">
-            <h2 onClick={HandleCheckoutGo} className=" Total rounded w-[100%] md:w-[20%]  flex justify-center items-center p-[7px] border-[2px] border-[#fff] bg-[#ffffff98] sm:text-[19px] font-[600]  text-[#ffffff]">Procces to CheckOut</h2>
-          </div>
+<section className="min-h-screen bg-gray-100 py-8">
+  <div className="container mx-auto px-4">
+    {cartItem.length > 0 ? (
+      <div className="relative">
+        {/* Loading Overlay */}
+        <div className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center ${Lodingon ? 'block' : 'hidden'}`}>
+          {Loding && <div className="text-white text-2xl font-semibold animate-pulse">Processing...</div>}
         </div>
-        : <h5 className='text-[20px] text-[#000] font-[600]' >You have no items in your cart.</h5>
-      }
+
+        {/* Header Row */}
+        <div className="bg-white rounded-xl shadow-md p-4 mb-4 hidden md:flex">
+          <div className="w-1/3 font-semibold text-lg text-gray-800">Product</div>
+          <div className="w-1/4 font-semibold text-lg text-gray-800">Model</div>
+          <div className="w-1/4 font-semibold text-lg text-gray-800">Quantity</div>
+          <div className="w-1/6 font-semibold text-lg text-right text-gray-800">Price</div>
+        </div>
+
+        {/* Cart Items */}
+        {cartItem.map((cartItemx, index) => (
+          <div key={index} className="bg-white rounded-xl shadow-sm p-4 mb-3 flex flex-col md:flex-row items-center md:justify-between gap-4">
+            <div className="flex items-center w-full md:w-1/3 relative">
+              <button onClick={() => HandleRemoveCartIn(index)} className="absolute -top-2 -left-2 text-red-500 hover:text-red-700 text-lg z-10">
+                <FaCircleXmark />
+              </button>
+              <img src={cartItemx.imgurl} alt="" className="h-[70px] w-[70px] object-contain rounded-md" />
+              <h2 onClick={() => goDetails_page(cartItemx.ProdectId)} className="ml-4 font-semibold text-gray-700 hover:underline cursor-pointer text-[16px]">
+                {cartItemx.Prodectname}
+              </h2>
+            </div>
+
+            <div className="w-full md:w-1/4 text-gray-600 font-medium">
+              {cartItemx.size ? cartItemx.size : 'Regular'}
+            </div>
+
+            <div className="w-full md:w-1/4 flex items-center space-x-3 text-gray-700">
+              <button onClick={() => handleIncre(index)} className="text-green-600 hover:text-green-800 text-lg"><IoAddOutline /></button>
+              <span className="font-semibold">{cartItemx.ProdectQun}</span>
+              <button onClick={() => handleDecre(index)} className="text-red-500 hover:text-red-700 text-lg"><CgMathMinus /></button>
+            </div>
+
+            <div className="w-full md:w-1/6 text-right font-semibold text-gray-800">
+              Price: {cartItemx.Pricesub ? cartItemx.Pricesub * cartItemx.ProdectQun : cartItemx.Price * cartItemx.ProdectQun}৳
+            </div>
+          </div>
+        ))}
+
+        {/* Checkout Button */}
+        <div className="flex justify-end mt-6">
+          <button
+            onClick={HandleCheckoutGo}
+            className="bg-green-600 hover:bg-green-700 transition text-white text-lg font-semibold px-6 py-3 rounded-lg shadow-md"
+          >
+            Proceed to Checkout
+          </button>
+        </div>
       </div>
-    </section>
+    ) : (
+      <div className="text-center py-20">
+        <h5 className="text-2xl font-semibold text-gray-700">You have no items in your cart.</h5>
+      </div>
+    )}
+  </div>
+</section>
+
   )
 }
 

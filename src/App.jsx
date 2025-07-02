@@ -23,7 +23,15 @@ function App() {
       <Route path="/user-profile" element={<UserProfile />} />
       <Route path="/ProductPage" element={<ProductPage />} />
     </Route>
-  ))
+  ),
+  {
+    future: {
+      v7_normalizeFormMethod: true,
+      v7_skipActionErrorRevalidation: true,
+    },
+  }
+
+)
   return (
     <>
     <RouterProvider router={router} />

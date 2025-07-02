@@ -292,7 +292,7 @@ const ProductDetails = () => {
                   <div className=" cursor-pointer overflow-hidden rightimg">
                     {info.Prodectname
                       ?
-                      <h1 className=' shadow-slate-900 text-customized font-[600] text-[20px] lg:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h1>
+                      <h1 className=' shadow-slate-900 text-customized font-[600] text-[17px] xl:text-[30px] 2xl:text-[40px] uppercase my-[5px]'>{info.Prodectname}</h1>
                       :
                       <SkeletonTheme className="w-[100%]" >
                         <Skeleton className="h-[18px] mb-[4px] w-[100%]" />
@@ -301,15 +301,15 @@ const ProductDetails = () => {
                       </SkeletonTheme>
                     }
                   </div>
-                  <h2 className='text-customized font-[600] text-[20px] my-[5px]'>Price : <span className='text-[#cf0cbf] font-[500]'>{modlePrice !== "" ? Number(modlePrice).toFixed(2) : (info?.Price != null ? Number(info.Price).toFixed(2) : "")}৳</span></h2>
-                  <h2 className='text-customized noselect font-[600] text-[20px] my-[5px]'>{info.ModelName}</h2>
+                  <h2 className='text-customized font-[600] text-[15px] xl:text-[20px] my-[5px]'>Price : <span className='text-[#cf0cbf] font-[500]'>{modlePrice !== "" ? Number(modlePrice).toFixed(2) : (info?.Price != null ? Number(info.Price).toFixed(2) : "")}৳</span></h2>
+                  <h2 className='text-customized noselect font-[600] text-[15px] xl:text-[20px] my-[5px]'>{info.ModelName}</h2>
 
                   {
                     info3 !== ""
                       ?
                       <div className="modles noselect mb-[30px] flex-wrap flex gap-[10px]">
                         {info3.map((addModle, index) => (
-                          <h2 onClick={() => handleModel({ index, addModle })} className={` ${modelselect === true && "border-[red]"}  flex border-[1px] py-[10px] px-[20px] rounded justify-center items-center cursor-pointer ${modleaddicon === addModle.Model ? "bg-[#000] text-[#fff]" : "border-[#000] text-[#000]"}  font-[600] text-[20px] my-[5px]`}>{addModle.Model}</h2>
+                          <h2 onClick={() => handleModel({ index, addModle })} className={` ${modelselect === true && "border-[red]"}  flex border-[1px] py-[10px] px-[20px] rounded justify-center items-center cursor-pointer ${modleaddicon === addModle.Model ? "bg-[#000] text-[#fff]" : "border-[#000] text-[#000]"}  font-[600] text-[13px] xl:text-[20px] my-[5px]`}>{addModle.Model}</h2>
                         ))}
                       </div>
                       : ""

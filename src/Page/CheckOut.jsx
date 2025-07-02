@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BuyProDucts from '../Componat/BuyProDucts';
 import UserContact from '../Componat/UserContact';
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, get , ref, set, onValue } from "firebase/database";
 import { removeAllcartPro } from '../Componat/slice/AllSlice';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,8 +14,6 @@ const CheckOut = () => {
   const userUid = useSelector((state) => state.counter.user);
   const BuyItem = useSelector((state) => state.counter.BuyItem);
   const cartItem = useSelector((state) => state.counter.cartItem);
-
-  console.log(cartItem);
   
   const [userDelivery, setUserDelivery] = useState({});
   const [sendOTP, setSendOTP] = useState(false);
@@ -29,8 +27,12 @@ const CheckOut = () => {
   let [ errorItem4 , seterrorItem4 ] = useState('') 
   let [ errorItem5 , seterrorItem5 ] = useState('') 
   let [ errorItem6 , seterrorItem6 ] = useState('') 
-
+  
   let [test , settest] = useState(false)
+  
+  let [ building_data , setbuilding_data ] = useState({})
+  let [ TotalBuild , settotalBuild ] = useState('')
+
 
   useEffect(() => {
     const starCountRef = ref(db, `users/${userUid}`);
@@ -94,7 +96,6 @@ const CheckOut = () => {
       const orders = snapshot.val()
       if (orders !== null) {
         const id = snapshot.val().length
-        console.log(id);
         setids(id)
       } else{
         setids(1)
@@ -145,95 +146,134 @@ const CheckOut = () => {
     }
   };
 
-  let [ building_data , setbuilding_data ] = useState({})
-  let [ TotalBuild , settotalBuild ] = useState('')
 
   useEffect(()=>{
-    const buildingDataPath = ref(db , 'building/')
-    onValue(buildingDataPath , ( snapshot )=>{
-      const building_data = snapshot.val()
-      setbuilding_data(building_data);
-    })
-    const total = BuyItem.flatMap(item => item || []);
-    const total_Cart = BuyItem.flatMap(item => item.totalPrice || []);
-    const total_cartItem = BuyItem.flatMap(item => item.cartItem || []);
- 
-    if (total_cartItem.length >= 1) {
-      const total_B_C_Cart = Number(total_Cart) +
-      Number(building_data?.delivery_charges) +
-      Number(building_data?.VAT);
-      settotalBuild(total_B_C_Cart);
-      
-    } else {
-      const itemTotal = total.reduce((sum, item) => {
-        const price = Number(item?.Pricesub || item?.Price || 0); 
-        return sum + price;
-      }, 0);
-      const total_B_C = itemTotal +
-        Number(building_data?.delivery_charges) +
-        Number(building_data?.VAT);
-        settotalBuild(total_B_C);
+    let fetchData = async () => {
+      try {
+        
+        const buildingDataPath = ref(db , 'building/')
+        const snapshot = await get(buildingDataPath)
+        if (snapshot.exists()) {
+          const building_data = snapshot.val();
+          setbuilding_data(building_data)
+                    
+          const total = BuyItem.flatMap(item => item || []);
+          const total_Cart = BuyItem.flatMap(item => item.totalPrice || []);
+          const total_cartItem = BuyItem.flatMap(item => item.cartItem || []);
+          
+          if (total_cartItem.length >= 1) {
+            const total_B_C_Cart = Number(total_Cart) +
+            Number(building_data?.delivery_charges) +
+            Number(building_data?.VAT);
+            settotalBuild(total_B_C_Cart);
+            
+          } else {
+            const itemTotal = total.reduce((sum, item) => {
+              const price = Number(item?.Pricesub || item?.Price || 0); 
+              return sum + price;
+            }, 0);
+            const total_B_C = itemTotal +
+            Number(building_data?.delivery_charges) +
+            Number(building_data?.VAT);
+            settotalBuild(total_B_C);
+          }
+        }
+      } catch (error) {
+       console.log(error);
+        
+      }
     }
-  },[db , TotalBuild , building_data])
+    fetchData()
+  },[ BuyItem , db ])
   
   return (
-    <section>
-      <div className="container px-[10px] my-[30px] flex justify-center mx-auto">
+<section className="py-10 bg-[#f9f9f9] min-h-screen text-sm sm:text-base">
+  <div className="container mx-auto px-4 flex justify-center">
+    <div className="w-full lg:w-4/5 bg-white shadow-xl rounded-xl space-y-6">
 
-        <div className="w-[100%] lg:w-[80%]">
-        <UserContact userDelivery={userDelivery} />
-        <BuyProDucts HandleSendOTP={HandleSendOTP} building_data={building_data} TotalBuild={TotalBuild} BuyItem={BuyItem} />
-        </div>
-        {test && (
-  <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[80%] md:w-[50%] bg-[#1a1a1a] text-[#f5f5f5] py-[20px] px-[30px] rounded-[15px] shadow-lg border border-[#d32f2f]">
-    <h3 className="text-[20px] font-bold text-center mb-[10px] text-[#ff6f61]">
-      Error Notification
-    </h3>
-    {[errorItem, errorItem1, errorItem2, errorItem3 , errorItem6].map(
-      (item, index) => (
-        item !== "" &&
-        <div
-          key={index}
-          className="bg-[#282828] my-[5px] px-[10px] py-[5px] rounded text-[15px] font-medium border border-[#555]"
-        >
-          {item}
-        </div>
-      )
-    )}
-    <button
-      onClick={() => setTest(false)}
-      className="mt-[20px] w-full py-[10px] bg-[#d32f2f] text-[#fff] text-[16px] rounded hover:bg-[#a00000] transition duration-300"
-    >
-      Close
-    </button>
-  </div>
-)}
+      {/* User Contact Section */}
+      <UserContact userDelivery={userDelivery} />
 
-        {sendOTP && (
-          <div className="p-[30px] rounded OTPInput fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[300px] h-[200px] sm:w-[500px] sm:h-[300px] bg-[#fff]">
-            <h2 className="flex justify-center mb-[20px] text-[18px] font-[600]">Please check your message box</h2>
-            <h2 className="flex justify-center my-[20px] text-[18px] text-[green] font-[600]">
-              {phoneNumber.replace(/\d(?=\d{4})/g, '*')}
-            </h2>
-            <div className="flex justify-center items-center">
-              <input
-                type="text"
-                className="w-[100%] h-[40px] outline-none px-[5px] border-[2px] border-[#00000097] rounded"
-                placeholder="Enter OTP"
-                onChange={(e) => setOtpInput(e.target.value)}
-              />
-            </div>
-            <h2
-              onClick={handleVerifyOTP}
-              className="flex justify-center items-center mt-[10px] rounded w-[80px] h-[30px] bg-[#000] text-[#fff] text-[15px] font-[600] cursor-pointer"
-            >
-              Verify
-            </h2>
-          </div>
+      {/* Product List Section */}
+      <BuyProDucts 
+        HandleSendOTP={HandleSendOTP} 
+        building_data={building_data} 
+        TotalBuild={TotalBuild} 
+        BuyItem={BuyItem} 
+      />
+    </div>
+
+
+    {/* Error Modal */}
+    {test && (
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100%] md:w-[50%] bg-[#1a1a1a] text-white p-5 sm:p-6 rounded-xl shadow-2xl border border-red-600 z-50">
+        <h3 className="text-lg sm:text-xl font-bold text-center text-[#ff6f61] mb-4">
+          Error Notification
+        </h3>
+        {[errorItem, errorItem1, errorItem2, errorItem3, errorItem6].map(
+          (item, index) =>
+            item && (
+              <div
+                key={index}
+                className="bg-[#282828] my-2 px-4 py-2 rounded-md text-xs sm:text-sm border border-[#444]"
+              >
+                {item}
+              </div>
+            )
         )}
-        <div id="recaptcha-container"></div>
+        <button
+          onClick={() => settest(false)}
+          className="mt-6 w-full py-2 bg-red-600 hover:bg-red-800 text-white text-sm font-semibold rounded-md transition duration-300"
+        >
+          Close
+        </button>
       </div>
-    </section>
+    )}
+
+    {/* OTP Modal */}
+    {sendOTP && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+        <div className="w-[90%] sm:w-[400px] bg-white rounded-2xl shadow-2xl p-6 sm:p-8 space-y-5 border border-gray-200">
+
+          <div className="text-center space-y-1">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">OTP Verification</h2>
+            <p className="text-xs sm:text-sm text-gray-500">Please check your message inbox</p>
+          </div>
+
+          <div className="text-center">
+            <p className="text-green-600 text-base sm:text-lg font-semibold tracking-wider">
+              {phoneNumber.replace(/\d(?=\d{4})/g, '*')}
+            </p>
+          </div>
+
+          <div className="flex items-center justify-center px-4 py-6">
+            <input
+              type="tel"
+              inputMode="numeric"
+              pattern='[0-9]*'
+              maxLength={6}
+              className="w-full max-w-xs h-14 px-4 text-center text-lg sm:text-xl tracking-[0.6em] placeholder-gray-400 focus:outline-none"
+              placeholder="******"
+              onChange={(e) => setOtpInput(e.target.value.replace(/\D/g, ''))}
+            />
+          </div>
+
+          <button
+            onClick={handleVerifyOTP}
+            className="w-full h-11 bg-black text-white rounded-lg text-sm sm:text-base font-semibold hover:bg-gray-900 transition duration-300"
+          >
+            Verify OTP
+          </button>
+        </div>
+      </div>
+    )}
+
+    {/* reCAPTCHA */}
+    <div id="recaptcha-container"></div>
+  </div>
+</section>
+
+
   );
 };
 

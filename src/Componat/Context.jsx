@@ -30,7 +30,7 @@ const Context = ({ children }) => {
           "Price": item?.Price,
         })
       )
-      console.log(data);
+      // console.log(data);
       
       const total = data.length;
       const newItems = data.slice(

@@ -26,11 +26,9 @@ export const counterSlice = createSlice({
       localStorage.setItem("BuyItem" , JSON.stringify(state.BuyItem))
     },
     AddToCart:(state , action) => {
-      let FindProduct = state.cartItem.findIndex((item)=> item.id == action.payload.id)
+      let FindProduct = state.cartItem.findIndex((item)=> item.id === action.payload.id)
       let FindProductModel = state.cartItem.findIndex((item)=> item.size === action.payload.size)
       let FindProductPCU = state.cartItem.findIndex((item)=> item.PCU === action.payload.PCU)
-      console.log(FindProductPCU);
-
       
       if (FindProduct !== -1 && FindProductModel !== -1  && FindProductPCU !== -1 ) {
           state.cartItem[FindProductModel].ProdectQun += 1
