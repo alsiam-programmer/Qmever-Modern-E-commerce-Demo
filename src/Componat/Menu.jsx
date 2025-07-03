@@ -7,7 +7,7 @@ import { userLogout, userUidLogin } from './slice/AllSlice';
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { IoSearchOutline, IoCloseOutline, IoCameraOutline } from "react-icons/io5";
 import axios from 'axios';
-import { useNavigate , Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { FaSnowflake } from "react-icons/fa";
 
 const Menu = () => {
@@ -25,9 +25,9 @@ const Menu = () => {
   let [MenuShow, setMenuShow] = useState(false)
   let [Year, setYear] = useState([])
   let [useruid, setUseruid] = useState('')
-  let [getDataSearch , setGetDataSearch] = useState([])
-  let [ searchItemIndex , setSearchItemIndex ] = useState(-1)
-  
+  let [getDataSearch, setGetDataSearch] = useState([])
+  let [searchItemIndex, setSearchItemIndex] = useState(-1)
+
   useEffect(() => {
     userLoginUid.map((item) => {
       setUseruid(item);
@@ -70,55 +70,44 @@ const Menu = () => {
   // upazila: `${userDelivery.upazila !== "" ? userDelivery.upazila : ""}`,
 
   let handleLogin = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
 
-        if (user !== null) {
-          set(ref(db, 'users/' + user.uid), {
+      if (user) {
+        set(ref(db, 'users/' + user.uid), {
+          username: user.displayName,
+          email: user.email,
+          profile_picture: user.photoURL,
+          uid: user.uid,
+          gender: userData?.gender || "",
+          dateOfBirth: userData?.dateOfBirth || "",
+          Delivery_address: {
             username: user.displayName,
             email: user.email,
-            profile_picture: user.photoURL,
-            uid: user.uid,
-            gender: `${userData.gender !== "" ? userData.gender : ""}`,
-            dateOfBirth: `${userData.dateOfBirth !== "" ? userData.dateOfBirth : ""}`,
-            Delivery_address: {
-              username: user.displayName,
-              email: user.email,
-              Phone_Number: `${userDelivery.Phone_Number !== "" ? userDelivery.Phone_Number : ""}`,
-              Division: `${userDelivery.Division !== "" ? userDelivery.Division : ""}`,
-              District: `${userDelivery.District !== "" ? userDelivery.District : ""}`,
-              local_address: `${userDelivery.local_address !== "" ? userDelivery.local_address : ""}`,
-            }
-          });
-          dispatch(userUidLogin(user.uid))
-          console.log(user, "done");
+            Phone_Number: userDelivery?.Phone_Number || "",
+            Division: userDelivery?.Division || "",
+            District: userDelivery?.District || "",
+            local_address: userDelivery?.local_address || "",
+          }
+        });
 
-        } else {
-          console.log("error datadase");
+        dispatch(userUidLogin(user.uid));
+        console.log(user, "done");
+      } else {
+        console.log("error database");
+      }
+    })
+    .then(() => {
+      navigate('/Login');
+    })
+    .catch((error) => {
+      console.error("Auth Error:", error.code, error.message);
+    });
+};
 
-        }
-      })
-      .then(() => {
-        navigate('/Login')
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        console.log(errorCode);
-        console.log(error);
-
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
-
-  }
 
   let handleLogout = () => {
     signOut(auth).then(() => {
@@ -153,7 +142,7 @@ const Menu = () => {
     });
   }, [db])
   const [search, setSearch] = useState("");
-  let [ searchBoxShow , setSearchBoxShow ] = useState(false)
+  let [searchBoxShow, setSearchBoxShow] = useState(false)
   const handleSearch = (e) => {
     setSearch(e.target.value)
     axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase/products.json").then((res) => {
@@ -164,7 +153,7 @@ const Menu = () => {
 
   const GoSearchEnter = (e) => {
     if (e.key === "Enter") {
-      if (searchItemIndex === -1 || searchItemIndex === (getDataSearch.length + 1) ) {
+      if (searchItemIndex === -1 || searchItemIndex === (getDataSearch.length + 1)) {
         navigate(`/search_query?query=${encodeURIComponent(search)}`)
         setSearchBoxShow(false)
         setSearchItemIndex(-1)
@@ -177,12 +166,12 @@ const Menu = () => {
       }
     }
     if (e.key === "ArrowDown") {
-      if ( getDataSearch.length - 1 > searchItemIndex ) {
+      if (getDataSearch.length - 1 > searchItemIndex) {
         setSearchItemIndex(item => item + 1)
       }
     }
     if (e.key === "ArrowUp") {
-      if (searchItemIndex > -1 ) {
+      if (searchItemIndex > -1) {
         setSearchItemIndex(item => item - 1)
       }
     }
@@ -196,10 +185,10 @@ const Menu = () => {
     setSearch("")
   }
 
-  let handleItemName = ({item , index}) => {
+  let handleItemName = ({ item, index }) => {
     setSearch(item.Prodectname)
     console.log(index);
-    
+
   }
   return (
     <section>
@@ -213,9 +202,9 @@ const Menu = () => {
       <h5 className='text-[#fff] lg:text-[20px] fixed top-0 translate-x-[50%] left-[80%] animate-[animake_10s_linear_infinite] z-[990] '><FaSnowflake /></h5>
       <h5 className='text-[#fff] lg:text-[20px] fixed top-0 translate-x-[50%] left-[98%] animate-[animake_6s_linear_infinite] z-[990] '><FaSnowflake /></h5>
 
-      
+
       <section className='w-[100%] h-[100px] mb-[10px] sm:mb-[0px] sm:h-[120px] '>
-               <div className=' z-[990] px-[10px] bg-[#062919] fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
+        <div className=' z-[990] px-[10px] bg-[#062919] fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
           <div className=" relative container mx-auto h-[60px] sm:h-[70px] md:h-[80px]">
             <div className="webLogo cursor-pointer w-[100%] flex justify-center items-center h-[60px] sm:h-[70px] md:h-[80px] lg:justify-start">
               <h1 className='text-[#fff] text-[30px] noselect italic font-[700]'>Qmever.com</h1>
@@ -243,123 +232,133 @@ const Menu = () => {
           </div>
         </div>
       </section>
-     {
-  MenuShow ? (
-    <div className="fixed top-0 right-0 z-[999] h-full w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] bg-white shadow-xl duration-300">
-      <ul className="w-full mt-16 px-4 space-y-3">
-        {
-          useruid === "" ? (
-            <div className=" w-full flex justify-center">
+      {
+        MenuShow ? (
+          <div className="fixed top-0 right-0 z-[999] h-full w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] bg-white shadow-xl duration-300">
+            <ul className="w-full mt-16 px-4 space-y-3">
+              {
+                useruid === "" ? (
+                  <div className=" w-full flex justify-center">
 
-      <img
-        src="https://i.ibb.co/vC8zmqHv/low-self-esteem-1-1.jpg"
-        alt="Nice to meet you"
-        className=" w-[80%] h-auto object-contain"
-        />
-        </div>
-      
-
-          ) : (
-            <Link to={'/user-profile'}>
-              <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
-                <img
-                  src={userData.profile_picture}
-                  alt="User"
-                  className="w-12 h-12 rounded-full border-4 border-yellow-400"
-                />
-                <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData.username}</h2>
-              </div>
-            </Link>
-          )
-        }
-
-        {
-          useruid === "" ? (
-            <li
-              onKeyDown={handleKeysystem}
-              onClick={handleLogin}
-              className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-green-600 text-white px-6 py-3 text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
-            >
-              Login
-            </li>
-          ) : (
-            <div className="space-y-2">
-              <Link to="/"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Home</li></Link>
-              <Link to="/ProductPage"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Products</li></Link>
-              <li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Notification</li>
-              <Link to="/Orders"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">My Order</li></Link>
-              <Link to="/CartPage"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Cart</li></Link>
-
-              <li
-                onClick={handleLogout}
-                className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-red-600 text-white px-6 py-3 text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
-              >
-                Logout
-              </li>
-            </div>
-          )
-        }
-      </ul>
-    </div>
-  ) : (
-    <div className="fixed top-0 right-[-60%] z-[999] h-full w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] bg-white shadow-xl duration-300">
-      <ul className="w-full mt-16 px-4 space-y-3">
-     {
-          useruid === "" ? (
-            <div className=" w-full flex justify-center">
-
-      <img
-        src="https://i.ibb.co/vC8zmqHv/low-self-esteem-1-1.jpg"
-        alt="Nice to meet you"
-        className=" w-[80%] h-auto object-contain"
-        />
-        </div>
-      
-
-          ) : (
-            <Link to={'/user-profile'}>
-              <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
-                <img
-                  src={userData.profile_picture}
-                  alt="User"
-                  className="w-12 h-12 rounded-full border-4 border-yellow-400"
-                />
-                <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData.username}</h2>
-              </div>
-            </Link>
-          )
-        }
+                    <img
+                      src="https://i.ibb.co/vC8zmqHv/low-self-esteem-1-1.jpg"
+                      alt="Nice to meet you"
+                      className=" w-[80%] h-auto object-contain"
+                    />
+                  </div>
 
 
-        {
-          useruid === "" ? (
-            <li
-              onClick={handleLogin}
-              className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-green-600 text-white px-6 py-3 text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
-            >
-              Login
-            </li>
-          ) : (
-            <div className="space-y-2">
-              <Link to="/"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Home</li></Link>
-              <Link to="/ProductPage"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Products</li></Link>
-              <li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Notification</li>
-              <Link to="/Orders"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">My Order</li></Link>
-              <Link to="/CartPage"><li className="text-[20px] font-bold px-5 py-3 rounded-xl hover:bg-gray-100">Cart</li></Link>
+                ) : (
+                  <Link to={'/user-profile'}>
+                    <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
+                      <img
+                        src={userData.profile_picture}
+                        alt="User"
+                        className="w-12 h-12 rounded-full border-4 border-yellow-400"
+                      />
+                      <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData.username}</h2>
+                    </div>
+                  </Link>
+                )
+              }
 
-              <li
-                onClick={handleLogout}
-                className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-red-600 text-white px-6 py-3 text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
-              >
-                Logout
-              </li>
-            </div>
-          )
-        }
-      </ul>
-    </div>
-  )
-}
+              {
+                useruid === "" ? (
+                  <li
+                    onKeyDown={handleKeysystem}
+                    onClick={handleLogin}
+                    className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-green-600 text-white px-6 lg:py-2 py-[5px] text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
+                  >
+                    Login
+                  </li>
+                ) : (
+                  <div className="space-y-2">
+                    <Link to="/"><li className=" hover:text-green-700 text-[black]
+ text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Home</li></Link>
+                    <Link to="/ProductPage"><li className=" hover:text-green-700 text-[black]
+ text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Products</li></Link>
+                    <li className=" hover:text-green-700 text-[black]
+ text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Notification</li>
+                    <Link to="/Orders"><li className=" hover:text-green-700 text-[black]
+ text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">My Order</li></Link>
+                    <Link to="/CartPage"><li className=" hover:text-green-700 text-[black]
+ text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Cart</li></Link>
+
+                    <li
+                      onClick={handleLogout}
+                      className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-red-600 text-white px-6 lg:py-2 py-[5px] text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
+                    >
+                      Logout
+                    </li>
+                  </div>
+                )
+              }
+            </ul>
+          </div>
+        ) : (
+          <div className="fixed top-0 right-[-60%] z-[999] h-full w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] bg-white shadow-xl duration-300">
+            <ul className="w-full mt-16 px-4 space-y-3">
+              {
+                useruid === "" ? (
+                  <div className=" w-full flex justify-center">
+
+                    <img
+                      src="https://i.ibb.co/vC8zmqHv/low-self-esteem-1-1.jpg"
+                      alt="Nice to meet you"
+                      className=" w-[80%] h-auto object-contain"
+                    />
+                  </div>
+
+
+                ) : (
+                  <Link to={'/user-profile'}>
+                    <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
+                      <img
+                        src={userData.profile_picture}
+                        alt="User"
+                        className="w-12 h-12 rounded-full border-4 border-yellow-400"
+                      />
+                      <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData.username}</h2>
+                    </div>
+                  </Link>
+                )
+              }
+
+              {
+                useruid === "" ? (
+                  <li
+                    onKeyDown={handleKeysystem}
+                    onClick={handleLogin}
+                    className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-green-600 text-white px-6 lg:py-2 py-[5px] text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
+                  >
+                    Login
+                  </li>
+                ) : (
+                  <div className="space-y-2">
+                    <Link to="/"><li className=" hover:text-green-700 text-[black]
+ text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Home</li></Link>
+                    <Link to="/ProductPage"><li className=" hover:text-green-700 text-[black]
+ text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Products</li></Link>
+                    <li className=" hover:text-green-700 text-[black]
+ text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Notification</li>
+                    <Link to="/Orders"><li className=" hover:text-green-700 text-[black]
+ text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">My Order</li></Link>
+                    <Link to="/CartPage"><li className=" hover:text-green-700 text-[black]
+ text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Cart</li></Link>
+
+                    <li
+                      onClick={handleLogout}
+                      className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-red-600 text-white px-6 lg:py-2 py-[5px] text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
+                    >
+                      Logout
+                    </li>
+                  </div>
+                )
+              }
+            </ul>
+          </div>
+        )
+      }
 
     </section>
   )

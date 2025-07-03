@@ -13,7 +13,6 @@ export const counterSlice = createSlice({
         localStorage.setItem("user" , JSON.stringify(state.user))
     },
     userLogout:(state , action)=>{
-      console.log(action.payload);
       state.user.splice(action.payload)
       localStorage.setItem("user" , JSON.stringify(state.user))
     },

@@ -1,168 +1,168 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue } from 'firebase/database';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { IoIosDoneAll } from "react-icons/io";
+import { IoIosDoneAll } from 'react-icons/io';
 
-const Login = () => { 
+const Login = () => {
   const navigate = useNavigate();
-  const userLoginUid = useSelector((item) => item.counter.user);
   const db = getDatabase();
-  const [userData, setUserdata] = useState({});
-  const [Delivery_address, setDelivery_address] = useState({});
-  const [genderSelet, setGenderSelet] = useState('');
-  const [userDaydata, setUserDaydata] = useState('');
-  const [userPH_Num, setUserPH_Num] = useState('');
+  const userLoginUid = useSelector((state) => state.counter.user);
 
-  // Fetch user data
+  const [userData, setUserData] = useState({});
+  const [deliveryAddress, setDeliveryAddress] = useState({});
+  const [selectedGender, setSelectedGender] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const genderOptions = ['Male', 'Female', 'Transgender'];
+
+  // Fetch user and address data
   useEffect(() => {
-    userLoginUid.forEach((useruid) => {
-      onValue(ref(db, '/users/' + useruid), (snapshot) => {
-        const userDetails = snapshot.val();
-        setUserdata(userDetails);
+    userLoginUid.forEach((uid) => {
+      const userRef = ref(db, `/users/${uid}`);
+      const addressRef = ref(db, `/users/${uid}/Delivery_address`);
+
+      onValue(userRef, (snapshot) => {
+        const data = snapshot.val();
+        console.log(data);
+        
+        if (data) setUserData(data);
       }, { onlyOnce: true });
-    });
-  }, [userLoginUid]);
 
-  // Fetch delivery address data
-  useEffect(() => {
-    userLoginUid.forEach((useruid) => {
-      onValue(ref(db, '/users/' + useruid + '/Delivery_address/'), (snapshot) => {
+      onValue(addressRef, (snapshot) => {
         const address = snapshot.val();
-        setDelivery_address(address);
+        console.log(address);
+        
+        if (address) setDeliveryAddress(address);
       }, { onlyOnce: true });
     });
   }, [userLoginUid]);
 
-  const Gender = [
-    { "Gender": "Male" },
-    { "Gender": "Female" },
-    { "Gender": "Transgender" },
-  ];
-
-  // Handle gender selection
-  const handleGenderSelect = (item) => {
-    setGenderSelet(item.Gender);
-  };
-
-  // Handle phone number change with validation for Bangladeshi format
-  const handlePhoneChange = (e) => {
-    let phoneNumber = e.target.value;
-
-    // Allow only numbers and enforce +880 as the starting sequence
-    if (/^01[3-9][0-9]{8}$/.test(phoneNumber)) {
-      setUserPH_Num(phoneNumber);
-    }
-  };
-
-  // Update user data in Firebase
-  const handleUpdateData = () => {
-    if (!userPH_Num) {
-      alert("Please enter a valid Bangladeshi phone number");
-      return;
-    }
-    if (!userDaydata) {
-      alert("You not 12 Year old");
-      return;
-    }
-    if (!genderSelet) {
-      alert("select Gender");
-      return;
-    }
-
-    set(ref(db, `users/${userData.uid}`), {
-      ...userData,
-      gender: genderSelet || userData.gender,
-      dateOfBirth: userDaydata || userData.dateOfBirth,
-      Delivery_address: {
-        ...Delivery_address,
-        Phone_Number: `+88${userPH_Num}`,
-      }
-    }).then(() => {
-      navigate("/")
-    }).catch(error => {
-      console.error("Error updating user data: ", error);
-    });
-  };
-
-  // Handle date input
-  const handleDateChange = (e) => {
-    const selectedDate = e.target.value;
-    const currentDate = new Date();
-    const birthDate = new Date(selectedDate);
-  
-    // Calculate age in years
-    let age = currentDate.getFullYear() - birthDate.getFullYear();
-    const monthDifference = currentDate.getMonth() - birthDate.getMonth();
-  
-    // If the current month is before the birth month, or the month is the same but the current date is before the birth date, subtract 1 from the age
-    if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < birthDate.getDate())) {
-      age--;
-    }
-  
-    // If the user is less than 12 years old
-    if (age < 12) {
-      alert("You must be at least 12 years old.");
-    } else {
-      setUserDaydata(selectedDate);
-    }
-  };
-
-  // Scroll to top on load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const calculateAge = (dob) => {
+    const today = new Date();
+    const birth = new Date(dob);
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
+  const handleGenderSelect = (gender) => setSelectedGender(gender);
+
+  const handleDateChange = (e) => {
+    const selected = e.target.value;
+    const age = calculateAge(selected);
+    if (age < 12) {
+      alert("You must be at least 12 years old.");
+    } else {
+      setBirthDate(selected);
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value.trim();
+    if (/^01[3-9][0-9]{8}$/.test(value)) {
+      setPhoneNumber(value);
+    }
+  };
+
+  const handleUpdate = () => {
+    if (!phoneNumber) return alert("Enter a valid Bangladeshi phone number.");
+    if (!birthDate && !userData.dateOfBirth) return alert("Enter your birth date.");
+    if (!selectedGender && !userData.gender) return alert("Select your gender.");
+
+    const updatedUser = {
+      ...userData,
+      gender: selectedGender || userData.gender || '',
+      dateOfBirth: birthDate || userData.dateOfBirth || '',
+      Delivery_address: {
+        ...deliveryAddress,
+        Phone_Number: `+88${phoneNumber}`,
+      },
+    };
+
+    set(ref(db, `users/${userData.uid}`), updatedUser)
+      .then(() => navigate("/"))
+      .catch((error) => console.error("Update failed:", error));
+  };
+
   return (
-    <section>
-      <div className="container mx-auto flex justify-center items-center px-4">
-        <div className="userLogin_Box w-full xl:w-[550px] bg-[#00000036] md:w-4/5 md:mt-24 lg:mt-10 lg:w-3/5 p-4 md:p-8 xl:h-[600px] border-3 rounded border-white">
-          <div className="flex justify-center mb-4">
-            <img className="w-24 h-24 rounded-full" src={userData.profile_picture} alt="Profile" />
-          </div>
-          <input 
-            className="w-full h-10 bg-[#ffffffcc] outline-none my-2 rounded px-4 font-semibold" 
-            type="text" 
-            placeholder={userData.username} 
-            disabled 
+    <section className="flex items-center justify-center py-10 ">
+      <div className="w-full max-w-lg bg-gray-50 shadow-md rounded-xl p-6">
+        {/* Profile Image */}
+        <div className="flex justify-center mb-6">
+          <img
+            src={userData.profile_picture}
+            alt="Profile"
+            className="w-24 h-24 rounded-full object-cover"
           />
-          <h5 className="w-full h-10 bg-[#ffffff63] flex items-center justify-between my-2 text-pink-600 rounded px-4 font-semibold overflow-hidden">
-            {userData.email} <span className="text-4xl text-green-600"><IoIosDoneAll /></span>
-          </h5>
-          <div className="flex items-center gap-1 w-full mb-2 h-10">
-            <h5 className="w-1/5 lg:w-1/10 h-10 rounded-l bg-[#ffffff63] flex items-center justify-center my-2 text-pink-600 rounded px-4 font-semibold">+88</h5>
-            <input 
-              onChange={handlePhoneChange} 
-              className="w-4/5 lg:w-9/10 h-10 bg-[#ffffff63] outline-none rounded-r px-4 font-semibold"
-              type="text" 
-              placeholder="Enter Your phone number"
-            />
-          </div>
-          <input 
-            onChange={handleDateChange} 
-            className="w-full h-10 bg-[#ffffff63] outline-none mb-2 rounded px-4 font-semibold" 
-            type="date" 
-          />
-          <div className="w-full h-12 bg-[#ffffff63] mb-2 rounded flex items-center gap-2 px-4 font-semibold">
-            {Gender.map((item) => (
-              <h5
-                key={item.Gender}
-                onClick={() => handleGenderSelect(item)}
-                className={`${
-                  genderSelet === item.Gender ? "bg-green-600 text-white" : "text-black border-2 border-black"
-                } cursor-pointer px-4 rounded h-9 flex items-center`}
-              >
-                {item.Gender}
-              </h5>
-            ))}
-          </div>
-          <h5 
-            onClick={handleUpdateData} 
-            className="noselect w-full h-10 bg-green-600 flex items-center justify-center mt-14 my-2 text-white rounded px-4 font-semibold cursor-pointer"
-          >
-            Next
-          </h5>
         </div>
+
+        {/* Username (readonly) */}
+        <input
+          type="text"
+          value={userData.username || ''}
+          disabled
+          className="w-full mb-3 px-4 py-2 rounded border bg-gray-100 font-semibold text-gray-600"
+          placeholder="Username"
+        />
+
+        {/* Email */}
+        <div className="w-full mb-3 flex items-center justify-between px-4 py-2 rounded border bg-gray-100 font-semibold text-pink-600">
+          <span>{userData.email}</span>
+          <IoIosDoneAll className="text-green-600 text-2xl" />
+        </div>
+
+        {/* Phone Input */}
+        <div className="flex items-center mb-3">
+          <span className="bg-gray-200 px-4 py-2 rounded-l font-semibold text-pink-600">+88</span>
+          <input
+            type="text"
+            onChange={handlePhoneChange}
+            className="flex-1 py-2 px-4 rounded-r border border-l-0 bg-gray-50 outline-none"
+            placeholder={deliveryAddress?.Phone_Number || "01XXXXXXXXX"}
+          />
+        </div>
+
+        {/* Date of Birth */}
+        <input
+          type="date"
+          value={birthDate || (userData?.dateOfBirth || "").trim()}
+          onChange={handleDateChange}
+          className="w-full mb-3 px-4 py-2 rounded border bg-gray-50"
+        />
+
+        {/* Gender Selection */}
+        <div className="flex gap-2 mb-4">
+          {genderOptions.map((gender) => (
+            <button
+              key={gender}
+              onClick={() => handleGenderSelect(gender)}
+              className={`px-4 py-2 rounded-full border transition ${
+                selectedGender === gender || userData?.gender === gender
+                  ? "bg-green-600 text-white"
+                  : "border-gray-600 text-gray-800"
+              }`}
+            >
+              {gender}
+            </button>
+          ))}
+        </div>
+
+        {/* Submit */}
+        <button
+          onClick={handleUpdate}
+          className="w-full mt-6 bg-green-600 text-white py-2 rounded font-semibold hover:bg-green-700 transition"
+        >
+          Next
+        </button>
       </div>
     </section>
   );
