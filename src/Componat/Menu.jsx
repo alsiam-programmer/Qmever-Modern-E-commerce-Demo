@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { FaBars } from "react-icons/fa";
 import { getAuth, signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { getDatabase, onValue, ref, set } from 'firebase/database';
+import { getDatabase, onValue, ref, set , get } from 'firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogout, userUidLogin } from './slice/AllSlice';
 import { IoIosArrowDropdownCircle } from "react-icons/io";
@@ -69,45 +69,55 @@ const Menu = () => {
 
   // unions: `${userDelivery.unions !== "" ? userDelivery.unions : ""}`,
   // upazila: `${userDelivery.upazila !== "" ? userDelivery.upazila : ""}`,
-
-  let handleLogin = () => {
+let handleLogin = () => {
   signInWithPopup(auth, provider)
-    .then((result) => {
+    .then(async (result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
-      dispatch(userUidLogin(user.uid));
 
-      if (user && userLoginUid) {
-        set(ref(db, 'users/' + user.uid), {
+      // Dispatch Redux action
+      await dispatch(userUidLogin(user.uid));
+
+      const userRef = ref(db, 'users/' + user.uid);
+
+      // Check if user already exists
+      const snapshot = await get(userRef);
+
+      if (!snapshot.exists()) {
+        // User does not exist, create new data
+        await set(userRef, {
           username: user.displayName,
           email: user.email,
           profile_picture: user.photoURL,
           uid: user.uid,
-          gender: userData?.gender || "",
-          dateOfBirth: userData?.dateOfBirth || "",
+          gender: "",
+          dateOfBirth: "",
           Delivery_address: {
             username: user.displayName,
             email: user.email,
-            Phone_Number: userDelivery?.Phone_Number || "",
-            Division: userDelivery?.Division || "",
-            District: userDelivery?.District || "",
-            local_address: userDelivery?.local_address || "",
+            Phone_Number: "",
+            Division: "",
+            District: "",
+            local_address: "",
           }
         });
-
-        console.log(user, "done");
+        await navigate('/Login')
+        window.location.reload()
+        console.log("new");
+        
       } else {
-        console.log("error database");
+        navigate('/')
+        console.log('old');
+        
       }
     })
-    .then(() => {
-      navigate('/Login');
-    })
+
     .catch((error) => {
       console.error("Auth Error:", error.code, error.message);
     });
 };
+
 
 
   let handleLogout = () => {
@@ -115,7 +125,11 @@ const Menu = () => {
       dispatch(userLogout(userLoginUid))
       setUseruid('')
       navigate("/")
-    }).catch((error) => {
+    })
+    .then(()=>{
+      window.location.reload()
+    })
+    .catch((error) => {
       console.log(error);
 
     });
