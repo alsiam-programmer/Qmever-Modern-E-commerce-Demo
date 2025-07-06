@@ -17,6 +17,8 @@ const ProductPage = () => {
   // Extract unique categories
   const query = new URLSearchParams(location.search).get("category");
 
+  console.log(info);
+  
   const categoriesMain = ["All", ...new Set(info.map((item) => item?.category?.main || "Uncategorized"))];
   const categoriesSub = ["All", ...new Set(info.map((item) => item?.category?.sub || "Uncategorized"))];
   const categoriesSubs = ["All", ...new Set(info.map((item) => item?.category?.subs || "Uncategorized"))];

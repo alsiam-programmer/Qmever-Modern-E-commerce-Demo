@@ -27,6 +27,7 @@ const Menu = () => {
   let [useruid, setUseruid] = useState('')
   let [getDataSearch, setGetDataSearch] = useState([])
   let [searchItemIndex, setSearchItemIndex] = useState(-1)
+  
 
   useEffect(() => {
     userLoginUid.map((item) => {
@@ -75,8 +76,9 @@ const Menu = () => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
+      dispatch(userUidLogin(user.uid));
 
-      if (user) {
+      if (user && userLoginUid) {
         set(ref(db, 'users/' + user.uid), {
           username: user.displayName,
           email: user.email,
@@ -94,7 +96,6 @@ const Menu = () => {
           }
         });
 
-        dispatch(userUidLogin(user.uid));
         console.log(user, "done");
       } else {
         console.log("error database");
@@ -252,7 +253,7 @@ const Menu = () => {
                   <Link to={'/user-profile'}>
                     <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
                       <img
-                        src={userData.profile_picture}
+                        src={userData?.profile_picture}
                         alt="User"
                         className="w-12 h-12 rounded-full border-4 border-yellow-400"
                       />
@@ -314,7 +315,7 @@ const Menu = () => {
                   <Link to={'/user-profile'}>
                     <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
                       <img
-                        src={userData.profile_picture}
+                        src={userData?.profile_picture}
                         alt="User"
                         className="w-12 h-12 rounded-full border-4 border-yellow-400"
                       />

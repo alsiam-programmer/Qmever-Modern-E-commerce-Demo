@@ -23,12 +23,18 @@ const Context = ({ children }) => {
       );
 
       const data = Object.values(res?.data || {}).map((item)=>
+        
         ({
           "Prodectname": item?.Prodectname,
           "imgurl": item?.imgurl,
           "ProdectId": item?.ProdectId,
           "Price": item?.Price,
-        })
+          "category" : {
+            "main": item?.category?.main,
+            "sub": item?.category?.sub,
+            "subs": item?.category?.subs,
+          }
+        }),
       )
       // console.log(data);
       
