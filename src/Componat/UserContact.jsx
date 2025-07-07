@@ -33,7 +33,6 @@ const UserContact = ({ userDelivery }) => {
     const [district, setdistrict] = useState([]);
 
  
-
     // Handle form submission to Firebase
     const Handleupload = () => {
         SetAlert(true)

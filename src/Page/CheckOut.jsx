@@ -24,8 +24,6 @@ const CheckOut = () => {
   let [ errorItem , seterrorItem ] = useState('') 
   let [ errorItem1 , seterrorItem1 ] = useState('') 
   let [ errorItem2 , seterrorItem2 ] = useState('') 
-  let [ errorItem3 , seterrorItem3 ] = useState('') 
-  let [ errorItem4 , seterrorItem4 ] = useState('') 
   let [ errorItem5 , seterrorItem5 ] = useState('') 
   let [ errorItem6 , seterrorItem6 ] = useState('') 
   
@@ -161,7 +159,7 @@ const CheckOut = () => {
           const total = BuyItem.flatMap(item => item || []);
           const total_Cart = BuyItem.flatMap(item => item.totalPrice || []);
           const total_cartItem = BuyItem.flatMap(item => item.cartItem || []);
-          setQty(total_cartItem)
+          setQty(total_cartItem.length)
           if (total_cartItem.length >= 1) {
             const total_B_C_Cart = Number(total_Cart) +
             Number(building_data?.delivery_charges) +
@@ -212,7 +210,7 @@ const CheckOut = () => {
         <h3 className="text-lg sm:text-xl font-bold text-center text-[#ff6f61] mb-4">
           Error Notification
         </h3>
-        {[errorItem, errorItem1, errorItem2, errorItem3, errorItem6].map(
+        {[errorItem, errorItem1, errorItem2, errorItem5, errorItem6].map(
           (item, index) =>
             item && (
               <div
