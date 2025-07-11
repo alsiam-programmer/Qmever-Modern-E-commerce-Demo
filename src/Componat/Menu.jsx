@@ -242,7 +242,7 @@ let handleLogin = () => {
               } */}
             </div>
             <div ref={MenuRef} onKeyDown={handleKeysystem} className="MenuBar cursor-pointer absolute top-[50%] right-[0px] translate-y-[-50%]">
-              <icon className='text-[38px] text-[#fff]' ><FaBars /></icon>
+              <div className='text-[38px] text-[#fff]' ><FaBars /></div>
             </div>
           </div>
         </div>

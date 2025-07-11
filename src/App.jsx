@@ -9,34 +9,33 @@ import Order from "./Page/Order"
 import SearchItem from "./Page/SearchItem"
 import UserProfile from "./Page/UserProfile"
 import ProductPage from "./Page/ProductPage"
+
 function App() {
 
   let router = createBrowserRouter(createRoutesFromElements(
     <Route element={<RootLayout/>}>
-      <Route path="/" element={<Home/>} ></Route>
-      <Route path="/Login" element={<Login/>} ></Route>
-      <Route path="/productDetails/:id" element={<ProductDetails/>} ></Route>
-      <Route path="/CheckOut" element={<CheckOut/>} ></Route>
-      <Route path="/CartPage" element={<Cartpage/>} ></Route>
-      <Route path="/Orders" element={<Order/>} ></Route>
+      <Route path="/" element={<Home/>} />
+      <Route path="/Login" element={<Login/>} />
+      <Route path="/productDetails/:id" element={<ProductDetails/>} />
+      <Route path="/CheckOut" element={<CheckOut/>} />
+      <Route path="/CartPage" element={<Cartpage/>} />
+      <Route path="/Orders" element={<Order/>} />
       <Route path="/search_query" element={<SearchItem />} />
       <Route path="/user-profile" element={<UserProfile />} />
       <Route path="/ProductPage" element={<ProductPage />} />
     </Route>
-  ),
-  {
+  ), {
     future: {
       v7_normalizeFormMethod: true,
       v7_skipActionErrorRevalidation: true,
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+      v7_fetcherPersist: true,
+      v7_partialHydration: true,
     },
-  }
+  })
 
-)
-  return (
-    <>
-    <RouterProvider router={router} />
-    </>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
