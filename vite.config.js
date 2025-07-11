@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate', // এইটাই service worker কে auto generate ও auto update করে
+      registerType: 'autoUpdate',
       includeAssets: ['Qmever.png'],
       manifest: {
         name: 'Qmever',
@@ -19,10 +19,14 @@ export default defineConfig({
         icons: [
           {
             src: 'Qmever.png',
-            sizes: '612x612',
+            sizes: '512x512',
             type: 'image/png',
+            purpose: 'any maskable',
           },
         ],
+      },
+      devOptions: {
+        enabled: true,
       },
     }),
   ],
