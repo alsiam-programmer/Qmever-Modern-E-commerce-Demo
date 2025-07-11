@@ -13,13 +13,12 @@ export default defineConfig({
         short_name: 'Qmever',
         description: 'A stylish shopping experience!',
         theme_color: '#000000',
-        background_color: '#ffffff',
+        background_color: '#000000',
         display: 'standalone',
         start_url: '/',
         icons: [
           {
             src: 'Qmever.png',
-            sizes: '512x512',
             type: 'image/png',
           },
         ],
