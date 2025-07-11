@@ -19,6 +19,7 @@ export default defineConfig({
         icons: [
           {
             src: 'Qmever.png',
+            sizes: '612x612',
             type: 'image/png',
           },
         ],
