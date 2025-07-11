@@ -11,26 +11,6 @@
         "source": "**",
         "destination": "/index.html"
       }
-    ],
-    "headers": [
-      {
-        "source": "**/*.@(jpg|jpeg|gif|png|webp|svg|js|css|eot|otf|ttf|ttc|woff|woff2|font.css)",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "max-age=31536000"
-          }
-        ]
-      },
-      {
-        "source": "/sitemap.xml",
-        "headers": [
-          {
-            "key": "Content-Type",
-            "value": "application/xml"
-          }
-        ]
-      }
     ]
   }
 }
