@@ -46,6 +46,7 @@ const Banner = () => {
     </div>
     {/* <img className='w-[20%] p-[10px] rounded-[20px]' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkNJRyKOaepOQlOOx_AjFJNEwZ4TtQn-5sLNdlctaf2tYa5xMBfUj2P2nBvb4_qu33w38&usqp=CAU" alt="" /> */}
         </div>
+        
     </section>
   )
 }

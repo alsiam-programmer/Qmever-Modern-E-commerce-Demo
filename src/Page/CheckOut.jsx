@@ -185,6 +185,7 @@ const CheckOut = () => {
     fetchData()
   },[ BuyItem , db ])
   
+  
   return (
 <section className="py-10 bg-[#f9f9f9] min-h-screen text-sm sm:text-base">
   <div className="container mx-auto px-4 flex justify-center">

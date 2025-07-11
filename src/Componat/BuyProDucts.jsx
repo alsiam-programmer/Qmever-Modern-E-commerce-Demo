@@ -49,6 +49,7 @@ const BuyProDucts = ({ BuyItem, building_data, TotalBuild, HandleSendOTP }) => {
               </h2>
             </div>
 
+
             {/* Payment Options */}
             <div className="flex gap-4 flex-col sm:flex-row text-sm sm:text-base text-gray-800">
               <div className="flex items-center gap-2">

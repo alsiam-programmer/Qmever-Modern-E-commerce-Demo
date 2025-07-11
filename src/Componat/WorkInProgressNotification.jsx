@@ -9,6 +9,7 @@ const WorkInProgressNotification = () => {
     setIsOpen(false);
   };
 
+  
   return (
     <>
       {isOpen && (

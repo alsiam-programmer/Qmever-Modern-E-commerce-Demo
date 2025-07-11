@@ -120,6 +120,7 @@ const Login = () => {
           <IoIosDoneAll className="text-green-600 text-2xl" />
         </div>
 
+
         {/* Phone Input */}
         <div className="flex items-center mb-3">
           <span className="bg-gray-200 px-4 py-2 rounded-l font-semibold text-pink-600">+88</span>

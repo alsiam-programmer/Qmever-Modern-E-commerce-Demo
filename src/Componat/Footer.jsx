@@ -33,7 +33,8 @@ const Footer = () => {
           <iframe className='w-[100%] h-[200px]' src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d117618.22871571548!2d89.17929430664063!3d22.892350670537734!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ff6f45dabacc0f%3A0xa8030a8113dddfb!2sSiam%20House!5e0!3m2!1sen!2sbd!4v1731901565799!5m2!1sen!2sbd"></iframe>
         </div>
     </div>
-        :
+       
+       :
         <div className='bg-[#062919] w-[100%] fixed bottom-[-100%] duration-200 left-0 z-[990]' >
         <div className="container mx-auto px-[10px] lg:px-[0px] py-[30px] ">
           <h5 className=' flex items-center text-[#fff] md:text-[30px] font-[700]' >Qmever.com{path}</h5>

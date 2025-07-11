@@ -11,6 +11,7 @@ const RootLayout = () => {
     <Footer/>
     </>
   )
+  
 }
 
 export default RootLayout

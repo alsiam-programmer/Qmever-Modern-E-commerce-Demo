@@ -11,10 +11,11 @@
 
   
   
+
   img {
     -webkit-user-drag: none;
   }
-
+/* 
   @keyframes animake {
     0% {
       top: -10px;
@@ -26,4 +27,4 @@
       top: 890px;
       opacity: 0;
     }
-  }
+  } */

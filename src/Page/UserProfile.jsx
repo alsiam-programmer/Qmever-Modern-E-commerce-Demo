@@ -16,6 +16,7 @@ const UserProfile = () => {
     })
   }
 
+  
   useEffect(() => {
     user_data()
   }, [userUID])

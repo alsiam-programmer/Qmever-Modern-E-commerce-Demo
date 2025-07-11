@@ -24,6 +24,7 @@ export const counterSlice = createSlice({
       state.BuyItem.splice(action.payload)
       localStorage.setItem("BuyItem" , JSON.stringify(state.BuyItem))
     },
+    
     AddToCart:(state , action) => {
       let FindProduct = state.cartItem.findIndex((item)=> item.id === action.payload.id)
       let FindProductModel = state.cartItem.findIndex((item)=> item.size === action.payload.size)

@@ -111,6 +111,7 @@ const ProductPage = () => {
           </div>
         </div>
 
+
         {/* Product Grid */}
         <div className="sm:w-[75%]">
           {filteredProducts.length > 0 ? (

@@ -47,6 +47,7 @@ const ProductDetails = () => {
   let [Loding, setLoding] = useState(false)
   let [modelselect, setModelselect] = useState(false)
   let [addsucess, setaddsucess] = useState(false)
+  
   let productData = () => axios.get(`https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId.id}.json`).then((res) => {
     setInfo(res.data);
     setInfo2(res.data.thumbnail)

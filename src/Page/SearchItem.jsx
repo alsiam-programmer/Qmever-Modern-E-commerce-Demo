@@ -83,6 +83,7 @@ const SearchItem = () => {
         </div>:""}
         </div>
 
+
         {/* Loading or Failed Search */}
         {failedSearch && (
            <div className="flex flex-col items-center justify-center">
