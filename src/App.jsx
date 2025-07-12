@@ -36,7 +36,7 @@ function App() {
   })
 
   return ( 
-  <div className=" lg:w-[85%] mx-auto">
+  <div className=" lg:w-[80%] mx-auto">
     <RouterProvider router={router} />
   </div>
   )

@@ -33,7 +33,7 @@ const Banner = () => {
       };
   return (
     <section className=' '>
-        <div className="container py-[5px] px-[10px] md:py-[20px] 2xl:px-0 flex mx-auto">
+        <div className="container py-[5px] px-[10px] md:py-[6px] 2xl:px-0 flex mx-auto">
       <div className="w-[100%]">
         <Slider {...settings}>
             <div className="imgBox w-[100%]">
@@ -46,7 +46,7 @@ const Banner = () => {
     </div>
     {/* <img className='w-[20%] p-[10px] rounded-[20px]' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkNJRyKOaepOQlOOx_AjFJNEwZ4TtQn-5sLNdlctaf2tYa5xMBfUj2P2nBvb4_qu33w38&usqp=CAU" alt="" /> */}
         </div>
-        
+      
     </section>
   )
 }
