@@ -102,9 +102,8 @@ let handleLogin = () => {
             local_address: "",
           }
         });
-        await navigate('/Login')
-        window.location.reload()
-        console.log("new");
+
+        await new Promise(res => setTimeout(res, 2000)); window.location.href = '/Login';
         
       } else {
         navigate('/')
@@ -267,11 +266,11 @@ let handleLogin = () => {
                   <Link to={'/user-profile'}>
                     <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
                       <img
-                        src={userData?.profile_picture}
+                        src={userData?.profile_picture || ''}
                         alt="User"
                         className="w-12 h-12 rounded-full border-4 border-yellow-400"
                       />
-                      <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData.username}</h2>
+                      <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData?.username || ''}</h2>
                     </div>
                   </Link>
                 )
@@ -330,11 +329,11 @@ let handleLogin = () => {
                   <Link to={'/user-profile'}>
                     <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
                       <img
-                        src={userData?.profile_picture}
+                        src={userData?.profile_picture || ''}
                         alt="User"
                         className="w-12 h-12 rounded-full border-4 border-yellow-400"
                       />
-                      <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData.username}</h2>
+                      <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData?.username || ''}</h2>
                     </div>
                   </Link>
                 )
