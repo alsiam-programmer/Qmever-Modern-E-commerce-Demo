@@ -220,7 +220,7 @@ let handleLogin = () => {
 
       <section className='w-[100%] h-[100px] mb-[10px] sm:mb-[0px] sm:h-[120px] '>
         <div className=' z-[990] px-[10px] bg-[#062919] fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
-          <div className=" relative container mx-auto h-[60px] sm:h-[70px] md:h-[80px]">
+          <div className=" lg:w-[85%] relative container mx-auto h-[60px] sm:h-[70px] md:h-[80px]">
             <div className="webLogo cursor-pointer w-[100%] flex justify-center items-center h-[60px] sm:h-[70px] md:h-[80px] lg:justify-start">
               <h1 className='text-[#fff] text-[30px] noselect italic font-[700]'>Qmever</h1>
             </div>
