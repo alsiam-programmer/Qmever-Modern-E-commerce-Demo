@@ -62,13 +62,14 @@ const Context = ({ children }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (
-        window.location.pathname === "/" &&
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 50
-      ) {
-        setPage((prevPage) => prevPage + 1);
-      }
+if (
+  (window.location.pathname === "/" || window.location.pathname === "/ProductPage") &&
+  window.innerHeight + document.documentElement.scrollTop >=
+    document.documentElement.offsetHeight - 50
+) {
+  setPage((prevPage) => prevPage + 1);
+}
+
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -82,7 +83,6 @@ const Context = ({ children }) => {
       setLoadingMore(false);
     }
   }, [info, totalItems]);
-
   
   return (
     <apiData.Provider value={info}>

@@ -8,7 +8,7 @@ const AllProductsHome = () => {
 
   const navigate = useNavigate()
 
-  
+
 
   const handleProDetails = (item) => {
     navigate(`/productDetails/${item.ProdectId}`);
@@ -18,9 +18,10 @@ const AllProductsHome = () => {
     <section className=" ">
       <div className="container py-[5px] md:py-10 mx-auto">
         <div className="flex flex-wrap ">
-          {info.map((item, index) => (
-            item !== null
-              ?
+          
+          {info
+          .filter(item => item && Number.isInteger(item.ProdectId) && item.ProdectId > 0)
+          .map((item, index) => (
               <div
                 key={item.ProdectId || index}
                 onClick={() => handleProDetails(item)}
@@ -47,7 +48,6 @@ const AllProductsHome = () => {
                 </h3>
                 
               </div>
-              : ""
           ))}
         </div>
 

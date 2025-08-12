@@ -124,6 +124,7 @@ const CheckOut = () => {
       const orderRef = ref(db, `orders/${userUid}/${ids}`);
       await set(orderRef, {
         orderId: ids,
+        placeOrderDate: new Date().toLocaleString('en-BD', { timeZone: 'Asia/Dhaka' }),
         customerUid: userUid,
         customer: userDelivery,
         orderItem: BuyItem,

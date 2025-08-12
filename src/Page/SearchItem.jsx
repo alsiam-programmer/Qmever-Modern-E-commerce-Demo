@@ -16,6 +16,7 @@ const SearchItem = () => {
   // Extract query parameter from the URL
   const query = new URLSearchParams(location.search).get('query');
 
+
   // Fetch and filter product data
   const fetchData = () => {
     setGetDataSearch([]); // Clear previous results
@@ -23,9 +24,13 @@ const SearchItem = () => {
     axios
       .get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json")
       .then((res) => {
-        const filteredData = res.data.filter((item) =>
+
+
+        const filteredData = Object.values(res.data || {}).filter((item) =>
           item?.Prodectname?.toLowerCase().includes(query.toLowerCase())
         );
+        console.log(filteredData);
+        
         setGetDataSearch(filteredData);
         if (filteredData.length === 0) {
           setFailedSearch(true);

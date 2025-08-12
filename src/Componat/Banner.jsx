@@ -29,18 +29,18 @@ const Banner = () => {
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />,
         autoplay: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 10000,
       };
   return (
     <section className=' '>
         <div className="container py-[5px] px-[10px] md:py-[6px] 2xl:px-0 flex mx-auto">
       <div className="w-[100%]">
-        <Slider {...settings}>
+        <Slider {...settings} >
             <div className="imgBox w-[100%]">
-                <img className=' rounded-[10px] w-[100%]' src="https://i.ibb.co.com/PzGTq0h/Black-and-Yellow-Minimalist-E-Commerce-Store-Burning-Mercado-Shops-Banner.png" alt="" />
+                <img className=' rounded-[2px] w-[100%]' src="https://i.ibb.co.com/PzGTq0h/Black-and-Yellow-Minimalist-E-Commerce-Store-Burning-Mercado-Shops-Banner.png" alt="" />
             </div>
             <div className="imgBox w-[100%]">
-                <img className=' rounded-[10px] w-[100%]' src="https://i.ibb.co.com/PzGTq0h/Black-and-Yellow-Minimalist-E-Commerce-Store-Burning-Mercado-Shops-Banner.png" alt="" />
+                <img className=' rounded-[2px] w-[100%]' src="https://i.ibb.co.com/PzGTq0h/Black-and-Yellow-Minimalist-E-Commerce-Store-Burning-Mercado-Shops-Banner.png" alt="" />
             </div>
     </Slider>
     </div>

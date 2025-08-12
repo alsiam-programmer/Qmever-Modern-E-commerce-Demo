@@ -113,8 +113,7 @@ const Order = () => {
             }`}>
             {orderStatusx[orderIndex]?.orderStatus || "Unknown"}
           </span>
-          {console.log(order)
-          }
+
           <p className="text-sm font-semibold text-gray-700">
             Total: {order.TotalBuild} ৳
           </p>

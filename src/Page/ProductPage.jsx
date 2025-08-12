@@ -116,8 +116,9 @@ const ProductPage = () => {
         <div className="sm:w-[75%]">
           {filteredProducts.length > 0 ? (
             <div className="flex flex-wrap">
-              {filteredProducts.map((item, index) => (
-                item !== null && (
+              {filteredProducts
+              .filter(item => item && Number.isInteger(item.ProdectId) && item.ProdectId > 0 )
+              .map((item, index) => (
                   <div
                     key={item.ProdectId || index}
                     onClick={() => handleProDetails(item)}
@@ -131,7 +132,6 @@ const ProductPage = () => {
                         alt={item.Prodectname || "Product Image"}
                       />
                     </div>
-
                     {/* Product Price */}
                     <h2 className="text-lg font-semibold text-[#cf0cbf] shadow-black mt-2">
                       Price: {Number(item.Price).toFixed(2) || "N/A"}৳
@@ -143,7 +143,7 @@ const ProductPage = () => {
                     </h3>
                   </div>
                 )
-              ))}
+            )}
             </div>
           ) : (
             <div className="flex justify-center my-8">
