@@ -17,7 +17,7 @@ const AllProductsHome = () => {
   return (
     <section className=" ">
       <div className="container py-[5px] md:py-10 mx-auto">
-        <div className="flex flex-wrap ">
+        <div className="flex flex-wrap">
           
           {info
           .filter(item => item && Number.isInteger(item.ProdectId) && item.ProdectId > 0)
