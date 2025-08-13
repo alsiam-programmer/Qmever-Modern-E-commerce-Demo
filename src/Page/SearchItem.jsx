@@ -16,6 +16,8 @@ const SearchItem = () => {
   // Extract query parameter from the URL
   const query = new URLSearchParams(location.search).get('query');
 
+  
+
 
   // Fetch and filter product data
   const fetchData = () => {
@@ -29,15 +31,13 @@ const SearchItem = () => {
         const filteredData = Object.values(res.data || {}).filter((item) =>
           item?.Prodectname?.toLowerCase().includes(query.toLowerCase())
         );
-        console.log(filteredData);
-        
+
         setGetDataSearch(filteredData);
         if (filteredData.length === 0) {
           setFailedSearch(true);
         }
       })
       .catch((err) => {
-        console.error("Error fetching data:", err);
         setFailedSearch(true);
       });
   };
@@ -58,52 +58,60 @@ const SearchItem = () => {
         <title>Qmever.com - {query}</title>
         <meta name="description" content={`Buy ${query} online at the best price. Free shipping and amazing discounts. Get it now!`} />
         <meta property="og:url" content={`https://qmever.com/search_query?query=${query}`} />
-            </Helmet>
+      </Helmet>
       <div className="container mx-auto">
         {/* Product List */}
-        <div className="ProPraBox my-[40px] cursor-pointer w-[100%] flex flex-wrap gap-[4px] sm:gap-[12px]">
-          { getDataSearch.length > 0 ?  getDataSearch.map((item) => (
-            <div
-            key={item.ProdectId}
-            onClick={() => handleProDetails(item)}
-            className="group w-[50%] md:w-[33.333333%] lg:w-[20%] p-[10px] rounded-lg cursor-pointer"
-          >
-            <div className="w-full overflow-hidden rounded-lg">
-              <img
-                className="w-full h-[190px] md:h-[240px] xl:h-[350px] object-cover group-hover:scale-110 transition-transform duration-300"
-                src={item.imgurl}
-                alt={item.Prodectname || "Product Image"}
-              />
+        <div className="flex flex-wrap ">
+          {getDataSearch.length > 0 ? (
+            getDataSearch
+              .filter(item => item && Number.isInteger(item.ProdectId) && item.ProdectId > 0)
+              .map((item, index) => (
+                <div
+                  key={item.ProdectId || index}
+                  onClick={() => handleProDetails(item)}
+                  className="group w-[50%] md:w-[33.333333%] lg:w-[20%] p-[10px] rounded-lg cursor-pointer"
+                >
+                  <div className="w-full overflow-hidden rounded-lg">
+                    <img
+                      className="w-full h-[190px] md:h-[240px] xl:h-[350px] object-cover group-hover:scale-110 transition-transform duration-300"
+                      src={item.imgurl}
+                      alt={item.Prodectname || "Product Image"}
+                    />
+                  </div>
+                  <h2 className="text-[12px] xl:text-lg font-semibold text-[#cf0cbf] shadow-black mt-2">
+                    Price: {Number(item.Price).toFixed(2) || "N/A"}৳
+                  </h2>
+                  <h3 className="text-[13px] xl:text-lg font-medium text-customized">
+                    {item.Prodectname && item.Prodectname.length > 30
+                      ? item.Prodectname.slice(0, 45) + "..."
+                      : item.Prodectname || "Unnamed Product"}
+                  </h3>
+                </div>
+              ))
+          ) : failedSearch !== true ? (
+            <div className="flex w-full justify-center my-8">
+              <TbLoader2 className="w-10 h-10 animate-spin text-pink-500" />
             </div>
-            <h2 className="text-lg font-semibold text-[#cf0cbf] shadow-black mt-2">
-              Price: {Number(item.Price).toFixed(2) || "N/A"}৳
-            </h2>
-            <h3 className="text-md font-medium italic text-customized">
-              {item.Prodectname || "Unnamed Product"}
-            </h3>
-          </div>
-          )): failedSearch !== true ?
-          <div className="flex w-[100%] justify-center my-8">
-          <TbLoader2 className="w-10 h-10 animate-spin text-pink-500" />
-        </div>:""}
+          ) : null}
         </div>
+
 
 
         {/* Loading or Failed Search */}
         {failedSearch && (
-           <div className="flex flex-col items-center justify-center">
-           <div className="text-[#ffffffcb]">
-             <TbMoodSad className="text-7xl text-customized md:text-9xl" />
-           </div>
-           <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mt-4">
-             No Products Found
-           </h1>
-           <p className="italic text-customized text-center mt-2">
-             We couldn't find any results for{' '}
-             <span className="text-red-500 font-bold">{query}</span>. <br />
-             Please try searching with a different keyword.
-           </p>
-         </div>
+          <div className="flex flex-col items-center justify-center">
+            <div className="text-[#ffffffcb]">
+              <TbMoodSad className="text-7xl text-customized md:text-9xl" />
+            </div>
+            <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mt-4">
+              No Products Found
+            </h1>
+            <p className="italic text-customized text-center mt-2">
+              We couldn't find any results for{' '}
+              <span className="text-red-500 font-bold">{query}</span>. <br />
+              Please try searching with a different keyword.
+            </p>
+          </div>
         )}
       </div>
     </section>

@@ -21,9 +21,7 @@ const Menu = () => {
   let [userDelivery, setuserDelivery] = useState({})
   const provider = new GoogleAuthProvider();
   let MenuRef = useRef()
-  let SupportRef = useRef()
   let [MenuShow, setMenuShow] = useState(false)
-  let [Year, setYear] = useState([])
   let [useruid, setUseruid] = useState('')
   let [getDataSearch, setGetDataSearch] = useState([])
   let [searchItemIndex, setSearchItemIndex] = useState(-1)
@@ -59,16 +57,7 @@ const Menu = () => {
 
   }
   document.addEventListener('keydown', handleKeysystem);
-  useEffect(() => {
-    const yearArray = [];
-    for (let i = 2024; i > 1900; i--) {
-      yearArray.push(i); // Push the year directly
-    }
-    setYear(yearArray); // Set the state
-  }, []); // Empty dependency array, so this runs only once after the component mounts
 
-  // unions: `${userDelivery.unions !== "" ? userDelivery.unions : ""}`,
-  // upazila: `${userDelivery.upazila !== "" ? userDelivery.upazila : ""}`,
 let handleLogin = () => {
   signInWithPopup(auth, provider)
     .then(async (result) => {
@@ -106,8 +95,7 @@ let handleLogin = () => {
         await new Promise(res => setTimeout(res, 2000)); window.location.href = '/Login';
         
       } else {
-        navigate('/')
-        console.log('old');
+
         
       }
     })
@@ -168,13 +156,13 @@ let handleLogin = () => {
   const GoSearchEnter = (e) => {
     if (e.key === "Enter") {
       if (searchItemIndex === -1 || searchItemIndex === (getDataSearch.length + 1)) {
-        navigate(`/search_query?query=${encodeURIComponent(search)}`)
+        navigate(`/search?query=${encodeURIComponent(search)}`)
         setSearchBoxShow(false)
         setSearchItemIndex(-1)
       } else {
         const selectedItem = getDataSearch.find((item, idx) => idx === searchItemIndex);
         setSearch(selectedItem.Prodectname)
-        navigate(`/search_query?query=${encodeURIComponent(selectedItem.Prodectname)}`)
+        navigate(`/search?query=${encodeURIComponent(selectedItem.Prodectname)}`)
         setSearchBoxShow(false)
         setSearchItemIndex(-1)
       }
@@ -191,7 +179,7 @@ let handleLogin = () => {
     }
   }
   let GoSearchPage = () => {
-    navigate(`/search_query?query=${encodeURIComponent(search)}`)
+    navigate(`/search?query=${encodeURIComponent(search)}`)
     setSearchBoxShow(false)
     setSearchItemIndex(-1)
   }
@@ -249,7 +237,7 @@ let handleLogin = () => {
       {
         MenuShow ? (
           <div className="fixed top-0 right-0 z-[999] h-full w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] bg-white shadow-xl duration-300">
-            <ul className="w-full mt-16 px-4 space-y-3">
+            <ul className="w-full flex flex-col h-screen justify-between py-16 px-4 space-y-3">
               {
                 useruid === "" ? (
                   <div className=" w-full flex justify-center">
@@ -263,56 +251,66 @@ let handleLogin = () => {
 
 
                 ) : (
+                  <div className=" flex flex-col gap-y-[30px] ">
                   <Link to={'/user-profile'}>
                     <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
                       <img
                         src={userData?.profile_picture || ''}
                         alt="User"
                         className="w-12 h-12 rounded-full border-4 border-yellow-400"
-                      />
+                        />
                       <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData?.username || ''}</h2>
                     </div>
                   </Link>
+                                  <div className="space-y-2">
+                  <Link to="/"><li className=" hover:text-green-700 text-[black]
+text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Home</li></Link>
+                  <Link to="/ProductPage"><li className=" hover:text-green-700 text-[black]
+text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Products</li></Link>
+                  <li className=" hover:text-green-700 text-[black]
+text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Notification</li>
+                  <Link to="/Orders"><li className=" hover:text-green-700 text-[black]
+text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">My Order</li></Link>
+                  <Link to="/CartPage"><li className=" hover:text-green-700 text-[black]
+text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Cart</li></Link>
+
+                  
+                </div>
+                  </div>
                 )
               }
 
               {
                 useruid === "" ? (
-                  <li
+                  <div className=" space-y-2">
+                    <li
                     onKeyDown={handleKeysystem}
                     onClick={handleLogin}
-                    className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-green-600 text-white px-6 lg:py-2 py-[5px] text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
+                    className=" bg-green-600 text-white text-center py-[5px] mt-5 text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
                   >
                     Login
                   </li>
+                  </div>
                   
                 ) : (
-                  <div className="space-y-2">
-                    <Link to="/"><li className=" hover:text-green-700 text-[black]
- text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Home</li></Link>
-                    <Link to="/ProductPage"><li className=" hover:text-green-700 text-[black]
- text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Products</li></Link>
-                    <li className=" hover:text-green-700 text-[black]
- text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Notification</li>
-                    <Link to="/Orders"><li className=" hover:text-green-700 text-[black]
- text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">My Order</li></Link>
-                    <Link to="/CartPage"><li className=" hover:text-green-700 text-[black]
- text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Cart</li></Link>
+<>
 
-                    <li
-                      onClick={handleLogout}
-                      className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-red-600 text-white px-6 lg:py-2 py-[5px] text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
-                    >
-                      Logout
-                    </li>
-                  </div>
+                <div className="space-y-2">
+                  <li
+                    onClick={handleLogout}
+                    className=" bg-red-600 text-white text-center mt-5 py-[5px] text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
+                  >
+                    Logout
+                  </li>
+                </div>
+</>
                 )
               }
             </ul>
           </div>
         ) : (
           <div className="fixed top-0 right-[-60%] z-[999] h-full w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] bg-white shadow-xl duration-300">
-            <ul className="w-full mt-16 px-4 space-y-3">
+ <ul className="w-full flex flex-col h-screen justify-between py-16 px-4 space-y-3">
               {
                 useruid === "" ? (
                   <div className=" w-full flex justify-center">
@@ -326,48 +324,59 @@ let handleLogin = () => {
 
 
                 ) : (
+                  <div className=" flex flex-col gap-y-[30px] ">
                   <Link to={'/user-profile'}>
                     <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
                       <img
                         src={userData?.profile_picture || ''}
                         alt="User"
                         className="w-12 h-12 rounded-full border-4 border-yellow-400"
-                      />
+                        />
                       <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData?.username || ''}</h2>
                     </div>
                   </Link>
+                                  <div className="space-y-2">
+                  <Link to="/"><li className=" hover:text-green-700 text-[black]
+text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Home</li></Link>
+                  <Link to="/ProductPage"><li className=" hover:text-green-700 text-[black]
+text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Products</li></Link>
+                  <li className=" hover:text-green-700 text-[black]
+text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Notification</li>
+                  <Link to="/Orders"><li className=" hover:text-green-700 text-[black]
+text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">My Order</li></Link>
+                  <Link to="/CartPage"><li className=" hover:text-green-700 text-[black]
+text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Cart</li></Link>
+
+                  
+                </div>
+                  </div>
                 )
               }
 
               {
                 useruid === "" ? (
-                  <li
+                  <div className=" space-y-2">
+                    <li
                     onKeyDown={handleKeysystem}
                     onClick={handleLogin}
-                    className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-green-600 text-white px-6 lg:py-2 py-[5px] text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
+                    className=" bg-green-600 text-white text-center py-[5px] mt-5 text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
                   >
                     Login
                   </li>
-                ) : (
-                  <div className="space-y-2">
-                    <Link to="/"><li className=" hover:text-green-700 text-[black]
- text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Home</li></Link>
-                    <Link to="/ProductPage"><li className=" hover:text-green-700 text-[black]
- text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Products</li></Link>
-                    <li className=" hover:text-green-700 text-[black]
- text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Notification</li>
-                    <Link to="/Orders"><li className=" hover:text-green-700 text-[black]
- text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">My Order</li></Link>
-                    <Link to="/CartPage"><li className=" hover:text-green-700 text-[black]
- text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Cart</li></Link>
-
-                    <li
-                      onClick={handleLogout}
-                      className="absolute left-1/2 -translate-x-1/2 bottom-48 bg-red-600 text-white px-6 lg:py-2 py-[5px] text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
-                    >
-                      Logout
-                    </li>
                   </div>
+                  
+                ) : (
+<>
+
+                <div className="space-y-2">
+                  <li
+                    onClick={handleLogout}
+                    className=" bg-red-600 text-white text-center mt-5 py-[5px] text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
+                  >
+                    Logout
+                  </li>
+                </div>
+</>
                 )
               }
             </ul>
