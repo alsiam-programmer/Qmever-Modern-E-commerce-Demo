@@ -9,8 +9,15 @@
     user-select: none;         /* Standard syntax */
   }
 
-  
-  
+html, body {
+  min-height: 100%;
+}
+
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 
   img {
     -webkit-user-drag: none;
