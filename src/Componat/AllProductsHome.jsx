@@ -16,15 +16,15 @@ const AllProductsHome = () => {
   }
   return (
 <section className="py-10">
-  <div className="container bg-gray-50 mx-auto p-4">
-    <div className="flex flex-wrap -mx-3">
+  <div className="container bg-gray-50 mx-auto py-4">
+    <div className="flex flex-wrap">
       {info
         .filter(item => item && Number.isInteger(item.ProdectId) && item.ProdectId > 0)
         .map((item, index) => (
           <div
             key={item.ProdectId || index}
             onClick={() => handleProDetails(item)}
-            className=" flex w-1/2 sm:w-1/3 lg:w-1/5 px-3 mb-6"
+            className=" flex w-1/2 sm:w-1/3 lg:w-1/5 px-1 mb-6"
           >
             <div className="group relative bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300">
 

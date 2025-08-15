@@ -5,6 +5,7 @@ const InstallPWAButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    
       const handler = (e) => {
           e.preventDefault(); // ব্রাউজারকে স্বয়ংক্রিয়ভাবে prompt দেখাতে দাও না
           setDeferredPrompt(e); // ইভেন্টটি save করো

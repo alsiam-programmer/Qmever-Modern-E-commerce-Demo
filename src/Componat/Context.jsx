@@ -13,7 +13,7 @@ const Context = ({ children }) => {
   const [totalItems, setTotalItems] = useState(0);
   const [page, setPage] = useState(1);
 
-  const itemsPerPage = 20;
+  const itemsPerPage = 7;
 
   const getData = async () => {
     setLoading(true);
@@ -61,6 +61,8 @@ const Context = ({ children }) => {
   }, [page]);
 
   useEffect(() => {
+    console.log("sdasfwe");
+    
     const handleScroll = () => {
 if (
   (window.location.pathname === "/" || window.location.pathname === "/ProductPage") &&

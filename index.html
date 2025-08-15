@@ -2,10 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
+    <!-- ✅ Viewport with Safe Area Support -->
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
+
     <title>Qmever</title>
 
     <!-- ✅ Favicon -->
@@ -66,18 +69,22 @@
       }
     </script>
 
-    <!-- ✅ Theme Color + Safe Area Fix -->
-    <meta name="theme-color" content="#062919" />
+    <!-- ✅ Theme Color for Android & iOS -->
+    <meta name="theme-color" content="#062919" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#062919" media="(prefers-color-scheme: dark)" />
+
+    <!-- ✅ iOS Fullscreen -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <!-- ✅ PWA Manifest (vite-plugin-pwa) -->
+    <!-- ✅ PWA Manifest -->
     <link rel="manifest" href="/manifest.webmanifest" />
   </head>
 
   <body>
     <div id="root"></div>
-    <!-- ✅ Vite app entry -->
+
+    <!-- ✅ Vite App Entry -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
