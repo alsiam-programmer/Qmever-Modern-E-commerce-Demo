@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import AllProductsHome from '../Componat/AllProductsHome'
 import Banner from '../Componat/Banner'
 import WorkInProgressNotification from '../Componat/WorkInProgressNotification';
+import InstallPWAButton from '../Componat/InstallPWAButton'
 
 const Home = () => {
   useEffect(() => {
@@ -11,6 +12,7 @@ const Home = () => {
     <>
     <WorkInProgressNotification/>
     <Banner/>
+    <InstallPWAButton/>
     <AllProductsHome/>
     </>
   )

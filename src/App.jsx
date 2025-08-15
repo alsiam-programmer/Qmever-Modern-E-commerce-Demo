@@ -36,7 +36,12 @@ function App() {
   })
 
   return ( 
-  <div className=" lg:w-[80%] mx-auto">
+  <div style={{
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingBottom: 'env(safe-area-inset-bottom)'
+      }}
+     className=" lg:w-[80%] mx-auto min-h-screen bg-white">
+      
     <RouterProvider router={router} />
   </div>
   )
