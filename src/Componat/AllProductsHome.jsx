@@ -16,7 +16,7 @@ const AllProductsHome = () => {
   }
   return (
 <section className="py-10">
-  <div className="container bg-gray-50 mx-auto py-4">
+  <div className="container px-[10px] bg-gray-50 mx-auto py-4">
     <div className="flex flex-wrap">
       {info
         .filter(item => item && Number.isInteger(item.ProdectId) && item.ProdectId > 0)
@@ -33,7 +33,7 @@ const AllProductsHome = () => {
                 <img
                   src={item.imgurl}
                   alt={item.Prodectname || "Product Image"}
-                  className="w-full h-52 sm:h-64 xl:h-72 object-cover lg:group-hover:scale-105 transform transition-transform duration-300"
+                  className="w-full object-cover lg:group-hover:scale-105 transform transition-transform duration-300"
                 />
               </div>
 
