@@ -2,8 +2,6 @@ import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
-import { TbLoader2 } from "react-icons/tb";
-
 const apiData = createContext();
 
 const Context = ({ children }) => {
@@ -13,10 +11,11 @@ const Context = ({ children }) => {
   const [totalItems, setTotalItems] = useState(0);
   const [page, setPage] = useState(1);
 
-  const itemsPerPage = 7;
+  const itemsPerPage = 20;
 
   const getData = async () => {
     setLoading(true);
+
     try {
       const res = await axios.get(
         "https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json"
@@ -40,34 +39,37 @@ const Context = ({ children }) => {
       // console.log(data);
       
       const total = data.length;
+      setTotalItems(total)
       const newItems = data.slice(
         (page - 1) * itemsPerPage,
         page * itemsPerPage
       );
 
       // Update state with new data
-      setInfo((prevInfo) => [...prevInfo, ...newItems]);
-      setTotalItems(total);
+      await setInfo((prevInfo) => [...prevInfo, ...newItems]);
       setLoading(false);
-      setLoadingMore(false);
     } catch (error) {
       console.error("Error fetching data:", error);
       setLoading(false);
     }
   };
+  
+  console.log(totalItems,info.length);
+  
 
   useEffect(() => {
     getData();
   }, [page]);
 
-  useEffect(() => {
-    console.log("sdasfwe");
-    
+  useEffect(() => {    
     const handleScroll = () => {
 if (
-  (window.location.pathname === "/" || window.location.pathname === "/ProductPage") &&
-  window.innerHeight + document.documentElement.scrollTop >=
-    document.documentElement.offsetHeight - 50
+  (window.location.pathname === "/" || window.location.pathname === "/ProductPage")
+   &&
+  (window.innerHeight + document.documentElement.scrollTop >=
+    document.documentElement.offsetHeight - 100) 
+  && 
+  (totalItems >= info.length)
 ) {
   setPage((prevPage) => prevPage + 1);
 }
@@ -76,24 +78,16 @@ if (
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (info.length !== 0 && info.length < totalItems) {
-      setLoadingMore(true);
-    } else {
-      setLoadingMore(false);
-    }
-  }, [info, totalItems]);
+  }, [info.length, totalItems]);
   
   return (
     <apiData.Provider value={info}>
       {children}
-      {loading && info.length === 0 && window.location.pathname === "/" && (
+      {loading && (
         <div className="container px-[10px] mx-auto">
           <SkeletonTheme>
             <div className="flex flex-wrap">
-              {Array(2)
+              {Array(10)
                 .fill(0)
                 .map((_, index) => (
                   <div
@@ -109,11 +103,7 @@ if (
           </SkeletonTheme>
         </div>
       )}
-      {loadingMore && (
-        <div className="flex justify-center my-8">
-          <TbLoader2 className="w-10 h-10 animate-spin text-[#fff]" />
-        </div>
-      )}
+      
     </apiData.Provider>
   );
 };
