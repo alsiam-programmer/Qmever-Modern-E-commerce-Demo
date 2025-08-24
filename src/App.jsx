@@ -9,6 +9,8 @@ import Order from "./Page/Order"
 import SearchItem from "./Page/SearchItem"
 import UserProfile from "./Page/UserProfile"
 import ProductPage from "./Page/ProductPage"
+import Spin from "./Componat/Spin"
+import NotFound from "./Page/NotFound"
 
 function App() {
 
@@ -23,6 +25,8 @@ function App() {
       <Route path="/search" element={<SearchItem />} />
       <Route path="/user-profile" element={<UserProfile />} />
       <Route path="/ProductPage" element={<ProductPage />} />
+      {/* <Route path="/spin-box" element={<Spin/>} /> */}
+      <Route path="*" element={<NotFound/>}/>
     </Route>
   ), {
     future: {
@@ -37,8 +41,7 @@ function App() {
 
   return ( 
   <div 
-     className=" lg:w-[80%] mx-auto bg-white">
-      
+     className=" lg:w-[75%] mx-auto bg-white">   
     <RouterProvider router={router} />
   </div>
   )

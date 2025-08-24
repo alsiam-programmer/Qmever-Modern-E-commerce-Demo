@@ -12,6 +12,15 @@
   img {
     -webkit-user-drag: none;
   }
+
+
+.clip-triangle {
+  /* position: relative; */
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  /* background: transparent; */
+}
+
+
 /* 
   @keyframes animake {
     0% {

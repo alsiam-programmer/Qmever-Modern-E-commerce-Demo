@@ -6,15 +6,19 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily :{
+      fontFamily: {
         "sans": ["Noto Sans", "sans-serif"],
       },
-      textColor:{
-        "customized" : "#000"
-      }
+      textColor: {
+        "customized": "#000",
+      },
+      screens: {
+        "3xl": "1920px",  // Full HD (1080p) and above
+        "4xl": "2560px",  // 2K / WQHD screens
+        "5xl": "3840px",  // 4K UHD
+        "6xl": "7680px",  // 8K UHD
+      },
     },
   },
   plugins: [],
 }
-
-

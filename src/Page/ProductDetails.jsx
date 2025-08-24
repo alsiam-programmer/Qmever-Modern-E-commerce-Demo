@@ -10,11 +10,11 @@ import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
 import { Helmet } from 'react-helmet';
-
+import ZoomableImage from '../Componat/ZoomableImage';
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
-    <div className='sm:block hidden'
+    <div className=''
       onClick={onClick}
     ><h2 className='flex justify-center items-center rounded-[50%] text-[27px] w-[50px] h-[50px] absolute top-[50%] translate-y-[-50%] z-[990] left-[10px] bg-[#ffffff49] hover:bg-[#fff]'><IoIosArrowBack /></h2></div>
   );
@@ -23,7 +23,7 @@ function SampleNextArrow(props) {
 function SamplePrevArrow(props) {
   const { onClick } = props;
   return (
-    <div className='sm:block hidden'
+    <div className=''
       onClick={onClick}
     ><h2 className='  flex justify-center items-center rounded-[50%] text-[27px] w-[50px] h-[50px] absolute top-[50%] translate-y-[-50%] z-[990] right-[10px] bg-[#ffffff49] hover:bg-[#fff]'><IoIosArrowForward /></h2></div>
   );
@@ -51,22 +51,31 @@ const ProductDetails = () => {
   let [modelselect, setModelselect] = useState(false)
   let [addsucess, setaddsucess] = useState(false)
 
-  let productData = () => axios.get(`https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId.id}.json`).then((res) => {
-    setInfo(res.data);
-    setInfo2(res.data.thumbnail)
-    setInfo3(res.data.addModle);
-  })
+  let productData = async () => {
+     try {
+      let res = await axios.get(`https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId.id}.json`)
+    if (res.data === null) {
+      navigate("/404");
+      return;
+    }
+
+      setInfo(res.data);
+      setInfo2(res.data.thumbnail)
+      setInfo3(res.data.addModle);
+     } catch (error) {
+      
+     }
+  }
+  
+
   useEffect(() => {
     productData()
   }, [productId.id])
-
   useEffect(() => {
     LoginInfo.map((item) => {
       setUserUID(item)
     })
   })
-
-  console.log(modleColor.Stock);
 
 
   let handleBuyNow = () => {
@@ -164,19 +173,20 @@ const ProductDetails = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
-    autoplay: true,
-    autoplaySpeed: 2000,
+    swipe: false,
+    draggable: false,
+    touchMove: false,
   };
+
   let handleImgSlick = () => {
     setShowSlick(true)
   }
   let handleSlickClose = () => {
     setShowSlick(false)
   }
+
 
 
 
@@ -224,20 +234,21 @@ const ProductDetails = () => {
           showSlick === true &&
           <div className="showImg fixed top-[50%] bg-[#000] left-[50%] translate-x-[-50%] translate-y-[-50%]  z-[999] w-[100%] h-[100%] ">
             <icon onClick={handleSlickClose} className=" m-[30px] cursor-pointer justify-end flex p-[10px] text-[#fff] text-[30px]"><IoMdClose /></icon>
-            <Slider className='w-[90%] flex items-center md:w-[60%] lg:w-[50%] xl:w-[600px] top-[50%] absolute left-[50%] translate-x-[-50%] translate-y-[-50%] ' {...settings}>
+            <Slider {...settings} className="w-[90%] flex items-center md:w-[60%] lg:w-[50%] xl:w-[600px] top-[50%] absolute left-[50%] translate-x-[-50%] translate-y-[-50%]">
               <div className="imgBox w-[100%]">
-                <img className='w-[100%]' src={info.imgurl} alt={`${info.Prodectname} main`} />
+                <ZoomableImage src={info.imgurl} alt={`${info.Prodectname} main`} />
               </div>
               <div className="imgBox w-[100%]">
-                <img className='w-[100%]' src={info2.productimg} alt={`${info.Prodectname} Thumbnail 1`} />
+                <ZoomableImage src={info2.productimg} alt={`${info.Prodectname} Thumbnail 1`} />
               </div>
               <div className="imgBox w-[100%]">
-                <img className='w-[100%]' src={info2.productimg2} alt={`${info.Prodectname} Thumbnail 2`} />
+                <ZoomableImage src={info2.productimg2} alt={`${info.Prodectname} Thumbnail 2`} />
               </div>
               <div className="imgBox w-[100%]">
-                <img className='w-[100%]' src={info2.productimg3} alt={`${info.Prodectname} Thumbnail 3`} />
+                <ZoomableImage src={info2.productimg3} alt={`${info.Prodectname} Thumbnail 3`} />
               </div>
             </Slider>
+
           </div>
         }
         {

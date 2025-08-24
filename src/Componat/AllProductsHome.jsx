@@ -24,12 +24,12 @@ const AllProductsHome = () => {
           <div
             key={item.ProdectId || index}
             onClick={() => handleProDetails(item)}
-            className=" flex w-1/2 sm:w-1/3 lg:w-1/5 px-1 mb-6"
+            className=" flex w-1/2 sm:w-1/3 lg:w-1/4 2xl:w-1/5 4xl:w-1/6  px-1 mb-6"
           >
-            <div className="group relative bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300">
+            <div className="group w-full relative bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300">
 
               {/* Product Image */}
-              <div className="overflow-hidden rounded-t-2xl">
+              <div className="overflow-hidden w-full rounded-t-2xl">
                 <img
                   src={item.imgurl}
                   alt={item.Prodectname || "Product Image"}
@@ -38,7 +38,7 @@ const AllProductsHome = () => {
               </div>
 
               {/* Overlay on Hover (only lg and above) */}
-              <div className="hidden lg:flex absolute inset-0 bg-black bg-opacity-25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
+              <div className="hidden lg:flex absolute inset-0 bg-black bg-opacity-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
                 <button className="px-4 py-2 bg-white text-[#062919] font-semibold rounded-lg shadow hover:bg-gray-100">
                   Quick View
                 </button>
@@ -46,7 +46,7 @@ const AllProductsHome = () => {
 
               {/* Product Info */}
               <div className="p-4">
-                <h2 className="text-sm sm:text-base font-bold text-purple-600">
+                <h2 className="text-sm sm:text-base lg:bg-[#ff00001e] rounded-lg font-bold text-purple-600 flex justify-center items-center">
                   {Number(item.Price).toFixed(2) || "N/A"}৳
                 </h2>
                 <h3 className="text-[13px] sm:text-sm xl:text-base font-medium text-gray-800 mt-1 line-clamp-2">
