@@ -11,6 +11,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
 import { Helmet } from 'react-helmet';
 import ZoomableImage from '../Componat/ZoomableImage';
+import ShareProductsLink from '../Componat/ShareProductsLink';
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
@@ -51,18 +52,20 @@ const ProductDetails = () => {
   let [modelselect, setModelselect] = useState(false)
   let [addsucess, setaddsucess] = useState(false)
 
+  console.log(info , info2 , info3);
+  
   
   let productData = async () => {
      try {
       let res = await axios.get(`https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products/${id}.json`)
-    // if (res.data === null) {
-    //   navigate("/404");
-    //   return;
-    // }
+    if (res.data === null) {
+      navigate("/404");
+      return;
+    }
 
       setInfo(res.data);
       setInfo2(res.data.thumbnail)
-      setInfo3(res.data.addModle);
+      setInfo3(res.data.addModle !== undefined ? res.data.addModle : "");
      } catch (error) {
       
      }
@@ -120,7 +123,7 @@ const ProductDetails = () => {
     if (userUID !== "") {
       if (info3 !== "") {
         if (modleaddicon !== "" && modleColor.Stock > 0) {
-          dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.ProdectId, imgurl: info.imgurl, PCU: info.PCU, category: info.category }, size: modleaddicon, Pricesub: modlePrice, ProdectQun, modleColor }))
+          dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, PCU: info.PCU, category: info.category }, size: modleaddicon, Pricesub: modlePrice, ProdectQun, modleColor }))
           setaddsucess(true)
           setTimeout(() => {
             setaddsucess(false)
@@ -132,7 +135,7 @@ const ProductDetails = () => {
           }, 1000);
         }
       } else {
-        dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.ProdectId, imgurl: info.imgurl, PCU: info.PCU, category: info.category }, ProdectQun }))
+        dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, PCU: info.PCU, category: info.category }, ProdectQun }))
         console.log(info);
         setaddsucess(true)
         setTimeout(() => {
@@ -255,6 +258,7 @@ const ProductDetails = () => {
       />
     </div>
     <div className="imgBox flex justify-center items-center h-[90vh]">
+      
       <ZoomableImage
         src={info2.productimg}
         alt={`${info.Prodectname} Thumbnail 1`}
@@ -309,35 +313,23 @@ const ProductDetails = () => {
         <div className="productdetailsBox gap-[20px] flex flex-wrap">
           <div className="imgbox w-[100%] flex gap-[10px] lg:w-[55%]">
             <div onClick={handleImgSlick} className=" cursor-pointer leftImg flex flex-wrap gap-y-[10px] w-[23%]">
-              <div className="w-[100%] ">
-                {info2.productimg
-                  ?
-                  <img className=" mb-[10px] cursor-pointer w-[100%] " src={info2.productimg} alt="" />
-                  :
-                  <SkeletonTheme >
-                    <Skeleton className=" h-[100px] lg:h-[150px] mb-3" />
+             <div className="w-[100%]">
+  {[info2.productimg, info2.productimg2, info2.productimg3].map((img, index) =>
+    img ? (
+      <img
+        key={index}
+        className="mb-[10px] cursor-pointer w-[100%]"
+        src={img}
+        alt={`${info.Prodectname} Thumbnail ${index + 1}`}
+      />
+    ) : (
+      <SkeletonTheme key={index}>
+        <Skeleton className="h-[100px] lg:h-[150px] mb-3" />
+      </SkeletonTheme>
+    )
+  )}
+</div>
 
-                  </SkeletonTheme>
-                }
-                {info2.productimg2
-                  ?
-                  <img className=" my-[10px] cursor-pointer w-[100%] " src={info2.productimg2} alt="" />
-                  :
-                  <SkeletonTheme >
-                    <Skeleton className=" h-[100px] lg:h-[150px] mb-3" />
-
-                  </SkeletonTheme>
-                }
-                {info2.productimg3
-                  ?
-                  <img className=" my-[10px] cursor-pointer w-[100%] " src={info2.productimg3} alt="" />
-                  :
-                  <SkeletonTheme >
-                    <Skeleton className=" h-[100px] lg:h-[150px] mb-3" />
-
-                  </SkeletonTheme>
-                }
-              </div>
             </div>
             <div onClick={handleImgSlick} className=" cursor-pointer overflow-hidden rightimg w-[77%]">
               {info.imgurl
@@ -365,11 +357,13 @@ const ProductDetails = () => {
               }
             </div>
             <h2 className='text-customized font-[600] text-[15px] xl:text-[20px] my-[5px]'>Price : <span className='text-[#cf0cbf] font-[500]'>{modlePrice !== "" ? Number(modlePrice).toFixed(2) : (info?.Price != null ? Number(info.Price).toFixed(2) : "")}৳</span></h2>
-            {modleColor?.Stock > 0 && (
+            {modleColor && modleColor?.Stock > 0 && (
               <div className="mt-2 py-1 rounded-md font-[500] text-[15px] xl:text-[20px] text-green-900 w-fit">
                 Stock: {modleColor.Stock}
               </div>
             )}
+
+            <ShareProductsLink title={info.Prodectname} />
 
             <h2 className='text-customized noselect font-[600] text-[17px] xl:text-[20px] my-[5px]'>{info.ModelName}</h2>
             {SelectColor && (
