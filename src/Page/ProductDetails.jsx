@@ -232,24 +232,52 @@ const ProductDetails = () => {
 
         {
           showSlick === true &&
-          <div className="showImg fixed top-[50%] bg-[#000] left-[50%] translate-x-[-50%] translate-y-[-50%]  z-[999] w-[100%] h-[100%] ">
-            <icon onClick={handleSlickClose} className=" m-[30px] cursor-pointer justify-end flex p-[10px] text-[#fff] text-[30px]"><IoMdClose /></icon>
-            <Slider {...settings} className="w-[90%] flex items-center md:w-[60%] lg:w-[50%] xl:w-[600px] top-[50%] absolute left-[50%] translate-x-[-50%] translate-y-[-50%]">
-              <div className="imgBox w-[100%]">
-                <ZoomableImage src={info.imgurl} alt={`${info.Prodectname} main`} />
-              </div>
-              <div className="imgBox w-[100%]">
-                <ZoomableImage src={info2.productimg} alt={`${info.Prodectname} Thumbnail 1`} />
-              </div>
-              <div className="imgBox w-[100%]">
-                <ZoomableImage src={info2.productimg2} alt={`${info.Prodectname} Thumbnail 2`} />
-              </div>
-              <div className="imgBox w-[100%]">
-                <ZoomableImage src={info2.productimg3} alt={`${info.Prodectname} Thumbnail 3`} />
-              </div>
-            </Slider>
+<div className="showImg fixed inset-0 bg-black/95 z-[999] flex items-center justify-center">
+  {/* Close Button */}
+  <button
+    onClick={handleSlickClose}
+    className="absolute z-[1000] top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 transition text-white text-3xl"
+  >
+    <IoMdClose />
+  </button>
 
-          </div>
+  {/* Slider */}
+  <Slider
+    {...settings}
+    className="w-full h-full flex items-center justify-center px-4"
+  >
+    <div className="imgBox flex justify-center items-center h-[90vh]">
+      <ZoomableImage
+        src={info.imgurl}
+        alt={`${info.Prodectname} main`}
+        className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+      />
+    </div>
+    <div className="imgBox flex justify-center items-center h-[90vh]">
+      <ZoomableImage
+        src={info2.productimg}
+        alt={`${info.Prodectname} Thumbnail 1`}
+        className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+      />
+    </div>
+    <div className="imgBox flex justify-center items-center h-[90vh]">
+      <ZoomableImage
+        src={info2.productimg2}
+        alt={`${info.Prodectname} Thumbnail 2`}
+        className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+      />
+    </div>
+    <div className="imgBox flex justify-center items-center h-[90vh]">
+      <ZoomableImage
+        src={info2.productimg3}
+        alt={`${info.Prodectname} Thumbnail 3`}
+        className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+      />
+    </div>
+  </Slider>
+</div>
+
+
         }
         {
           logErr === true ?
