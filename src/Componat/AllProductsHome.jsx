@@ -11,7 +11,7 @@ const AllProductsHome = () => {
 
 
   const handleProDetails = (item) => {
-    navigate(`/productDetails/${item.ProdectId}`);
+    navigate(`/productDetails/${item.uid}`);
     window.scrollTo(0, 0);
   }
   return (
@@ -19,10 +19,10 @@ const AllProductsHome = () => {
   <div className="container px-[10px] bg-gray-50 mx-auto py-4">
     <div className="flex flex-wrap">
       {info
-        .filter(item => item && Number.isInteger(item.ProdectId) && item.ProdectId > 0)
+        .filter(item => item)
         .map((item, index) => (
           <div
-            key={item.ProdectId || index}
+            key={item.uid || index}
             onClick={() => handleProDetails(item)}
             className=" flex w-1/2 sm:w-1/3 lg:w-1/4 2xl:w-1/5 4xl:w-1/6  px-1 mb-6"
           >

@@ -35,7 +35,7 @@ const ProductDetails = () => {
   let LoginInfo = useSelector((item) => item.counter.user)
   let [userUID, setUserUID] = useState('')
   let [logErr, setLogErr] = useState(false)
-  let productId = useParams()
+  let { id } = useParams();
   let [showSlick, setShowSlick] = useState(false)
   let [info, setInfo] = useState([])
   let [info2, setInfo2] = useState([])
@@ -51,13 +51,14 @@ const ProductDetails = () => {
   let [modelselect, setModelselect] = useState(false)
   let [addsucess, setaddsucess] = useState(false)
 
+  
   let productData = async () => {
      try {
-      let res = await axios.get(`https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId.id}.json`)
-    if (res.data === null) {
-      navigate("/404");
-      return;
-    }
+      let res = await axios.get(`https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products/${id}.json`)
+    // if (res.data === null) {
+    //   navigate("/404");
+    //   return;
+    // }
 
       setInfo(res.data);
       setInfo2(res.data.thumbnail)
@@ -70,7 +71,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     productData()
-  }, [productId.id])
+  }, [id])
   useEffect(() => {
     LoginInfo.map((item) => {
       setUserUID(item)
@@ -198,7 +199,7 @@ const ProductDetails = () => {
         <meta property="og:title" content={info.Prodectname} />
         <meta property="og:description" content={`Buy ${info.Prodectname} online at the best price. Free shipping and amazing discounts. Get it now!`} />
         <meta property="og:image" content={info.imgurl} />
-        <meta property="og:url" content={`https://www.qmever.com/productDetails/${productId.id}`} />
+        <meta property="og:url" content={`https://www.qmever.com/productDetails/${id}`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />

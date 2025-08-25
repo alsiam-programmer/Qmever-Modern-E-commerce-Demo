@@ -164,9 +164,7 @@ const handleSearch = async (e) => {
       .slice(0, 10);
 
     setGetDataSearch(
-      SD.length > 0
-        ? SD
-        : [{ Prodectname: "NO ITEM HAVE IN QMEVER" }]
+  SD
     );
 
     setSearchBoxShow(true);
@@ -175,18 +173,6 @@ const handleSearch = async (e) => {
   } catch (error) {
   }
 };
-
-
-useEffect(()=>{
-  setSearchBoxShow(true);
-  const value = getDataSearch.map((item) => item.Prodectname);
-    if (value.includes("NO ITEM HAVE IN QMEVER")) {
-      setTimeout(() => {
-        setSearchBoxShow(false);
-      }, 3000);
-    }
-},[search])
-  console.log(getDataSearch);
   
   const GoSearchEnter = (e) => {
     if(search.length === 0 || search === "NO ITEM HAVE IN QMEVER") return;
@@ -227,8 +213,6 @@ useEffect(()=>{
 
   let handleItemName = ({ item, index }) => {
     setSearch(item.Prodectname)
-    console.log(index);
-
   }
   return (
     <section>
