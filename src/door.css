@@ -1,0 +1,85 @@
+/* Door overlay */
+.door-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  z-index: 9999;
+  overflow: hidden;
+  perspective: 1200px;
+  background: #ffffff;
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity 1s ease;
+}
+
+/* Doors */
+.door {
+  flex: 1;
+  background: linear-gradient(135deg, #008080, #004d40);
+  box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.1), 0 0 10px rgba(0,0,0,0.2);
+  transition: transform 2s cubic-bezier(0.77, 0, 0.175, 1);
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+/* Left and right origin */
+.left-door { transform-origin: left; }
+.right-door { transform-origin: right; }
+
+
+/* Desktop - large screens */
+.open-left {
+  transform: rotateY(-45deg) translateX(-120%);
+}
+.open-right {
+  transform: rotateY(45deg) translateX(120%);
+}
+
+/* Door handle */
+.door-handle {
+  position: absolute;
+  width: 12px;
+  height: 60px;
+  background: #d4af37;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+.left-door .door-handle { right: 12px; }
+.right-door .door-handle { left: 12px; }
+
+/* Door text in center */
+.door-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  font-weight: bold;
+  color: #062919;
+  text-shadow: 0 0 25px rgba(0,0,0,0.7);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Fade-out effect for overlay */
+.door-container.fade-out {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+}
+
+/* Home page fade-in */
+.home-fade {
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.home-fade.show {
+  opacity: 1;
+}

@@ -6,6 +6,7 @@ export const counterSlice = createSlice({
     user: localStorage.getItem("user")? JSON.parse(localStorage.getItem("user")) :[],
     BuyItem: localStorage.getItem("BuyItem")? JSON.parse(localStorage.getItem("BuyItem")) :[],
     cartItem: localStorage.getItem("cartItem")? JSON.parse(localStorage.getItem("cartItem")) :[],
+    doorSplashDate: localStorage.getItem("doorSplashDate") ? JSON.parse(localStorage.getItem("doorSplashDate")) : []
   },
   reducers: {
     userUidLogin:(state , action) => {
@@ -26,11 +27,11 @@ export const counterSlice = createSlice({
     },
     
     AddToCart:(state , action) => {
-      let FindProduct = state.cartItem.findIndex((item)=> item.id === action.payload.id)
+      let FindProduct = state.cartItem.findIndex((item)=> item.uid === action.payload.uid)
       let FindProductModel = state.cartItem.findIndex((item)=> item.size === action.payload.size)
-      let FindProductPCU = state.cartItem.findIndex((item)=> item.PCU === action.payload.PCU)
-      
-      if (FindProduct !== -1 && FindProductModel !== -1  && FindProductPCU !== -1 ) {
+      let FindProductmodleColor = state.cartItem.findIndex((item)=> item.modleColor.Color === action.payload.modleColor.Color)
+
+      if (FindProduct !== -1 && FindProductModel !== -1  && FindProductmodleColor !== -1 ) {
           state.cartItem[FindProductModel].ProdectQun += 1
           localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
       } else {
@@ -55,11 +56,21 @@ export const counterSlice = createSlice({
     removeAllcartPro:(state , action) => {
       state.cartItem.splice(action.payload)
       localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
+    },
+    todayfordoor:(state , action) => {
+      let date = action.payload.today
+
+      if (!state.doorSplashDate.includes(date)) {
+        state.doorSplashDate.push(date)
+      }
+
+      localStorage.setItem("doorSplashDate" , JSON.stringify(state.doorSplashDate))
+      
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { userUidLogin , userLogout , userBuyItem , BuyItemDelete , AddToCart , removeCartPro , qunIncrement , qunDecrement , removeAllcartPro } = counterSlice.actions
+export const { userUidLogin , userLogout , userBuyItem , BuyItemDelete , AddToCart , removeCartPro , qunIncrement , qunDecrement , removeAllcartPro , todayfordoor } = counterSlice.actions
 
 export default counterSlice.reducer

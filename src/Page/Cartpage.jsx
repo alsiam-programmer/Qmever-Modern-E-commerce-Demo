@@ -77,7 +77,14 @@ const Cartpage = () => {
                     {item.size || 'Regular'}
                   </div>
 
-                  {/* Quantity Controls */}
+                  {
+                    item.modleColor.Color !== ""
+                    &&
+                  <div className="flex gap-2">
+                                <span className='text-[#000000] text-sm font-bold'>Color:</span>      <div className="w-4 h-4 rounded-[50%]" style={{ backgroundColor: item.modleColor.Color }}></div>
+                  </div>
+                  }
+
                   <div className="w-full md:w-1/4 flex items-center justify-center gap-3 text-gray-700">
                     <button onClick={() => handleIncre(index)} className="bg-green-100 p-2 rounded hover:bg-green-200">
                       <IoAddOutline className="text-green-600" />
