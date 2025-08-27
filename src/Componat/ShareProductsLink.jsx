@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 import {
-  FaFacebookF,
-  FaTwitter,
-  FaWhatsapp,
-  FaLinkedinIn,
-  FaTelegramPlane,
-  FaPinterestP,
   FaCopy
 } from "react-icons/fa";
 
@@ -35,10 +29,6 @@ const ShareProductsLink = ({ title }) => {
     });
   };
 
-  const socialLink = (href) => {
-    handleClick(() => window.open(href, "_blank", "noopener,noreferrer"));
-  };
-
   return (
     <div className="flex flex-wrap gap-2 mt-4">
       <button
@@ -48,53 +38,6 @@ const ShareProductsLink = ({ title }) => {
       >
         <FaCopy /> Copy/Share
       </button>
-
-      <button
-        onClick={() =>
-          socialLink(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`)
-        }
-        disabled={disabled}
-        className="flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-500"
-      >
-        <FaFacebookF /> Facebook
-      </button>
-
-      <button
-        onClick={() =>
-          socialLink(
-            `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`
-          )
-        }
-        disabled={disabled}
-        className="flex items-center gap-2 bg-sky-500 text-white px-3 py-2 rounded hover:bg-sky-400"
-      >
-        <FaTwitter /> Twitter
-      </button>
-
-      <button
-        onClick={() =>
-          socialLink(`https://wa.me/?text=${encodeURIComponent(title + " " + url)}`)
-        }
-        disabled={disabled}
-        className="flex items-center gap-2 bg-green-500 text-white px-3 py-2 rounded hover:bg-green-400"
-      >
-        <FaWhatsapp /> WhatsApp
-      </button>
-
-      <button
-        onClick={() =>
-          socialLink(
-            `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
-              title
-            )}`
-          )
-        }
-        disabled={disabled}
-        className="flex items-center gap-2 bg-blue-400 text-white px-3 py-2 rounded hover:bg-blue-300"
-      >
-        <FaTelegramPlane /> Telegram
-      </button>
-
     </div>
   );
 };

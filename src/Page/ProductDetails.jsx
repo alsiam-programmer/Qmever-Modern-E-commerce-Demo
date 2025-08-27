@@ -12,6 +12,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Helmet } from 'react-helmet';
 import ZoomableImage from '../Componat/ZoomableImage';
 import ShareProductsLink from '../Componat/ShareProductsLink';
+import { FaYoutube } from "react-icons/fa";
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
@@ -52,7 +53,8 @@ const ProductDetails = () => {
   let [modelselect, setModelselect] = useState(false)
   let [addsucess, setaddsucess] = useState(false)
 
-  console.log(info , info2 , info3);
+  let [show , setShow] = useState(false)
+
   
   
   let productData = async () => {
@@ -70,7 +72,8 @@ const ProductDetails = () => {
       
      }
   }
-  
+
+
 
   useEffect(() => {
     productData()
@@ -365,51 +368,137 @@ const ProductDetails = () => {
 
             <ShareProductsLink title={info.Prodectname} />
 
-            <h2 className='text-customized noselect font-[600] text-[17px] xl:text-[20px] my-[5px]'>{info.ModelName}</h2>
-            {SelectColor && (
-              <div className="flex flex-wrap items-center gap-2 px-3 py-2 border rounded-md shadow-sm bg-white">
-                {SelectColor.map((item, index) =>
-                  item.Stock > 0 ? (
-                    <div
-                      onClick={() => HandleGetColor(item, index)}
-                      key={index}
-                      className={`rounded-full border shadow-md transition-transform hover:scale-110 w-8 h-8
-  ${InColor === index ? 'ring-2 ring-black' : ''}
-  sm:w-7 sm:h-7 md:w-9 md:h-9`}
-                      style={{ backgroundColor: item.Color }}
-                      title={item.Color}
-                    />
-                  ) : null
-                )}
-              </div>
-            )}
+        <div className="py-4">
+  {/* Model Name */}
+  <h2 className="text-customized select-none font-semibold text-[17px] xl:text-[20px] mb-3">
+    {info.ModelName}
+  </h2>
 
-            {
-              info3 !== ""
-                ?
-                <div className="modles noselect mb-[30px] flex-wrap flex gap-[10px]">
-                  {info3.map((addModle, index) => (
-                    <div className="">
-                      <h2 onClick={() => handleModel({ index, addModle })} className={` ${modelselect === true && "border-[red]"}  flex border-[1px] py-[10px] px-[20px] rounded justify-center items-center cursor-pointer ${modleaddicon === addModle.Model ? "bg-[#000] text-[#fff]" : "border-[#000] text-[#000]"}  font-[600] text-[13px] xl:text-[20px] my-[5px]`}>{addModle.Model}</h2>
-                    </div>
-                  ))}
-                </div>
-                : ""
-            }
+  {/* Color Selector */}
+  {SelectColor && (
+    <div className="flex flex-wrap items-center gap-5 mb-4 px-3 py-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      {SelectColor.map((item, index) =>
+        item.Stock > 0 ? (
+          <div
+            key={index}
+            onClick={() => HandleGetColor(item, index)}
+            className={`
+              relative rounded-full w-12 h-12 sm:w-10 sm:h-10 md:w-14 md:h-14 cursor-pointer shadow-md
+              transition-transform transform hover:scale-110
+              ${InColor === index ? "ring-4 ring-offset-2 ring-[#00000086]" : ""}
+            `}
+            style={{ backgroundColor: item.Color }}
+            title={item.Color}
+          />
 
+
+        ) : null
+      )}
+    </div>
+  )}
+
+  {/* Additional Models */}
+  {info3 && info3.length > 0 && (
+    <div className="flex flex-wrap gap-3">
+      {info3.map((addModle, index) => {
+        const isSelected = modleaddicon === addModle.Model;
+        return (
+          <h2
+            key={index}
+            onClick={() => handleModel({ index, addModle })}
+            className={`
+              flex justify-center items-center cursor-pointer rounded-lg py-2 px-4
+              font-semibold text-[13px] xl:text-[18px]
+              transition-all duration-200
+              ${isSelected ? "bg-black text-white border-black" : "bg-white text-black border border-black"}
+              hover:scale-105
+            `}
+          >
+            {addModle.Model}
+          </h2>
+        );
+      })}
+    </div>
+  )}
+</div>
+
+
+  <div className="items-center pb-5">
+      {/* Button to open */}
+      <button
+        onClick={() => setShow(true)}
+        className={`${info.VideoURL !== "" ? "block" : "hidden"} flex items-center justify-center w-full h-[40px] sm:h-14 lg:h-16 bg-red-600 text-white rounded-[4px] shadow-lg hover:bg-red-700 transition`}
+      >
+        <FaYoutube className="text-3xl lg:text-4xl" />
+      </button>
+
+      {/* Show Video */}
+      {show && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div className="relative w-[95%] max-w-7xl rounded-xl overflow-hidden shadow-2xl">
+            
+            {/* Close Button */}
+            <button
+              onClick={() => setShow(false)}
+              className="absolute top-[-5px] right-[-5px] z-[999] bg-red-600 hover:bg-red-700 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition"
+            >
+              ✕
+            </button>
+
+            {/* Responsive Video */}
+            <div className="relative w-full pb-[56.25%]">
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-xl"
+                src={`${info.VideoURL}+?rel=0}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+
+                
 
             <div className="BTnCaBy noselect flex gap-[10px] w-[100%]">
               <h2 onClick={handleBuyNow} className='cursor-pointer text-[#fff] bg-[#062919] h-[40px] rounded-[5px] justify-center flex items-center font-[600] w-[50%]'>Buy Now</h2>
               <h2 onClick={handleAddTocart} className='cursor-pointer text-[#fff] bg-[#062919] h-[40px] rounded-[5px] justify-center flex items-center font-[600] w-[50%]'>{addsucess === true ? <h2 className='text-[24px] text-[#188918]'><IoCheckmarkDoneCircle /></h2> : <h2>Add To Cart</h2>} </h2>
             </div>
-            <div className="description mt-[50px] border-t-[2px] border-t-[#fff]">
-              <div className=" cursor-pointer overflow-hidden rightimg">
-                <p className=' text-[16px] font-[600] italic my-[30px]  text-[#0000008a] '>{info.description}</p>
-              </div>
-              <iframe className=' w-[100%] sm:h-[315px]' src={info.VideoURL} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
+
+
           </div>
         </div>
+      </div>
+      <div className=" container mx-auto px-[10px] py-[10px] ">
+<div className="description mt-12 lg:flex lg:justify-between">
+  <div className="cursor-pointer lg:w-[60%] overflow-hidden rightimg">
+    {info?.description ? (
+      info.description
+        .split(".  ") // sentences split
+        .map((text, i) => (
+          <p
+            key={i}
+            className="text-[16px] flex justify-between flex-wrap sm:text-[15px] md:text-[16px] lg:text-[17px] font-medium italic text-gray-700 my-2 leading-relaxed"
+          >
+            {text.trim()}.
+          </p>
+        ))
+    ) : (
+      <p className="text-gray-400 italic">Loading description...</p>
+    )}
+  </div>
+<div className="lg:w-[40%] w-full p-2">
+
+  
+
+</div>
+
+</div>
+
       </div>
     </section>
   )
