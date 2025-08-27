@@ -16,6 +16,8 @@ import "./door.css";
 function App() {
   const [showDoor, setShowDoor] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+  const [welcomeVisible, setWelcomeVisible] = useState(false);
+  const [ dateValue , setDateValue ] = useState('')
 
   const leftDoorRef = useRef(null);
   const rightDoorRef = useRef(null);
@@ -43,29 +45,35 @@ function App() {
     const today = new Date().toISOString().slice(0, 10);
     const storedDates = JSON.parse(localStorage.getItem("doorSplashDate")) || [];
 
-    // একদিনে একবার splash দেখানোর চেক
     if (!storedDates.includes(today)) {
+      document.body.style.overflowX = "hidden";
+      setDateValue(today)
       setShowDoor(true);
-      document.body.style.overflow = "hidden";
 
+      // Doors open animation
       const openTimer = setTimeout(() => {
         leftDoorRef.current.classList.add("open-left");
         rightDoorRef.current.classList.add("open-right");
       }, 500);
 
-      const fadeTimer = setTimeout(() => setFadeOut(true), 2000);
+      // Show welcome text
+      const wel_text = setTimeout(() => setWelcomeVisible(true), 800);
 
+      // Start fade-out after 3s
+      const fadeTimer = setTimeout(() => setFadeOut(true), 4000);
+
+      // Remove DOM after fade-out (2s)
       const removeTimer = setTimeout(() => {
         setShowDoor(false);
         document.body.style.overflow = "auto";
 
-        // আজকের তারিখ save করুন localStorage এ
         storedDates.push(today);
         localStorage.setItem("doorSplashDate", JSON.stringify(storedDates));
-      }, 3000);
+      }, 5000);
 
       return () => {
         clearTimeout(openTimer);
+        clearTimeout(wel_text);
         clearTimeout(fadeTimer);
         clearTimeout(removeTimer);
       };
@@ -74,16 +82,30 @@ function App() {
 
   return (
     <div>
-      {/* Always render router */}
-      <RouterProvider router={router} />
+      <div className="lg:w-[75%] container mx-auto">
+        <RouterProvider router={router} />
+      </div>
 
-      {/* Door overlay */}
       {showDoor && (
         <div className={`door-container ${fadeOut ? "fade-out" : ""}`}>
-          <div ref={leftDoorRef} className="door left-door">
+{welcomeVisible && (
+  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-50 pointer-events-none">
+    <span className="welcome-text block text-5xl font-extrabold text-white mb-4">
+      Welcome
+    </span>
+    <span className="date-text animate-fadeInGlow block">
+      {dateValue}
+    </span>
+  </div>
+)}
+
+
+
+          <div ref={leftDoorRef} className="door left-door glow">
             <div className="door-handle" onClick={() => setShowDoor(false)}></div>
           </div>
-          <div ref={rightDoorRef} className="door right-door">
+
+          <div ref={rightDoorRef} className="door right-door glow">
             <div className="door-handle" onClick={() => setShowDoor(false)}></div>
           </div>
         </div>
