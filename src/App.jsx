@@ -39,6 +39,7 @@ function App() {
     )
   );
 
+  
   useEffect(() => {
     if (window.location.pathname !== "/") return;
 
@@ -67,8 +68,7 @@ function App() {
         setShowDoor(false);
         document.body.style.overflow = "auto";
 
-        storedDates.push(today);
-        localStorage.setItem("doorSplashDate", JSON.stringify(storedDates));
+        localStorage.setItem("doorSplashDate", JSON.stringify([today]));
       }, 5000);
 
       return () => {

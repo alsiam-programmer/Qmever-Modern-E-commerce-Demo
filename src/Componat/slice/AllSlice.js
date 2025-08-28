@@ -6,7 +6,6 @@ export const counterSlice = createSlice({
     user: localStorage.getItem("user")? JSON.parse(localStorage.getItem("user")) :[],
     BuyItem: localStorage.getItem("BuyItem")? JSON.parse(localStorage.getItem("BuyItem")) :[],
     cartItem: localStorage.getItem("cartItem")? JSON.parse(localStorage.getItem("cartItem")) :[],
-    doorSplashDate: localStorage.getItem("doorSplashDate") ? JSON.parse(localStorage.getItem("doorSplashDate")) : []
   },
   reducers: {
     userUidLogin:(state , action) => {
@@ -57,20 +56,11 @@ export const counterSlice = createSlice({
       state.cartItem.splice(action.payload)
       localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
     },
-    todayfordoor:(state , action) => {
-      let date = action.payload.today
 
-      if (!state.doorSplashDate.includes(date)) {
-        state.doorSplashDate.push(date)
-      }
-
-      localStorage.setItem("doorSplashDate" , JSON.stringify(state.doorSplashDate))
-      
-    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { userUidLogin , userLogout , userBuyItem , BuyItemDelete , AddToCart , removeCartPro , qunIncrement , qunDecrement , removeAllcartPro , todayfordoor } = counterSlice.actions
+export const { userUidLogin , userLogout , userBuyItem , BuyItemDelete , AddToCart , removeCartPro , qunIncrement , qunDecrement , removeAllcartPro } = counterSlice.actions
 
 export default counterSlice.reducer
