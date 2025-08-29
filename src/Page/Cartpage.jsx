@@ -80,7 +80,7 @@ const Cartpage = () => {
                   {
                     item.modleColor.Color !== ""
                     &&
-                  <div className="flex gap-2">
+                  <div className={`${item.modleColor.Color ? "block" : "hidden"} flex gap-2`}>
                                 <span className='text-[#000000] text-sm font-bold'>Color:</span>      <div className="w-4 h-4 rounded-[50%]" style={{ backgroundColor: item.modleColor.Color }}></div>
                   </div>
                   }

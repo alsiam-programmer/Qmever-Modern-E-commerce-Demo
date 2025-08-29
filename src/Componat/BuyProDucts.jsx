@@ -1,7 +1,8 @@
 
-const BuyProDucts = ({ BuyItem, building_data, TotalBuild, HandleSendOTP }) => {
+const BuyProDucts = ({ BuyItem, building_data, TotalBuild, HandleSendOTP }) => {  
 
-
+  console.log(BuyItem);
+  
   return (
     <div className="w-full space-y-6">
       {BuyItem.map((Buyitemuser, i) =>
@@ -25,6 +26,14 @@ const BuyProDucts = ({ BuyItem, building_data, TotalBuild, HandleSendOTP }) => {
                 <h2 className="text-sm sm:text-base font-semibold text-green-600">
                   ৳ {item.Pricesub || item.Price}
                 </h2>
+                
+                  {
+                    item.modleColor.Color !== ""
+                    &&
+                  <div className={`${item.modleColor.Color ? "block" : "hidden"} flex gap-2`}>
+                                <span className='text-[#000000] text-sm font-bold'>Color:</span>      <div className="w-4 h-4 rounded-[50%]" style={{ backgroundColor: item.modleColor.Color }}></div>
+                  </div>
+                  }
               </div>
             ))}
             {/* Summary */}
@@ -86,6 +95,13 @@ const BuyProDucts = ({ BuyItem, building_data, TotalBuild, HandleSendOTP }) => {
               <h2 className="text-sm sm:text-base font-semibold text-green-600">
                 ৳ {Buyitemuser.Pricesub || Buyitemuser.Price}
               </h2>
+                        {
+                    Buyitemuser.modleColor.Color !== ""
+                    &&
+                  <div className={`${Buyitemuser.modleColor.Color ? "block" : "hidden"} flex gap-2`}>
+                                <span className='text-[#000000] text-sm font-bold'>Color:</span>      <div className="w-4 h-4 rounded-[50%]" style={{ backgroundColor: Buyitemuser.modleColor.Color }}></div>
+                  </div>
+                  }
             </div>
 
             <div className="space-y-1 text-sm sm:text-base font-medium text-gray-800">

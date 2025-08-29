@@ -88,7 +88,7 @@ const ProductDetails = () => {
   let handleBuyNow = () => {
     if (userUID !== "") {
       if (info3 !== "") {
-        if (modleaddicon !== "" || modleColor.Stock > 0) {
+        if (modleaddicon !== "" && modleColor.Stock > 0) {
           dispatch(BuyItemDelete({ ...info, size: modleaddicon, Pricesub: modlePrice, ProdectQun, modleColor }))
           setLodingOn(true)
           setTimeout(() => {
@@ -100,10 +100,23 @@ const ProductDetails = () => {
             navigate('/CheckOut')
           }, 1000);
         } else {
+          if ( modleaddicon !== "" && !SelectColor) {
+                  dispatch(BuyItemDelete({ ...info, size: modleaddicon, Pricesub: modlePrice, ProdectQun , modleColor }))
+          setLodingOn(true)
+          setTimeout(() => {
+            setLoding(true)
+          }, 30);
+          setTimeout(() => {
+            dispatch(userBuyItem({ ...info, size: modleaddicon, Pricesub: modlePrice, ProdectQun , modleColor }))
+            window.scrollTo(0, 0)
+            navigate('/CheckOut')
+          }, 1000);
+          } else {
           setModelselect(true)
           setTimeout(() => {
             setModelselect(false)
           }, 1000);
+        }
         }
       } else {
         dispatch(BuyItemDelete({ ...info, size: modleaddicon, Pricesub: modlePrice, ProdectQun }))
@@ -125,20 +138,28 @@ const ProductDetails = () => {
   let handleAddTocart = () => {
     if (userUID !== "") {
       if (info3 !== "") {
-        if (modleaddicon !== "" || modleColor.Stock > 0) {
-          dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, PCU: info.PCU, category: info.category }, size: modleaddicon, Pricesub: modlePrice, ProdectQun, modleColor }))
+        if (modleaddicon !== "" && modleColor.Stock > 0) {
+          dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, category: info.category }, size: modleaddicon, Pricesub: modlePrice, ProdectQun, modleColor }))
           setaddsucess(true)
           setTimeout(() => {
             setaddsucess(false)
           }, 1000);
         } else {
-          setModelselect(true)
+          if ( modleaddicon !== "" && !SelectColor) {
+        dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, category: info.category }, size: modleaddicon, Pricesub: modlePrice, ProdectQun , modleColor }))
+          setaddsucess(true)
+          setTimeout(() => {
+            setaddsucess(false)
+          }, 1000);
+          } else{
+                 setModelselect(true)
           setTimeout(() => {
             setModelselect(false)
           }, 1000);
+          }
         }
       } else {
-        dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, PCU: info.PCU, category: info.category }, ProdectQun }))
+        dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, category: info.category }, ProdectQun }))
         console.log(info);
         setaddsucess(true)
         setTimeout(() => {
