@@ -88,7 +88,7 @@ const ProductDetails = () => {
   let handleBuyNow = () => {
     if (userUID !== "") {
       if (info3 !== "") {
-        if (modleaddicon !== "" && modleColor.Stock > 0) {
+        if (modleaddicon !== "" || modleColor.Stock > 0) {
           dispatch(BuyItemDelete({ ...info, size: modleaddicon, Pricesub: modlePrice, ProdectQun, modleColor }))
           setLodingOn(true)
           setTimeout(() => {
@@ -125,7 +125,7 @@ const ProductDetails = () => {
   let handleAddTocart = () => {
     if (userUID !== "") {
       if (info3 !== "") {
-        if (modleaddicon !== "" && modleColor.Stock > 0) {
+        if (modleaddicon !== "" || modleColor.Stock > 0) {
           dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, PCU: info.PCU, category: info.category }, size: modleaddicon, Pricesub: modlePrice, ProdectQun, modleColor }))
           setaddsucess(true)
           setTimeout(() => {
