@@ -65,14 +65,13 @@ const ProductDetails = () => {
     }
 
       setInfo(res.data);
-      setInfo2(res.data.thumbnail)
+      setInfo2(res.data.thumbnail || "")
       setInfo3(res.data.addModle !== undefined ? res.data.addModle : "");
      } catch (error) {
       
      }
   }
-
-
+  
 
   useEffect(() => {
     productData()
@@ -266,7 +265,11 @@ let handleBuyNow = () => {
     <IoMdClose />
   </button>
 
-  {/* Slider */}
+
+  {
+    info2 !== ""
+
+    ?
   <Slider
     {...settings}
     className="w-full h-full flex items-center justify-center px-4"
@@ -278,8 +281,9 @@ let handleBuyNow = () => {
         className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
       />
     </div>
+
     <div className="imgBox flex justify-center items-center h-[90vh]">
-      
+
       <ZoomableImage
         src={info2.productimg}
         alt={`${info.Prodectname} Thumbnail 1`}
@@ -301,6 +305,22 @@ let handleBuyNow = () => {
       />
     </div>
   </Slider>
+    :
+    <div className="imgBox flex justify-center items-center h-[90vh]">
+      <ZoomableImage
+        src={info.imgurl}
+        alt={`${info.Prodectname} main`}
+        className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+      />
+    </div>
+  }
+
+
+
+
+
+  {/* Slider */}
+
 </div>
 
 
@@ -333,29 +353,32 @@ let handleBuyNow = () => {
         }
         <div className="productdetailsBox gap-[20px] flex flex-wrap">
           <div className="imgbox w-[100%] flex gap-[10px] lg:w-[55%]">
-            <div onClick={handleImgSlick} className=" cursor-pointer leftImg flex flex-wrap gap-y-[10px] w-[23%]">
+            <div onClick={handleImgSlick} className={` cursor-pointer leftImg flex flex-wrap gap-y-[10px] ${info2 !== "" ? "w-[23%]" : " hidden "} `}>
              <div className="w-[100%]">
   {[info2.productimg, info2.productimg2, info2.productimg3].map((img, index) =>
     img ? (
       <img
-        key={index}
-        className="mb-[10px] cursor-pointer w-[100%]"
-        src={img}
-        alt={`${info.Prodectname} Thumbnail ${index + 1}`}
+      key={index}
+      className="  mb-[10px] cursor-pointer w-[100%]"
+      src={img}
+      alt={`${info.Prodectname} Thumbnail ${index + 1}`}
       />
     ) : (
       <SkeletonTheme key={index}>
         <Skeleton className="h-[100px] lg:h-[150px] mb-3" />
       </SkeletonTheme>
     )
+    
   )}
 </div>
 
             </div>
-            <div onClick={handleImgSlick} className=" cursor-pointer overflow-hidden rightimg w-[77%]">
+            <div onClick={handleImgSlick} className={` cursor-pointer overflow-hidden rightimg ${ info2 !== "" ? "w-[77%]" : "w-[100%]" } `}>
               {info.imgurl
                 ?
+                  <div className={` ${info2 === "" && "border-[2px] p-3 border-[#0000006e] rounded"} `}>
                 <img className=" hover:scale-125 duration-200 cursor-pointer w-[100%] " src={info.imgurl} alt="" />
+  </div>
                 :
                 <SkeletonTheme >
                   <Skeleton className=" h-[330px] lg:h-[490px] mb-4" />

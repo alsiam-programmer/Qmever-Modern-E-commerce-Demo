@@ -25,8 +25,8 @@ export const counterSlice = createSlice({
       localStorage.setItem("BuyItem" , JSON.stringify(state.BuyItem))
     },
     
-    AddToCart:(state , action) => {
-      let FindProduct = state.cartItem.findIndex((item)=> item.uid === action.payload.uid)
+    AddToCart:(state , action) => {      
+      let FindProduct = state.cartItem.findIndex((item)=> item.ProdectId === action.payload.ProdectId)
       let FindProductModel = state.cartItem.findIndex((item)=> item.size === action.payload.size)
       let FindProductmodleColor = state.cartItem.findIndex((item)=> item.modleColor.Color === action.payload.modleColor.Color)
 
