@@ -31,8 +31,23 @@ export const counterSlice = createSlice({
       let FindProductmodleColor = state.cartItem.findIndex((item)=> item.modleColor.Color === action.payload.modleColor.Color)
 
       if (FindProduct !== -1 && FindProductModel !== -1  && FindProductmodleColor !== -1 ) {
+        
+        
+        if (action.payload.modleColor.Color !== undefined) {
+          state.cartItem[FindProductmodleColor].ProdectQun += 1
+          localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
+          return          
+        }
+        
+
+        if (action.payload.size !== undefined) {
           state.cartItem[FindProductModel].ProdectQun += 1
           localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
+          return          
+        } 
+
+        state.cartItem[FindProduct].ProdectQun += 1
+        localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
       } else {
         state.cartItem = [ ...state.cartItem , action.payload ]
         localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
