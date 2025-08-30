@@ -56,7 +56,6 @@ const ProductDetails = () => {
   let [show , setShow] = useState(false)
 
   
-  
   let productData = async () => {
      try {
       let res = await axios.get(`https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products/${id}.json`)
@@ -84,8 +83,7 @@ const ProductDetails = () => {
     })
   })
 
-
-  let handleBuyNow = () => {
+let handleBuyNow = () => {
     if (userUID !== "") {
       if (info3 !== "") {
         if (modleaddicon !== "" && modleColor.Stock > 0) {
@@ -119,13 +117,13 @@ const ProductDetails = () => {
         }
         }
       } else {
-        dispatch(BuyItemDelete({ ...info, size: modleaddicon, Pricesub: modlePrice, ProdectQun }))
+        dispatch(BuyItemDelete({ ...info, size: modleaddicon, Pricesub: modlePrice, ProdectQun , modleColor }))
         setLodingOn(true)
         setTimeout(() => {
           setLoding(true)
         }, 30);
         setTimeout(() => {
-          dispatch(userBuyItem({ ...info, ProdectQun }))
+          dispatch(userBuyItem({ ...info, ProdectQun , modleColor }))
           window.scrollTo(0, 0)
           navigate('/CheckOut')
         }, 1000);
@@ -139,14 +137,14 @@ const ProductDetails = () => {
     if (userUID !== "") {
       if (info3 !== "") {
         if (modleaddicon !== "" && modleColor.Stock > 0) {
-          dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, category: info.category }, size: modleaddicon, Pricesub: modlePrice, ProdectQun, modleColor }))
+          dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: modlePrice ? modlePrice : info.Price, ProdectId: info.uid, imgurl: info.imgurl, category: info.category }, size: modleaddicon, Pricesub: modlePrice, ProdectQun, modleColor }))
           setaddsucess(true)
           setTimeout(() => {
             setaddsucess(false)
           }, 1000);
         } else {
           if ( modleaddicon !== "" && !SelectColor) {
-        dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, category: info.category }, size: modleaddicon, Pricesub: modlePrice, ProdectQun , modleColor }))
+        dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: modlePrice ? modlePrice : info.Price, ProdectId: info.uid, imgurl: info.imgurl, category: info.category }, size: modleaddicon, Pricesub: modlePrice, ProdectQun , modleColor }))
           setaddsucess(true)
           setTimeout(() => {
             setaddsucess(false)
@@ -159,8 +157,7 @@ const ProductDetails = () => {
           }
         }
       } else {
-        dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: info.Price, ProdectId: info.uid, imgurl: info.imgurl, category: info.category }, ProdectQun }))
-        console.log(info);
+        dispatch(AddToCart({ ...{ Prodectname: info.Prodectname, Price: modlePrice ? modlePrice : info.Price, ProdectId: info.uid, imgurl: info.imgurl, category: info.category }, ProdectQun , modleColor }))
         setaddsucess(true)
         setTimeout(() => {
           setaddsucess(false)
