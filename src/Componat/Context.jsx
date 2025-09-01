@@ -84,28 +84,33 @@ const Context = ({ children }) => {
 
   return (
     <apiData.Provider value={info}>
-      {children}
-      {loading && (
-        <div className="container px-[10px] mx-auto">
-          <SkeletonTheme>
-            <div className="flex flex-wrap">
-              {Array(10)
-                .fill(0)
-                .map((_, index) => (
-                  <div
-                    key={index}
-                    className="w-[50%] md:w-[33.333333%] lg:w-[20%] px-[4px] md:px-4"
-                  >
-                    <Skeleton className="h-48 mb-4" />
-                    <Skeleton className="h-4 mb-2" />
-                    <Skeleton className="h-6 mb-2" />
-                  </div>
-                ))}
+  {children}
+  
+  {loading && (
+    <div className="lg:w-[75%] container mx-auto px-4 lg:px-0">
+      <SkeletonTheme baseColor="#e0e0e0" highlightColor="#f5f5f5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4">
+          {Array(10).fill(0).map((_, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden animate-pulse"
+            >
+              {/* Image Skeleton */}
+              <Skeleton className="w-full h-48 sm:h-56 lg:h-64 object-cover rounded-t-2xl" />
+
+              {/* Text Skeletons */}
+              <div className="p-4 space-y-2">
+                <Skeleton className="h-4 w-1/2 mx-auto rounded" />
+                <Skeleton className="h-6 w-3/4 mx-auto rounded" />
+              </div>
             </div>
-          </SkeletonTheme>
+          ))}
         </div>
-      )}
-    </apiData.Provider>
+      </SkeletonTheme>
+    </div>
+  )}
+</apiData.Provider>
+
   );
 };
 
