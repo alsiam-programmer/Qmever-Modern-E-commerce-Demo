@@ -33,7 +33,7 @@ const InstallPWAButton = () => {
 
   return (
 
-    <div className="flex justify-center px-[10px]">
+    <div className="flex justify-center px-[10px] lg:px-0 lg:mt-3">
   <div className="flex flex-row items-center justify-between gap-4 sm:gap-6 px-2 sm:px-6 py-2 bg-gradient-to-r from-green-500 to-blue-600 rounded-xl shadow-lg container">
     
     {/* Logo */}
