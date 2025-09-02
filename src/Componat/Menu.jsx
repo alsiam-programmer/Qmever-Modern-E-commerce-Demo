@@ -215,7 +215,7 @@ const handleSearch = async (e) => {
     setSearch(item.Prodectname)
   }
   return (
-    <section>
+  <section>
       {/* <h5 className='text-[#fff] lg:text-[20px] fixed top-0 translate-x-[50%] left-[10%] animate-[animake_9s_linear_infinite] z-[990] '><FaSnowflake /></h5>
       <h5 className='text-[#fff] lg:text-[20px] fixed top-0 translate-x-[50%] left-[22%] animate-[animake_8s_linear_infinite] z-[990] '><FaSnowflake /></h5>
       <h5 className='text-[#fff] lg:text-[20px] fixed top-0 translate-x-[50%] left-[22%] animate-[animake_12s_linear_infinite] z-[990] '><FaSnowflake /></h5>
@@ -228,27 +228,62 @@ const handleSearch = async (e) => {
 
 
       <section className='w-[100%] h-[100px] mb-[10px] sm:mb-[0px] sm:h-[120px] lg:h-[100px] xl:h-[110px]'>
-        <div className=' z-[990] px-[10px] bg-[#062919] fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
+        <div className=' z-[990] px-[10px] bg-[#062919]/95 fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
           <div className=" lg:w-[75%] relative container mx-auto h-[60px] lg:h-[70px] xl:h-[80px]">
             <div className="webLogo cursor-pointer w-[100%] flex justify-center items-center h-[60px] lg:h-[70px] xl:h-[80px] lg:justify-start">
               <h1 className='text-[#fff] text-[30px] noselect italic font-[700]'>Qmever</h1>
             </div>
             <div className="Search rounded-l-[40px] shadow-2xl lg:shadow-none rounded-r-[40px] lg:my-[0px] w-[100%] lg:w-[70%] h-[40px] justify-center flex lg:top-[50%] relative lg:translate-y-[-50%] lg:left-[50%] lg:translate-x-[-50%] lg:absolute">
-              <div className="Search rounded-l-[40px] shadow-2xl lg:shadow-none my-[10px] rounded-r-[40px] lg:my-[0px] w-[100%] lg:w-[50%] h-[40px] justify-center flex lg:top-[50%] relative lg:translate-y-[-50%] lg:left-[50%] lg:translate-x-[-50%] lg:absolute">
-                <input value={search} onKeyDown={GoSearchEnter} onChange={handleSearch} type="text" className=' italic font-[600] w-[100%] px-[20px] outline-none rounded-l-[40px] lg:rounded-l-[5px] h-[40px]  text-[#000000a9] ' placeholder='what you need' />
-                <h5 onClick={valueDelet} className={` ${search !== "" ? "block" : "hidden"} h-[40px] w-[40px] top-0 right-[15%] lg:right-[10%] absolute z-[999] rounded-[50%] flex justify-center items-center text-[19px] bg-[#f0f0f0] text-[#000] font-[600] cursor-pointer`} ><IoCloseOutline /></h5>
-                <h5 onClick={GoSearchPage} className='h-[40px] rounded-r-[40px] lg:rounded-none w-[50px] flex justify-center items-center text-[19px] bg-[#f0f0f0] text-[#000] font-[600] cursor-pointer'><IoSearchOutline /></h5>
-              </div>
-              {
-                search.length >= 1 && searchBoxShow !== false
-                  ?
-                  <div className=" w-[100%] absolute z-[999] bg-white top-[60px] ">
-                    {getDataSearch.map((item , index)=>(
-                      <h5 onClick={()=>handleItemName({item , index})} className={` ${ index === searchItemIndex ? "bg-[black] text-white" : ""} text-[14px] my-[2px] p-[10px] py-[5px] text-[#061227] bg-[#f4f4f4]`} >{item.Prodectname}</h5>
-                    ))}
-                  </div>
-                  : ""
-              }
+<div className="Search relative w-full lg:w-[50%] h-[40px] flex items-center my-1 lg:my-0 lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 shadow-2xl lg:shadow-none shadow-black rounded-full overflow-hidden bg-white">
+
+  {/* Input */}
+  <input
+    value={search}
+    onKeyDown={GoSearchEnter}
+    onChange={handleSearch}
+    type="text"
+    placeholder="What are you looking for?"
+    className="flex-1 h-full px-4 lg:px-5 text-[#1f2937] placeholder-[#9ca3af] font-medium outline-none"
+  />
+
+  {/* Clear Button */}
+  {search && (
+    <button
+      onClick={valueDelet}
+      className="absolute top-1/2 right-[15%] lg:right-[10%] -translate-y-1/2 h-8 w-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-black font-semibold rounded-full transition"
+    >
+      <IoCloseOutline size={18} />
+    </button>
+  )}
+
+  {/* Search Button */}
+  <button
+    onClick={GoSearchPage}
+    className="h-[40px] rounded-r-[40px] lg:rounded-none w-[50px] flex justify-center items-center text-[19px] bg-[#f0f0f0] text-[#000] font-[600] cursor-pointer"
+  >
+    <IoSearchOutline size={20} />
+  </button>
+</div>
+
+
+             {search.length >= 1 && searchBoxShow && (
+  <div className="absolute top-[60px] w-full z-[999] bg-white shadow-lg rounded-md">
+    {getDataSearch.map((item, index) => (
+      <h5
+        key={index}
+        onClick={() => handleItemName({ item, index })}
+        className={`text-[14px] my-[2px] p-[10px] py-[5px] cursor-pointer rounded transition-colors ${
+          index === searchItemIndex
+            ? "bg-green-600 text-white"
+            : "bg-[#f9fafb] text-[#1f2937] hover:bg-[#e5e7eb]"
+        }`}
+      >
+        {item.Prodectname}
+      </h5>
+    ))}
+  </div>
+)}
+
             </div>
             <div ref={MenuRef} onKeyDown={handleKeysystem} className="MenuBar cursor-pointer absolute top-[50%] right-[0px] translate-y-[-50%]">
               <div className='text-[38px] text-[#fff]' ><FaBars /></div>
@@ -256,155 +291,87 @@ const handleSearch = async (e) => {
           </div>
         </div>
       </section>
-      {
-        MenuShow ? (
-          <div className="fixed top-0 right-0 z-[999] h-full w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] bg-white shadow-xl duration-300">
-            <ul className="w-full flex flex-col h-screen justify-between py-16 px-4 space-y-3">
-              {
-                useruid === "" ? (
-                  <div className=" w-full flex justify-center">
+      
+       <aside
+    className={`fixed top-0 right-0 h-full bg-white shadow-2xl transform transition-transform duration-300 z-[1000]
+      ${MenuShow ? "translate-x-0" : "translate-x-full"}
+    `}
+    style={{ width: "80%", maxWidth: "400px" }}
+  >
+    <ul className="flex flex-col h-full justify-between py-10 px-6 space-y-4">
+      {useruid === "" ? (
+        <div className="flex justify-center">
+          <img
+            src="https://i.ibb.co/vC8zmqHv/low-self-esteem-1-1.jpg"
+            alt="Guest"
+            className="w-[70%] rounded-lg mt-20"
+          />
+        </div>
+      ) : (
+        <div className="flex flex-col gap-6">
+          <Link to={"/user-profile"}>
+            <div className="flex items-center gap-3 px-4 py-3 bg-green-900 rounded-xl hover:bg-green-800 transition cursor-pointer">
+              <img
+                src={userData?.profile_picture || ""}
+                alt="User"
+                className="w-12 h-12 rounded-full border-2 border-yellow-400"
+              />
+              <h2 className="text-yellow-400 font-semibold text-lg">
+{userData?.username
+    ? userData.username.slice(0, 8) + (userData.username.length > 8 ? "…" : "")
+    : ""}              </h2>
+            </div>
+          </Link>
 
-                    <img
-                      src="https://i.ibb.co/vC8zmqHv/low-self-esteem-1-1.jpg"
-                      alt="Nice to meet you"
-                      className=" w-[80%] h-auto object-contain"
-                    />
-                  </div>
+          {/* Links */}
+          <nav className="space-y-2">
+            <Link to="/">
+              <li className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700">
+                Home
+              </li>
+            </Link>
+            <Link to="/ProductPage">
+              <li className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700">
+                Products
+              </li>
+            </Link>
+            <li className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700">
+              Notifications
+            </li>
+            <Link to="/Orders">
+              <li className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700">
+                My Orders
+              </li>
+            </Link>
+            <Link to="/CartPage">
+              <li className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700">
+                Cart
+              </li>
+            </Link>
+          </nav>
+        </div>
+      )}
 
-
-                ) : (
-                  <div className=" flex flex-col gap-y-[30px] ">
-                  <Link to={'/user-profile'}>
-                    <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
-                      <img
-                        src={userData?.profile_picture || ''}
-                        alt="User"
-                        className="w-12 h-12 rounded-full border-4 border-yellow-400"
-                        />
-                      <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData?.username || ''}</h2>
-                    </div>
-                  </Link>
-                                  <div className="space-y-2">
-                  <Link to="/"><li className=" hover:text-green-700 text-[black]
-text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Home</li></Link>
-                  <Link to="/ProductPage"><li className=" hover:text-green-700 text-[black]
-text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Products</li></Link>
-                  <li className=" hover:text-green-700 text-[black]
-text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Notification</li>
-                  <Link to="/Orders"><li className=" hover:text-green-700 text-[black]
-text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">My Order</li></Link>
-                  <Link to="/CartPage"><li className=" hover:text-green-700 text-[black]
-text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Cart</li></Link>
-
-                  
-                </div>
-                  </div>
-                )
-              }
-
-              {
-                useruid === "" ? (
-                  <div className=" space-y-2">
-                    <li
-                    onKeyDown={handleKeysystem}
-                    onClick={handleLogin}
-                    className=" bg-green-600 text-white text-center py-[5px] mt-5 text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
-                  >
-                    Login
-                  </li>
-                  </div>
-                  
-                ) : (
-<>
-
-                <div className="space-y-2">
-                  <li
-                    onClick={handleLogout}
-                    className=" bg-red-600 text-white text-center mt-5 py-[5px] text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
-                  >
-                    Logout
-                  </li>
-                </div>
-</>
-                )
-              }
-            </ul>
-          </div>
+      {/* Auth Button */}
+      <div>
+        {useruid === "" ? (
+          <li
+            onClick={handleLogin}
+            className="w-full text-center bg-green-600 text-white py-2 rounded-lg font-bold hover:bg-green-700 cursor-pointer transition"
+          >
+            Login
+          </li>
         ) : (
-          <div className="fixed top-0 right-[-60%] z-[999] h-full w-[200px] sm:w-[300px] md:w-[400px] 2xl:w-[600px] bg-white shadow-xl duration-300">
- <ul className="w-full flex flex-col h-screen justify-between py-16 px-4 space-y-3">
-              {
-                useruid === "" ? (
-                  <div className=" w-full flex justify-center">
-
-                    <img
-                      src="https://i.ibb.co/vC8zmqHv/low-self-esteem-1-1.jpg"
-                      alt="Nice to meet you"
-                      className=" w-[80%] h-auto object-contain"
-                    />
-                  </div>
-
-
-                ) : (
-                  <div className=" flex flex-col gap-y-[30px] ">
-                  <Link to={'/user-profile'}>
-                    <div className="flex items-center gap-4 px-5 py-3 bg-green-950 rounded-xl hover:bg-green-900 cursor-pointer transition-all">
-                      <img
-                        src={userData?.profile_picture || ''}
-                        alt="User"
-                        className="w-12 h-12 rounded-full border-4 border-yellow-400"
-                        />
-                      <h2 className="text-sm font-semibold text-yellow-400 group-hover:underline">{userData?.username || ''}</h2>
-                    </div>
-                  </Link>
-                                  <div className="space-y-2">
-                  <Link to="/"><li className=" hover:text-green-700 text-[black]
-text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Home</li></Link>
-                  <Link to="/ProductPage"><li className=" hover:text-green-700 text-[black]
-text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Products</li></Link>
-                  <li className=" hover:text-green-700 text-[black]
-text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Notification</li>
-                  <Link to="/Orders"><li className=" hover:text-green-700 text-[black]
-text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">My Order</li></Link>
-                  <Link to="/CartPage"><li className=" hover:text-green-700 text-[black]
-text-[15px] lg:text-[20px] font-bold px-5 py-3 hover:bg-gray-100 border-b-[1px] lg:border-b-[3px] border-b-gray-700">Cart</li></Link>
-
-                  
-                </div>
-                  </div>
-                )
-              }
-
-              {
-                useruid === "" ? (
-                  <div className=" space-y-2">
-                    <li
-                    onKeyDown={handleKeysystem}
-                    onClick={handleLogin}
-                    className=" bg-green-600 text-white text-center py-[5px] mt-5 text-lg font-bold rounded-xl hover:bg-green-700 cursor-pointer"
-                  >
-                    Login
-                  </li>
-                  </div>
-                  
-                ) : (
-<>
-
-                <div className="space-y-2">
-                  <li
-                    onClick={handleLogout}
-                    className=" bg-red-600 text-white text-center mt-5 py-[5px] text-lg font-bold rounded-xl hover:bg-red-700 cursor-pointer"
-                  >
-                    Logout
-                  </li>
-                </div>
-</>
-                )
-              }
-            </ul>
-          </div>
-        )
-      }
+          <li
+            onClick={handleLogout}
+            className="w-full text-center bg-red-600 text-white py-2 rounded-lg font-bold hover:bg-red-700 cursor-pointer transition"
+          >
+            Logout
+          </li>
+        )}
+      </div>
+    </ul>
+  </aside>
 
     </section>
   )
