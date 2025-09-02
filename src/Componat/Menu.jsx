@@ -318,7 +318,7 @@ const handleSearch = async (e) => {
               />
               <h2 className="text-yellow-400 font-semibold text-lg">
 {userData?.username
-    ? userData.username.slice(0, 8) + (userData.username.length > 8 ? "…" : "")
+    ? userData.username.slice(0, 8) + (userData.username.length > 8 ? "..." : "")
     : ""}              </h2>
             </div>
           </Link>
