@@ -53,9 +53,11 @@ const Cartpage = () => {
         {cartItem.length > 0 ? (
           <div className="relative">
             {/* Loading Overlay */}
-            <div className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center ${Lodingon ? 'block' : 'hidden'}`}>
-              {Loding && <div className="text-white text-xl font-semibold animate-pulse">Processing...</div>}
-            </div>
+              {Loding &&<div className="fixed inset-0 bg-black/50 z-[9998] flex items-center justify-center">
+      <div className="w-[60px] h-[60px] flex items-center justify-center">
+        <div className="loader w-full h-full" />
+      </div>
+    </div>}
 
             {/* Cart List */}
             <div className="space-y-4">

@@ -226,12 +226,15 @@ const UserContact = ({ userDelivery }) => {
                         Upload Your Address
                     </button>
                     {
-                        alert !== false
-                        ?
-                        <div className=" fixed bg-[#0000004d] w-[100%] h-[100%] translate-x-[-50%] translate-y-[-50%] left-[50%] top-[50%] ">
-                            <h4 className=' absolute translate-x-[-50%] translate-y-[-50%] left-[50%] top-[50%] font-bold text-[15px] shadow-bla' >Uploading{".".repeat(dotCount)}</h4>
-                        </div>
-                        :""
+                        alert
+                        &&
+                        (
+                                <div className="fixed inset-0 bg-black/50 z-[9998] flex items-center justify-center">
+      <div className="w-[60px] h-[60px] flex items-center justify-center">
+        <div className="loader w-full h-full" />
+      </div>
+    </div>
+                        )
                     } 
                 </div>
             </div>
