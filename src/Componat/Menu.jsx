@@ -83,6 +83,7 @@ let handleLogin = () => {
           email: user.email,
           profile_picture: user.photoURL,
           uid: user.uid,
+          role: "user",
           gender: "",
           dateOfBirth: "",
           Delivery_address: {
