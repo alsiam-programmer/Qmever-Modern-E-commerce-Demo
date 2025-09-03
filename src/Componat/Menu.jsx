@@ -22,6 +22,7 @@ const Menu = () => {
   const provider = new GoogleAuthProvider();
   let MenuRef = useRef()
   let [MenuShow, setMenuShow] = useState(false)
+  let [loader , setloader] = useState(false)
   let [useruid, setUseruid] = useState('')
   let [getDataSearch, setGetDataSearch] = useState([])
   let [searchItemIndex, setSearchItemIndex] = useState(-1)
@@ -73,7 +74,9 @@ let handleLogin = () => {
       // Check if user already exists
       const snapshot = await get(userRef);
 
+      
       if (!snapshot.exists()) {
+        setloader(true)
         // User does not exist, create new data
         await set(userRef, {
           username: user.displayName,
@@ -91,9 +94,8 @@ let handleLogin = () => {
             local_address: "",
           }
         });
-
         await new Promise(res => setTimeout(res, 2000)); window.location.href = '/Login';
-        
+        setloader(false)
       } else {
 
         
@@ -226,9 +228,19 @@ const handleSearch = async (e) => {
       <h5 className='text-[#fff] lg:text-[20px] fixed top-0 translate-x-[50%] left-[80%] animate-[animake_10s_linear_infinite] z-[990] '><FaSnowflake /></h5>
       <h5 className='text-[#fff] lg:text-[20px] fixed top-0 translate-x-[50%] left-[98%] animate-[animake_6s_linear_infinite] z-[990] '><FaSnowflake /></h5> */}
 
+{
+  loader && (
+    <div className="fixed inset-0 bg-black/50 z-[9998] flex items-center justify-center">
+      <div className="w-[60px] h-[60px] flex items-center justify-center">
+        <div className="loader w-full h-full" />
+      </div>
+    </div>
+  )
+}
+
 
       <section className='w-[100%] h-[100px] mb-[10px] sm:mb-[0px] sm:h-[120px] lg:h-[100px] xl:h-[110px]'>
-        <div className=' z-[990] px-[10px] bg-[#062919]/95 fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
+        <div className=' z-[990] px-[10px] bg-[#062919] fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
           <div className=" lg:w-[75%] relative container mx-auto h-[60px] lg:h-[70px] xl:h-[80px]">
             <div className="webLogo cursor-pointer w-[100%] flex justify-center items-center h-[60px] lg:h-[70px] xl:h-[80px] lg:justify-start">
               <h1 className='text-[#fff] text-[30px] noselect italic font-[700]'>Qmever</h1>
