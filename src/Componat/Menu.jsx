@@ -7,12 +7,12 @@ import { userLogout, userUidLogin } from './slice/AllSlice';
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { IoSearchOutline, IoCloseOutline, IoCameraOutline } from "react-icons/io5";
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { FaSnowflake } from "react-icons/fa";
 
 const Menu = () => {
   let userLoginUid = useSelector((item) => item.counter.user)
-
+  const location = useLocation()
   let [userData, setUserdata] = useState([])
   let dispatch = useDispatch()
   let navigate = useNavigate()
@@ -217,6 +217,17 @@ const handleSearch = async (e) => {
   let handleItemName = ({ item, index }) => {
     setSearch(item.Prodectname)
   }
+  
+    const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Products", path: "/ProductPage" },
+    { name: "Notifications", path: null },
+    { name: "My Orders", path: "/Orders" },
+    { name: "Cart", path: "/CartPage" },
+  ];
+
+  
+  
   return (
   <section>
       {/* <h5 className='text-[#fff] lg:text-[20px] fixed top-0 translate-x-[50%] left-[10%] animate-[animake_9s_linear_infinite] z-[990] '><FaSnowflake /></h5>
@@ -321,48 +332,49 @@ const handleSearch = async (e) => {
           />
         </div>
       ) : (
-        <div className="flex flex-col gap-6">
-          <Link to={"/user-profile"}>
-            <div className="flex items-center gap-3 px-4 py-3 bg-green-900 rounded-xl hover:bg-green-800 transition cursor-pointer">
-              <img
-                src={userData?.profile_picture || ""}
-                alt="User"
-                className="w-12 h-12 rounded-full border-2 border-yellow-400"
-              />
-              <h2 className="text-yellow-400 font-semibold text-lg">
-{userData?.username
-    ? userData.username.slice(0, 8) + (userData.username.length > 8 ? "..." : "")
-    : ""}              </h2>
-            </div>
-          </Link>
-
-          {/* Links */}
-          <nav className="space-y-2">
-            <Link to="/">
-              <li className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700">
-                Home
-              </li>
-            </Link>
-            <Link to="/ProductPage">
-              <li className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700">
-                Products
-              </li>
-            </Link>
-            <li className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700">
-              Notifications
-            </li>
-            <Link to="/Orders">
-              <li className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700">
-                My Orders
-              </li>
-            </Link>
-            <Link to="/CartPage">
-              <li className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700">
-                Cart
-              </li>
-            </Link>
-          </nav>
+    <div className="flex flex-col gap-6">
+      {/* Profile */}
+      <Link to={"/user-profile"}>
+        <div className="flex items-center gap-3 px-4 py-3 bg-green-900 rounded-xl hover:bg-green-800 transition cursor-pointer">
+          <img
+            src={userData?.profile_picture || ""}
+            alt="User"
+            className="w-12 h-12 rounded-full border-2 border-yellow-400"
+          />
+          <h2 className="text-yellow-400 font-semibold text-lg">
+            {userData?.username
+              ? userData.username.slice(0, 8) +
+                (userData.username.length > 8 ? "..." : "")
+              : ""}
+          </h2>
         </div>
+      </Link>
+
+      {/* Nav Links */}
+      <nav className="space-y-2">
+        {navLinks.map((link, index) =>
+          link.path ? (
+            <li key={index}>
+              <Link
+                to={link.path}
+                className={`block px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700 ${
+                  location.pathname === link.path ? "bg-[#002400] text-white" : ""
+                }`}
+              >
+                {link.name}
+              </Link>
+            </li>
+          ) : (
+            <li
+              key={index}
+              className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700"
+            >
+              {link.name}
+            </li>
+          )
+        )}
+      </nav>
+    </div>
       )}
 
       {/* Auth Button */}
