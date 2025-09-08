@@ -1,0 +1,125 @@
+import React from "react";
+import { IoLogoWhatsapp } from "react-icons/io5";
+import { TfiEmail } from "react-icons/tfi";
+
+const Contact = () => {
+  return (
+    <section className="flex flex-col mb-[50px]">
+
+      {/* About Company */}
+      <div className="bg-gradient-to-r from-[#062919] to-[#084d31] text-white py-16 px-4 md:px-8 rounded-2xl">
+        <div className="container mx-auto flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
+          {/* Company Image/Logo */}
+          <div className="flex justify-center w-full md:w-1/3 mb-6 md:mb-0">
+            <img
+              src="/Qmever.png"
+              alt="Qmever Logo"
+              className="w-40 h-40 md:w-56 md:h-56 object-contain rounded-3xl shadow-2xl border-4 border-white hover:scale-105 transform duration-300"
+            />
+          </div>
+
+          {/* About Text */}
+          <div className="w-full md:w-2/3 text-center md:text-left">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-wide">
+              About <span className="text-green-400">Qmever</span>
+            </h1>
+            <p className="text-base md:text-lg leading-relaxed text-gray-200 mb-4">
+              Qmever is a modern e-commerce platform designed to make online shopping simple, fast, and reliable for everyone. Our mission is to seamlessly connect buyers and sellers, offering a wide range of products from trusted sources at competitive prices.
+            </p>
+            <p className="text-base md:text-lg leading-relaxed text-gray-300 mb-4">
+              With Qmever, you can explore the latest trends, discover exclusive deals, and enjoy a smooth shopping experience from the comfort of your home. We prioritize security, fast delivery, and customer satisfaction to ensure every purchase is enjoyable and worry-free.
+            </p>
+            <p className="text-base md:text-lg leading-relaxed text-gray-300">
+              Whether you’re a casual shopper or a business looking to expand, Qmever provides the tools and services to meet your needs efficiently. We are committed to innovation, quality, and trust, ensuring every interaction on our platform is rewarding.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Contact Section */}
+      <div className="container mx-auto px-4 py-16 flex flex-col lg:flex-row gap-10">
+        {/* Contact Info */}
+        <div className="lg:w-1/2 space-y-6">
+          <h2 className="text-3xl font-bold text-[#062919] mb-4">Get in Touch</h2>
+
+          {/* WhatsApp */}
+          <div className="flex items-center border-2 border-[#062919] rounded-lg px-5 py-3 shadow-sm hover:shadow-md transition">
+            <span className="text-2xl text-green-600 border-r-2 border-gray-300 pr-3">
+              <IoLogoWhatsapp />
+            </span>
+            <span className="ml-3 text-lg font-semibold text-gray-700 cursor-pointer">
+              +880 1813-904257
+            </span>
+          </div>
+
+          {/* Email */}
+          <div className="flex items-center border-2 border-[#062919] rounded-lg px-5 py-3 shadow-sm hover:shadow-md transition">
+            <span className="text-2xl text-blue-600 border-r-2 border-gray-300 pr-3">
+              <TfiEmail />
+            </span>
+            <span className="ml-3 text-lg font-semibold text-gray-700 cursor-pointer">
+              qmever.bd@gmail.com
+            </span>
+          </div>
+
+          {/* Map */}
+          <div className="w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+            <iframe
+              className="w-full h-full"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d117618.22871571548!2d89.17929430664063!3d22.892350670537734!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ff6f45dabacc0f%3A0xa8030a8113dddfb!2sSiam%20House!5e0!3m2!1sen!2sbd!4v1731901565799!5m2!1sen!2sbd"
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Qmever Location"
+            ></iframe>
+          </div>
+        </div>
+
+        {/* Contact Form */}
+        <div className="lg:w-1/2 bg-gray-50 p-6 md:p-8 rounded-lg shadow-lg">
+          <h2 className="text-3xl font-bold text-[#062919] mb-6">Send Us a Message</h2>
+          <form className="space-y-4">
+            <div>
+              <label className="block text-gray-700 mb-1">Your Name</label>
+              <input
+                type="text"
+                placeholder="Enter your name"
+                className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#062919]"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-1">Your Email</label>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#062919]"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-1">Your Message</label>
+              <textarea
+                rows="4"
+                placeholder="Write your message..."
+                className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#062919]"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-[#062919] text-white py-3 rounded-lg hover:bg-[#084d31] duration-200"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* Footer */}
+          <footer className="bg-[#062919] w-full fixed bottom-0 left-0 text-white text-center py-4">
+  © {new Date().getFullYear()} Qmever.com. All rights reserved.
+</footer>
+    </section>
+  );
+};
+
+export default Contact;
+
