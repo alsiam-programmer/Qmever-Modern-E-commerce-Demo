@@ -2,10 +2,34 @@ import React from "react";
 import { IoLogoWhatsapp } from "react-icons/io5";
 import { TfiEmail } from "react-icons/tfi";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import { Helmet } from "react-helmet";
 
 const Contact = () => {
   return (
     <section className="flex flex-col mb-[50px]">
+       {/* SEO Header */}
+      <Helmet>
+        <title>Contact & About Qmever - Bangladesh E-commerce Platform</title>
+        <meta
+          name="description"
+          content="Get in touch with Qmever, a trusted Bangladesh e-commerce platform. Learn about our company, services, and contact information for inquiries and support."
+        />
+        <meta name="keywords" content="Qmever, Bangladesh e-commerce, contact, about, online shopping" />
+        <link rel="canonical" href="https://qmever.com/about-qc/" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:title" content="Contact & About Qmever - Bangladesh E-commerce Platform" />
+        <meta property="og:description" content="Get in touch with Qmever, a trusted Bangladesh e-commerce platform." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://qmever.com/about-qc/" />
+        <meta property="og:image" content="https://qmever.com/Qmever.png" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact & About Qmever - Bangladesh E-commerce Platform" />
+        <meta name="twitter:description" content="Get in touch with Qmever, a trusted Bangladesh e-commerce platform." />
+        <meta name="twitter:image" content="https://qmever.com/Qmever.png" />
+      </Helmet>
 {/* About Company */}
 <article className="relative py-20 px-4 md:px-8 overflow-hidden mb-5">
   <div className="container mx-auto flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-16 relative z-10">

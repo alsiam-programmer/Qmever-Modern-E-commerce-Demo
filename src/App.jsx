@@ -27,7 +27,7 @@ function App() {
         <Route path="/search" element={<SearchItem />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/ProductPage" element={<ProductPage />} />
-        <Route path="/Contact" element={<Contact />} />
+        <Route path="/about-qc" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     )
