@@ -87,7 +87,7 @@ const Context = ({ children }) => {
   {children}
   
   {loading && (
-    <div className="lg:w-[75%] container mx-auto px-4 lg:px-0">
+    <div className="container mx-auto px-4 lg:px-0">
       <SkeletonTheme baseColor="#e0e0e0" highlightColor="#f5f5f5">
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4">
           {Array(10).fill(0).map((_, index) => (

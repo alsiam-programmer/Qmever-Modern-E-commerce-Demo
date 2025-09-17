@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet';
 import ZoomableImage from '../Componat/ZoomableImage';
 import ShareProductsLink from '../Componat/ShareProductsLink';
 import { FaYoutube } from "react-icons/fa";
+import SIMILAR_PRODUCTS from '../Componat/SIMILAR_PRODUCTS';
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
@@ -52,6 +53,7 @@ const ProductDetails = () => {
   let [Loding, setLoding] = useState(false)
   let [modelselect, setModelselect] = useState(false)
   let [addsucess, setaddsucess] = useState(false)
+  const [ SIMILAR_PRODUCTSX , setSIMILAR_PRODUCTSX ] = useState('')
 
   let [show, setShow] = useState(false)
 
@@ -67,6 +69,8 @@ const ProductDetails = () => {
       setInfo(res.data);
       setInfo2(res.data.thumbnail || "")
       setInfo3(res.data.addModle !== undefined ? res.data.addModle : "");
+      setSIMILAR_PRODUCTSX(res?.data?.category?.subs);
+      
     } catch (error) {
 
     }
@@ -544,6 +548,8 @@ const ProductDetails = () => {
     </div>
   </div>
 )}
+    
+    <SIMILAR_PRODUCTS SIMILAR_PRODUCTSX={SIMILAR_PRODUCTSX} id={id}/>
 
     </section>
 

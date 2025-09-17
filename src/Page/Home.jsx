@@ -3,6 +3,7 @@ import AllProductsHome from '../Componat/AllProductsHome'
 import Banner from '../Componat/Banner'
 import WorkInProgressNotification from '../Componat/WorkInProgressNotification';
 import InstallPWAButton from '../Componat/InstallPWAButton'
+import { Context } from '../Componat/Context';
 
 const Home = () => {
   useEffect(() => {
@@ -10,10 +11,12 @@ const Home = () => {
   });
   return (
     <>
+    <Context>
     <WorkInProgressNotification/>
     <Banner/>
     <InstallPWAButton/>
     <AllProductsHome/>
+    </Context>
     </>
   )
 }
