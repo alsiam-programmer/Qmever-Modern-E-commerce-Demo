@@ -248,7 +248,7 @@ const ProductDetails = () => {
         <meta name="twitter:image" content={info.imgurl} />
       </Helmet>
 
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-6 lg:px-0 lg:py-0">
         {/* Toast for Model Select */}
         {modelselect && (
           <div className="fixed inset-x-0 top-24 flex justify-center z-[1200]">
@@ -504,22 +504,54 @@ const ProductDetails = () => {
         </div>
 
         {/* Description */}
-        <div className="mt-12">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Description</h2>
-          {info?.description ? (
-            info.description.split(".  ").map((txt, i) => (
-              <p
-                key={i}
-                className="text-gray-700 text-base leading-relaxed mb-2 italic"
-              >
-                {txt.trim()}.
-              </p>
-            ))
-          ) : (
-            <p className="text-gray-400 italic">Loading description...</p>
-          )}
+{/* Description */}
+<div className="mt-12">
+  <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">
+    Description
+  </h2>
+  {info?.description ? (
+    info.description.split(". ").map((txt, i) => (
+      <p
+        key={i}
+        className="text-gray-700 text-base leading-relaxed mb-3 italic"
+      >
+        {txt.trim()}.
+      </p>
+    ))
+  ) : (
+    <p className="text-gray-400 italic">Loading description...</p>
+  )}
+</div>
+{/* Specifications */}
+{info?.SpecificationValue && (
+  <div className="my-10">
+    <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b pb-4">
+      Specifications
+    </h2>
+    <div className="overflow-hidden">
+      {/* Data Rows */}
+      {info.SpecificationValue.map((item, i) => (
+        <div
+          key={i}
+          className="grid grid-cols-[35%_55%] border-b last:border-b-0"
+        >
+          <span className="px-4 py-3 font-medium text-gray-800 bg-gray-50">
+            {item.First}
+          </span>
+          <span className="px-4 py-3 text-gray-700">
+            {item.Second}
+          </span>
         </div>
+      ))}
+    </div>
+  </div>
+)}
+
+
+
       </div>
+
+
 
       {/* Video Modal */}
       {show && (

@@ -27,7 +27,7 @@ const SIMILAR_PRODUCTS = ({ SIMILAR_PRODUCTSX, id }) => {
 
       const allItems = Object.values(res.data || {});
       const filtered = allItems.filter(
-        (item) => item.uid !== id && item.category?.subs === SIMILAR_PRODUCTSX
+        (item) => item.uid !== id && item.category?.subs.toLowerCase() === SIMILAR_PRODUCTSX.toLowerCase()
       );
 
       setTotalItems(filtered.length);
