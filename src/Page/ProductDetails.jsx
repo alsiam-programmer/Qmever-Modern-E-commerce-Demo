@@ -324,7 +324,7 @@ const ProductDetails = () => {
                 </div>
 
                 {/* Extra Thumbnails */}
-                {[info2.productimg, info2.productimg2, info2.productimg3].map(
+                {info2.map(
                   (img, i) =>
                     img && (
                       <div
@@ -360,7 +360,7 @@ const ProductDetails = () => {
             {/* Thumbnails */}
             {info2 && (
               <div className="w-[22%] flex flex-col gap-4 cursor-pointer">
-                {[info2.productimg, info2.productimg2, info2.productimg3].map(
+                {info2.map(
                   (img, i) =>
                     img && (
                       <div
