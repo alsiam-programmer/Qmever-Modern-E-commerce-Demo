@@ -196,26 +196,30 @@ const ProductDetails = () => {
   };
 
 
-  var settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-    swipe: false,
-    draggable: false,
-    touchMove: false,
-  };
 
-  let handleImgSlick = () => {
-    setShowSlick(true)
-  }
-  let handleSlickClose = () => {
-    setShowSlick(false)
-  }
+const [imgSlickIndex, setImgSlickIndex] = useState(0);
 
+const allImages = [info.imgurl, ...info2]; // combine main + thumbnails
 
+const handleImgSlick = (img) => {
+  const index = allImages.indexOf(img);
+  setImgSlickIndex(index !== -1 ? index : 0);
+  setShowSlick(true);
+};
 
+const handleSlickClose = () => setShowSlick(false);
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
+  swipe: true,
+  draggable: true,
+  touchMove: true,
+  initialSlide: imgSlickIndex, // starts at clicked image
+};
 
   return (
     <section className="relative">
@@ -296,61 +300,48 @@ const ProductDetails = () => {
         )}
 
 
-        {showSlick && (
-          <div className="showImg fixed inset-0 bg-black/95 backdrop-blur-sm z-[999] flex items-center justify-center">
+ {showSlick && (
+  <div className="showImg fixed inset-0 bg-black/95 backdrop-blur-sm z-[999] flex items-center justify-center">
 
-            {/* Close Button */}
-            <button
-              onClick={handleSlickClose}
-              className="absolute hover:rotate-180 top-6 right-6 z-[1000] p-3 rounded-full bg-white/20 hover:bg-white/40 transition text-white text-3xl shadow-lg"
-              aria-label="Close"
+    {/* Close Button */}
+    <button
+      onClick={handleSlickClose}
+      className="absolute hover:rotate-180 top-6 right-6 z-[1000] p-3 rounded-full bg-white/20 hover:bg-white/40 transition text-white text-3xl shadow-lg"
+      aria-label="Close"
+    >
+      <IoMdClose />
+    </button>
+
+    {/* Slider */}
+    {info2?.length ? (
+      <Slider {...settings} className="w-full px-6">
+        {/* Combine main + extra images */}
+        {allImages.map((img, i) =>
+          img ? (
+            <div
+              key={i}
+              className="flex justify-center items-center h-[80vh]"
             >
-              <IoMdClose />
-            </button>
-
-            {/* Slider */}
-            {info2 ? (
-              <Slider
-                {...settings}
-                className="w-full px-6"
-              >
-                {/* Main Product Image */}
-                <div className="flex justify-center items-center h-[80vh]">
-                  <ZoomableImage
-                    src={info.imgurl}
-                    alt={`${info.Prodectname} main`}
-                    className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
-                  />
-                </div>
-
-                {/* Extra Thumbnails */}
-                {info2.map(
-                  (img, i) =>
-                    img && (
-                      <div
-                        key={i}
-                        className="flex justify-center items-center h-[80vh]"
-                      >
-                        <ZoomableImage
-                          src={img}
-                          alt={`${info.Prodectname} Thumbnail ${i + 1}`}
-                          className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
-                        />
-                      </div>
-                    )
-                )}
-              </Slider>
-            ) : (
-              <div className="flex justify-center items-center h-[80vh] w-full">
-                <ZoomableImage
-                  src={info.imgurl}
-                  alt={`${info.Prodectname} main`}
-                  className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
-                />
-              </div>
-            )}
-          </div>
+              <ZoomableImage
+                src={img}
+                alt={`${info.Prodectname} Image ${i + 1}`}
+                className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+              />
+            </div>
+          ) : null
         )}
+      </Slider>
+    ) : (
+      <div className="flex justify-center items-center h-[80vh] w-full">
+        <ZoomableImage
+          src={info.imgurl}
+          alt={`${info.Prodectname} main`}
+          className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+        />
+      </div>
+    )}
+  </div>
+)}
 
 
         {/* Product Content */}
@@ -358,32 +349,44 @@ const ProductDetails = () => {
           {/* Left: Image Gallery */}
           <div className={`flex ${info2 && "gap-4"}`}>
             {/* Thumbnails */}
-            {info2 && (
-              <div className="w-[22%] flex flex-col gap-4 cursor-pointer">
-                {info2.map(
-                  (img, i) =>
-                    img && (
-                      <div
-                        key={i}
-                        className="aspect-square w-full overflow-hidden rounded-lg"
-                        onClick={handleImgSlick}
-                      >
-                        <img
-                          src={img}
-                          alt={`Thumbnail ${i + 1}`}
-                          className="w-full h-full object-cover hover:scale-105 transition"
-                        />
-                      </div>
-                    )
-                )}
-              </div>
-            )}
+  {info2 && (
+  <div className="w-[22%] flex flex-col gap-4 cursor-pointer">
+    {/* Show only first 3 thumbnails */}
+    {info2.slice(0, 3).map(
+      (img, i) =>
+        img && (
+          <div
+            key={i}
+            className="aspect-square w-full overflow-hidden rounded-lg"
+            onClick={() => handleImgSlick(img)}
+          >
+            <img
+              src={img}
+              alt={`Thumbnail ${i + 1}`}
+              className="w-full h-full object-cover hover:scale-105 transition"
+            />
+          </div>
+        )
+    )}
+
+    {/* Show "More" if extra images exist */}
+    {info2.length > 3 && (
+      <div
+        onClick={() => handleImgSlick(info2[3])} 
+        className=" py-3 w-full flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 font-semibold hover:bg-gray-200 transition cursor-pointer"
+      >
+        +{info2.length - 3} More
+      </div>
+    )}
+  </div>
+)}
+
 
             {/* Main Image */}
             <div
               onClick={handleImgSlick}
               className={`${info2 ? "w-[78%]" : "w-full"
-                } aspect-square cursor-pointer rounded-lg overflow-hidden`}
+                } aspect-square ${""} cursor-pointer rounded-lg overflow-hidden`}
             >
               {info.imgurl ? (
                 <img
