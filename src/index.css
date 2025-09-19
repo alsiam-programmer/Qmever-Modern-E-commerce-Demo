@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+.slick-dots li.slick-active div {
+  background: white;
+  animation: pulse 1s infinite;
+}
+
 .noselect {
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none;    /* Firefox */

@@ -17,18 +17,18 @@ import SIMILAR_PRODUCTS from '../Componat/SIMILAR_PRODUCTS';
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
-    <div className=''
+    <div className=' hidden lg:block'
       onClick={onClick}
-    ><h2 className='flex justify-center items-center rounded-[50%] text-[27px] w-[50px] h-[50px] absolute top-[50%] translate-y-[-50%] z-[990] left-[10px] bg-[#ffffff49] hover:bg-[#fff]'><IoIosArrowBack /></h2></div>
+    ><h2 className='flex justify-center items-center rounded-[10%] text-[27px] transition hover:text-[#000] text-[#fff] w-[30px] h-[50px] absolute top-[50%] translate-y-[-50%] z-[990] left-[20px] bg-[#ffffff49] hover:bg-[#fff]'><IoIosArrowBack /></h2></div>
   );
 }
 
 function SamplePrevArrow(props) {
   const { onClick } = props;
   return (
-    <div className=''
+    <div className=' hidden lg:block'
       onClick={onClick}
-    ><h2 className='  flex justify-center items-center rounded-[50%] text-[27px] w-[50px] h-[50px] absolute top-[50%] translate-y-[-50%] z-[990] right-[10px] bg-[#ffffff49] hover:bg-[#fff]'><IoIosArrowForward /></h2></div>
+    ><h2 className='  flex justify-center items-center rounded-[10%] text-[27px] transition hover:text-[#000] text-[#fff] w-[30px] h-[50px] absolute top-[50%] translate-y-[-50%] z-[990] right-[20px] bg-[#ffffff49] hover:bg-[#fff]'><IoIosArrowForward /></h2></div>
   );
 }
 
@@ -213,13 +213,27 @@ const settings = {
   dots: true,
   infinite: true,
   speed: 500,
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />,
   swipe: true,
   draggable: true,
   touchMove: true,
-  initialSlide: imgSlickIndex, // starts at clicked image
+  initialSlide: imgSlickIndex,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
+
+  appendDots: dots => (
+    <div style={{ bottom: "20px" }}>
+      <ul className="flex justify-center gap-3">{dots}</ul>
+    </div>
+  ),
+
+  customPaging: i => (
+    <div
+      className="w-6 h-3 rounded-full bg-gray-400/50 
+                 hover:bg-white/80 transition-all duration-300"
+    ></div>
+  ),
 };
+
 
   return (
     <section className="relative">
@@ -300,13 +314,14 @@ const settings = {
         )}
 
 
- {showSlick && (
-  <div className="showImg fixed inset-0 bg-black/95 backdrop-blur-sm z-[999] flex items-center justify-center">
+{showSlick && (
+  <div className="fixed inset-0 bg-gradient-to-br from-black/90 via-black/80 to-black/90 backdrop-blur-md z-[999] flex items-center justify-center">
 
     {/* Close Button */}
     <button
       onClick={handleSlickClose}
-      className="absolute hover:rotate-180 top-6 right-6 z-[1000] p-3 rounded-full bg-white/20 hover:bg-white/40 transition text-white text-3xl shadow-lg"
+      className="fixed top-5 right-5 z-[1000]
+                 text-gray-300 hover:text-white text-2xl transition-all duration-300 shadow-lg backdrop-blur-md"
       aria-label="Close"
     >
       <IoMdClose />
@@ -314,34 +329,31 @@ const settings = {
 
     {/* Slider */}
     {info2?.length ? (
-      <Slider {...settings} className="w-full px-6">
-        {/* Combine main + extra images */}
+      <Slider {...settings} className="w-full lg:px-5">
         {allImages.map((img, i) =>
           img ? (
-            <div
-              key={i}
-              className="flex justify-center items-center h-[80vh]"
-            >
+            <div key={i} className="flex justify-center items-center h-screen animate-fadeIn">
               <ZoomableImage
                 src={img}
                 alt={`${info.Prodectname} Image ${i + 1}`}
-                className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+                className="max-h-[85vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl border border-white/10"
               />
             </div>
           ) : null
         )}
       </Slider>
     ) : (
-      <div className="flex justify-center items-center h-[80vh] w-full">
+      <div className="flex justify-center items-center h-[80vh] w-full animate-fadeIn">
         <ZoomableImage
           src={info.imgurl}
           alt={`${info.Prodectname} main`}
-          className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+          className="max-h-[85vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl border border-white/10"
         />
       </div>
     )}
   </div>
 )}
+
 
 
         {/* Product Content */}

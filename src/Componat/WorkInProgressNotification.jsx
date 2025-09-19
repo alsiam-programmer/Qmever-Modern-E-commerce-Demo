@@ -13,7 +13,7 @@ const WorkInProgressNotification = () => {
   return (
     <>
 {isOpen && (
-  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fadeIn">
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
     <div className="relative w-[90%] max-w-md p-6 bg-white/20 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/30 overflow-hidden animate-slideInUp">
       
       {/* Glowing Gradient Overlay */}
