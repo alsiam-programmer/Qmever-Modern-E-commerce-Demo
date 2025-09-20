@@ -63,7 +63,7 @@ const UserProfile = () => {
           }`}
         >
           {/* Avatar & Info */}
-          <div className="absolute left-1/2 sm:left-12 top-1/2 transform -translate-x-1/2 -translate-y-1/2 sm:translate-x-0 flex flex-col sm:flex-row items-center sm:items-end gap-5">
+          <div className="absolute left-1/2 sm:left-12 top-1/2 transform -translate-x-1/2 -translate-y-1/2 sm:translate-x-0 flex flex-col sm:flex-row !items-center sm:items-end gap-5">
             <img
               src={
                 userData.profile_picture ||
