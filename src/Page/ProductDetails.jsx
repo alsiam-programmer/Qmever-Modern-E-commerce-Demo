@@ -14,6 +14,7 @@ import ZoomableImage from '../Componat/ZoomableImage';
 import ShareProductsLink from '../Componat/ShareProductsLink';
 import { FaYoutube } from "react-icons/fa";
 import SIMILAR_PRODUCTS from '../Componat/SIMILAR_PRODUCTS';
+import Wishlist from '../Componat/Wishlist';
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
@@ -443,9 +444,11 @@ const settings = {
               </div>
             )}
 
-            {/* Share Links */}
-            <ShareProductsLink title={info.Prodectname} />
-
+  {/* Share & Wishlist */}
+  <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+    <ShareProductsLink title={info.Prodectname} />
+    <Wishlist info={info} />
+  </div>
             {/* Model Name */}
             {info.ModelName && (
               <h3 className="text-md xl:text-lg font-semibold text-gray-700">

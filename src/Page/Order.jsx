@@ -60,7 +60,7 @@ const Order = () => {
         key={index}
         onClick={() => handleSelectOS(status)}
         className={`px-4 sm:px-5 py-2 text-xs sm:text-sm rounded-full font-medium transition whitespace-nowrap
-        ${OS_selectX === status ? 'ring-2 ring-offset-1 ring-black' : ''}
+        ${OS_selectX === status ? 'ring-2 ring-offset-1 border-[3px] border-[#fff]' : ''}
         ${status === "Cancelled"
           ? "bg-red-600 text-white"
           : status === "Delivered"
