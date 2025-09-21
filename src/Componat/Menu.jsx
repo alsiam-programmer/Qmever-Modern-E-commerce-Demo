@@ -7,7 +7,7 @@ import { userLogout, userUidLogin } from './slice/AllSlice';
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { IoSearchOutline, IoCloseOutline, IoCameraOutline } from "react-icons/io5";
 import axios from 'axios';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link, useLocation, useMatch } from 'react-router-dom';
 import { FaSnowflake } from "react-icons/fa";
 
 const Menu = () => {
@@ -15,6 +15,7 @@ const Menu = () => {
   const location = useLocation()
   let [userData, setUserdata] = useState([])
   let dispatch = useDispatch()
+  const matchProduct = useMatch("/watch/:id");
   let navigate = useNavigate()
   const auth = getAuth();
   const db = getDatabase();
@@ -221,13 +222,11 @@ const handleSearch = async (e) => {
   
     const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Products", path: "/ProductPage" },
-    { name: "Notifications", path: null },
     { name: "My Orders", path: "/Orders" },
     { name: "Cart", path: "/CartPage" },
   ];
 
-  
+
   
   return (
   <section>
@@ -252,14 +251,20 @@ const handleSearch = async (e) => {
 }
 
 
-      <section className='w-[100%] h-[100px] mb-[10px] sm:mb-[0px] sm:h-[120px] lg:h-[100px] xl:h-[110px]'>
+      <section className={`w-[100%] h-[60px] lg:h-[70px] xl:h-[80px] ${(location.pathname === "/my-account" || location.pathname === "/my-account/user-edit_profile" || location.pathname === "/Orders" || location.pathname === "/CheckOut" || matchProduct) ? "" : "mb-[65px]" } lg:mb-3`}>
         <div className=' z-[990] px-[10px] bg-[#062919] fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
           <div className=" lg:w-[75%] relative container mx-auto h-[60px] lg:h-[70px] xl:h-[80px]">
             <div className="webLogo cursor-pointer w-[100%] flex justify-center items-center h-[60px] lg:h-[70px] xl:h-[80px] lg:justify-start">
               <h1 className='text-[#fff] text-[30px] noselect italic font-[700]'>Qmever</h1>
             </div>
-            <div className="Search rounded-l-[40px] shadow-2xl lg:shadow-none rounded-r-[40px] lg:my-[0px] w-[100%] lg:w-[70%] h-[40px] justify-center flex lg:top-[50%] relative lg:translate-y-[-50%] lg:left-[50%] lg:translate-x-[-50%] lg:absolute">
-<div className="Search relative w-full lg:w-[50%] h-[40px] flex items-center my-1 lg:my-0 lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 shadow-2xl lg:shadow-none shadow-black rounded-full overflow-hidden bg-white">
+{
+
+     (location.pathname === "/my-account" || location.pathname === "/my-account/user-edit_profile" || location.pathname === "/Orders" || location.pathname === "/CheckOut" || matchProduct)  ? "" :
+      (
+        <div className="Search rounded-l-[40px] shadow-2xl lg:shadow-none rounded-r-[40px] lg:my-[0px] w-[100%] lg:w-[70%] h-[40px] justify-center flex lg:top-[50%] relative lg:translate-y-[-50%] lg:left-[50%] lg:translate-x-[-50%] lg:absolute">
+
+
+<div className="Search relative w-full lg:w-[50%] h-[40px] flex items-center my-3 lg:my-0 lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 shadow-2xl lg:shadow-none shadow-black rounded-full overflow-hidden bg-white">
 
   {/* Input */}
   <input
@@ -310,6 +315,8 @@ const handleSearch = async (e) => {
 )}
 
             </div>
+      )
+}
             <div ref={MenuRef} onKeyDown={handleKeysystem} className="MenuBar cursor-pointer absolute top-[50%] right-[0px] translate-y-[-50%]">
               <div className='text-[38px] text-[#fff]' ><FaBars /></div>
             </div>

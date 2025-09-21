@@ -60,11 +60,11 @@ const My_account = () => {
 
 
   return (
-<div className="min-h-screen bg-gray-50">
-  <div className="lg:rounded-[10px] overflow-hidden">
+<div className="min-h-screen py-6 bg-gray-50">
+  <div className="sm:rounded-[10px] overflow-hidden">
     {/* Cover Section */}
 <div
-  className={`relative w-full h-64 sm:h-72 ${
+  className={`relative w-full rounded-full sm:rounded-none h-72 ${
     userData?.gender?.toLowerCase() === "male"
       ? "bg-gradient-to-r from-blue-600 to-indigo-700"
       : userData?.gender?.toLowerCase() === "female"
@@ -97,7 +97,7 @@ const My_account = () => {
       </div>
 
       {/* Action Buttons */}
-      <div className="absolute top-4 right-6 flex items-center gap-3 bg-white/15 backdrop-blur-md rounded-full p-2 shadow-md transition-all duration-300">
+      <div className="absolute top-4 right-4 flex items-center gap-3 bg-white/15 backdrop-blur-md rounded-full p-2 shadow-md transition-all duration-300">
         {showbaritem ? (
           <>
             {userData?.uid === loggedInUID[0] && (
@@ -169,12 +169,6 @@ const My_account = () => {
           </div>
         </div>
       )}
-
-      {/* Orders Section */}
-      <div className="rounded-3xl p-4 sm:p-6">
-        <h2 className="font-semibold text-lg mb-3">Your Orders:</h2>
-        <Order />
-      </div>
     </div>
   </div>
 </div>

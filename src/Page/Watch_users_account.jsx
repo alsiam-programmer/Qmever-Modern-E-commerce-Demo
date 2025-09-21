@@ -90,13 +90,13 @@ const Watch_users_account = () => {
     );
 
   return (
-<div className="min-h-screen bg-gray-50 pb-6 mb-6">
-  <div className="lg:rounded-[10px] overflow-hidden">
+<div className="min-h-screen bg-gray-50 py-6">
+  <div className="sm:rounded-[10px] overflow-hidden">
 
     {/* Profile Header */}
-    <div className="relative w-full h-64 sm:h-72">
+    <div className="relative w-full h-72">
 <div
-  className={`relative w-full h-64 sm:h-72 ${
+  className={`relative w-full rounded-full sm:rounded-none h-72 ${
     userData?.gender?.toLowerCase() === "male"
       ? "bg-gradient-to-r from-blue-600 to-indigo-700"
       : userData?.gender?.toLowerCase() === "female"

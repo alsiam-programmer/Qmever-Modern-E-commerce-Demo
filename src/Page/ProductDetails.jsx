@@ -267,7 +267,7 @@ const settings = {
         <meta name="twitter:image" content={info.imgurl} />
       </Helmet>
 
-      <div className="container mx-auto px-4 py-6 lg:px-0 lg:py-0">
+      <div className="container mx-auto px-4 lg:px-0 lg:py-0">
         {/* Toast for Model Select */}
         {modelselect && (
           <div className="fixed inset-x-0 top-24 flex justify-center z-[1200]">

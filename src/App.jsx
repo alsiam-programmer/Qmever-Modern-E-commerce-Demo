@@ -11,7 +11,6 @@ const Order = lazy(() => import("./Page/Order"));
 const SearchItem = lazy(() => import("./Page/SearchItem"));
 const My_account = lazy(() => import("./Page/My_account"));
 const Watch_users_account = lazy(() => import("./Page/Watch_users_account"));
-const ProductPage = lazy(() => import("./Page/ProductPage"));
 const NotFound = lazy(() => import("./Page/NotFound"));
 const Contact = lazy(() => import("./Page/Contact"));
 
@@ -28,7 +27,6 @@ function App() {
         <Route path="/search" element={<SearchItem />} />
         <Route path="/my-account" element={<My_account />} />
         <Route path="/watch/:id" element={<Watch_users_account />} />
-        <Route path="/ProductPage" element={<ProductPage />} />
         <Route path="/about-qc" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Route>
