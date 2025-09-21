@@ -11,6 +11,7 @@ const Watch_users_account = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Fetch user and orders
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -74,6 +75,13 @@ const Watch_users_account = () => {
     fetchUser();
   }, [id]);
 
+  // Navigate to 404 if error
+  useEffect(() => {
+    if (error) {
+      navigate("/404");
+    }
+  }, [error, navigate]);
+
   if (loading)
     return (
       <div className="flex justify-center items-center h-screen text-gray-500">
@@ -81,121 +89,121 @@ const Watch_users_account = () => {
       </div>
     );
 
-  if (error)
-    return (
-      navigate('/404')
-    );
-
   return (
-    <div className="min-h-screen bg-gray-100 mb-6">
-      {/* Cover Section */}
-      <div
-        className={`relative w-full h-64 sm:h-72 ${
-          userData.gender === "male"
-            ? "bg-gradient-to-r from-blue-600 to-indigo-700"
-            : userData.gender === "female"
-            ? "bg-gradient-to-r from-pink-500 to-purple-600"
-            : "bg-gray-600"
-        }`}
-      >
-        <div className="absolute left-1/2 sm:left-12 top-1/2 transform -translate-x-1/2 -translate-y-1/2 sm:translate-x-0 flex flex-col sm:flex-row !items-center sm:items-end gap-5">
-          <img
-            src={
-              userData.profile_picture ||
-              "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
-            }
-            className="rounded-full w-28 sm:w-32 md:w-36 h-28 sm:h-32 md:h-36 object-cover border-4 border-white shadow-lg"
-          />
-          <div className="text-white text-center sm:text-left">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
-              {userData.username || "Unknown User"}
-            </h1>
-            <p className="text-xs sm:text-sm opacity-80 mt-1">
-              {userData.email || "No email provided"}
-            </p>
-          </div>
+<div className="min-h-screen bg-gray-50 pb-6 mb-6">
+  <div className="lg:rounded-[10px] overflow-hidden">
+
+    {/* Profile Header */}
+    <div className="relative w-full h-64 sm:h-72">
+<div
+  className={`relative w-full h-64 sm:h-72 ${
+    userData?.gender?.toLowerCase() === "male"
+      ? "bg-gradient-to-r from-blue-600 to-indigo-700"
+      : userData?.gender?.toLowerCase() === "female"
+      ? "bg-gradient-to-r from-pink-500 to-purple-600"
+      : "bg-gradient-to-r from-gray-400 to-gray-600"
+  }`}
+/>
+
+
+      {/* Floating Glass Profile */}
+      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 sm:w-4/5 backdrop-blur-xl bg-white/25 border border-white/20 rounded-3xl shadow-lg p-6 flex flex-col sm:flex-row items-center gap-6 transition-all duration-300 hover:scale-[1.02]">
+        <img
+          src={
+            userData?.profile_picture ||
+            "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+          }
+          alt="Profile"
+          className="rounded-full w-28 sm:w-32 md:w-36 h-28 sm:h-32 md:h-36 object-cover border-4 border-white shadow-md"
+        />
+        <div className="text-white text-center sm:text-left">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold drop-shadow-lg truncate">
+            {userData?.username || "Unknown User"}
+          </h1>
+          <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
+            {userData?.email || "No email provided"}
+          </p>
+          <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
+            {userData?.bio || "No bio provided"}
+          </p>
         </div>
       </div>
-
-{/* Delivered Items Section */}
-<div className="buyitem container mx-auto p-4 sm:p-6">
-  {userbuyData && userbuyData.length > 0 ? (
-    <div>
-      <h2 className={`text-xl font-semibold mb-4 text-[#fff] flex items-center justify-center py-2 rounded-[10px] ${userData.gender === "male"
-            ? "bg-gradient-to-r from-blue-600 to-indigo-700"
-            : userData.gender === "female"
-            ? "bg-gradient-to-r from-pink-500 to-purple-600"
-            : "bg-gray-600"}`}>Buy Items</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
-        {userbuyData.map((item, idx) => (
-          <div
-            key={idx}
-            className="w-full aspect-square rounded-lg overflow-hidden shadow relative group"
-          >
-            <img
-              src={item.imgurl || "https://via.placeholder.com/300"}
-              alt=""
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-              <button
-                onClick={() => navigate(`/productDetails/${item.uid}`)}
-                className="bg-white text-gray-800 px-3 py-1 rounded shadow text-xs hover:bg-gray-100"
-              >
-                View
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
-  ) : (
-    <p className="text-center text-gray-400 text-sm mt-2">No delivered items</p>
-  )}
-</div>
 
-{/* Wishlist Section */}
-<div className="container mx-auto p-4 sm:p-6">
-  {userData.Wishlist && Object.keys(userData.Wishlist).length > 0 ? (
-    <div>
-          <h2 className={`text-xl font-semibold mb-4 text-[#fff] flex items-center justify-center py-2 rounded-[10px] ${userData.gender === "male"
-            ? "bg-gradient-to-r from-blue-600 to-indigo-700"
-            : userData.gender === "female"
-            ? "bg-gradient-to-r from-pink-500 to-purple-600"
-            : "bg-gray-600"}`}>Wishlist</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
-        {Object.values(userData.Wishlist)
-          .reverse()
-          .map((item) => (
+    {/* Buy Items Section */}
+    <section className="container mx-auto px-4 sm:px-6 my-8">
+      <div className="bg-white/50 backdrop-blur-lg rounded-3xl shadow-lg p-4 sm:p-6">
+      <h2 className="text-lg sm:text-xl bg-gray-100 font-bold mb-4 px-4 py-2 rounded-3xl text-gray-600 flex justify-center items-center shadow-sm">
+        Buy Items
+      </h2>
+      {userbuyData?.length > 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-5">
+          {userbuyData.map((item) => (
             <div
-              key={item.uid}
-              className="w-full aspect-square rounded-lg overflow-hidden shadow relative group"
+              key={item?.uid}
+              className="relative w-full aspect-square rounded-2xl overflow-hidden bg-white/20 backdrop-blur-md border border-white/20 shadow-md group transition-all duration-300 hover:scale-105 hover:shadow-lg"
             >
               <img
-                src={item.imgurl || "https://via.placeholder.com/300"}
-                alt=""
-                className="w-full h-full object-cover"
+                src={item?.imgurl || "https://via.placeholder.com/300"}
+                alt={item?.Prodectname || "Product"}
+                className="w-full h-full object-cover rounded-2xl"
               />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+              <div className="absolute inset-0 bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <button
-                  onClick={() => navigate(`/productDetails/${item.uid}`)}
-                  className="bg-white text-gray-800 px-3 py-1 rounded shadow text-xs hover:bg-gray-100"
+                  onClick={() => navigate(`/productDetails/${item?.uid}`)}
+                  className="bg-white/90 text-gray-900 px-3 py-1 rounded-xl shadow-sm hover:bg-white text-sm transition"
                 >
                   View
                 </button>
               </div>
             </div>
           ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-400 text-sm mt-2">No delivered items</p>
+      )}
       </div>
-    </div>
-  ) : (
-    <p className="text-center text-gray-400 text-sm mt-2">No items in wishlist</p>
-  )}
+    </section>
+
+    {/* Wishlist Section */}
+    {userData?.Wishlist && Object.keys(userData.Wishlist).length > 0 && (
+      <section className="container mx-auto px-4 sm:px-6 my-8">
+        <div className="bg-white/50 backdrop-blur-lg rounded-3xl shadow-lg p-4 sm:p-6">
+      <h2 className="text-lg sm:text-xl bg-gray-100 font-bold mb-4 px-4 py-2 rounded-3xl text-gray-600 flex justify-center items-center shadow-sm">
+            Wishlist
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-5">
+            {Object.values(userData.Wishlist)
+              .reverse()
+              .map((item) => (
+                <div
+                  key={item?.uid}
+                  className="relative w-full aspect-square rounded-2xl overflow-hidden bg-white/20 backdrop-blur-md border border-white/20 shadow-md group transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                >
+                  <img
+                    src={item?.imgurl || "https://via.placeholder.com/300"}
+                    alt={item?.Prodectname || "Wishlist Item"}
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
+                  <div className="absolute inset-0 bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button
+                      onClick={() => navigate(`/productDetails/${item?.uid}`)}
+                      className="bg-white/90 text-gray-900 px-3 py-1 rounded-xl shadow-sm hover:bg-white text-sm transition"
+                    >
+                      View
+                    </button>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </div>
 </div>
 
 
 
-    </div>
   );
 };
 

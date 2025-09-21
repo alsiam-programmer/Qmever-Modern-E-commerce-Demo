@@ -97,10 +97,9 @@ let handleLogin = () => {
             local_address: "",
           }
         });
-        await new Promise(res => setTimeout(res, 2000)); window.location.href = '/Login';
+        await new Promise(res => setTimeout(res, 2000)); window.location.href = '/my-account/user-edit_profile';
         setloader(false)
       } else {
-
         
       }
     })

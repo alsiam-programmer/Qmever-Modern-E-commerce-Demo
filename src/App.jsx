@@ -3,7 +3,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import RootLayout from "./Componat/RootLayout";
 
 const Home = lazy(() => import("./Page/Home"));
-const Login = lazy(() => import("./Page/Login"));
+const EditProfile = lazy(() => import("./Page/EditProfile"));
 const ProductDetails = lazy(() => import("./Page/ProductDetails"));
 const CheckOut = lazy(() => import("./Page/CheckOut"));
 const Cartpage = lazy(() => import("./Page/Cartpage"));
@@ -20,7 +20,7 @@ function App() {
     createRoutesFromElements(
       <Route element={<RootLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/my-account/user-edit_profile" element={<EditProfile />} />
         <Route path="/productDetails/:id" element={<ProductDetails />} />
         <Route path="/CheckOut" element={<CheckOut />} />
         <Route path="/CartPage" element={<Cartpage />} />
