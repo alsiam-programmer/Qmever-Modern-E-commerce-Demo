@@ -7,9 +7,9 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Order from "./Order";
 import { useNavigate } from "react-router-dom";
 
-const UserProfile = () => {
+const My_account = () => {
   const navigate = useNavigate();
-  const loggedInUID = useSelector((state) => state.counter.user); // UID directly
+  const loggedInUID = useSelector((state) => state.counter.user);
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -49,6 +49,8 @@ const UserProfile = () => {
     return () => unsubscribe();
   }, [loggedInUID]);
 
+  console.log(userData);
+  
   return (
     <div className="min-h-screen">
       <div className="lg:rounded-[10px] overflow-hidden bg-gray-100">
@@ -162,4 +164,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default My_account;

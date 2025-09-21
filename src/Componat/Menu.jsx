@@ -336,7 +336,7 @@ const handleSearch = async (e) => {
       ) : (
     <div className="flex flex-col gap-6">
       {/* Profile */}
-      <Link to={"/user-profile"}>
+      <Link to={"/my-account"}>
         <div className="flex items-center gap-3 px-4 py-3 bg-green-900 rounded-xl hover:bg-green-800 transition cursor-pointer">
           <img
             src={userData?.profile_picture || ""}
