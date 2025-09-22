@@ -267,7 +267,7 @@ const settings = {
         <meta name="twitter:image" content={info.imgurl} />
       </Helmet>
 
-      <div className="container mx-auto px-4 lg:px-0 lg:py-0">
+     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Toast for Model Select */}
         {modelselect && (
           <div className="fixed inset-x-0 top-24 flex justify-center z-[1200]">
@@ -344,231 +344,226 @@ const settings = {
         )}
       </Slider>
     ) : (
-      <div className="flex justify-center items-center h-[80vh] w-full animate-fadeIn">
+      <div className="w-full lg:px-5">
+
+      <div className="flex justify-center items-center h-screen animate-fadeIn">
         <ZoomableImage
           src={info.imgurl}
           alt={`${info.Prodectname} main`}
           className="max-h-[85vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl border border-white/10"
-        />
-      </div>
-    )}
-  </div>
-)}
-
-
-
-        {/* Product Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Left: Image Gallery */}
-          <div className={`flex ${info2 && "gap-4"}`}>
-            {/* Thumbnails */}
-  {info2 && (
-  <div className="w-[22%] flex flex-col gap-4 cursor-pointer">
-    {/* Show only first 3 thumbnails */}
-    {info2.slice(0, 3).map(
-      (img, i) =>
-        img && (
-          <div
-            key={i}
-            className="aspect-square w-full overflow-hidden rounded-lg"
-            onClick={() => handleImgSlick(img)}
-          >
-            <img
-              src={img}
-              alt={`Thumbnail ${i + 1}`}
-              className="w-full h-full object-cover hover:scale-105 transition"
-            />
+          />
           </div>
-        )
-    )}
-
-    {/* Show "More" if extra images exist */}
-    {info2.length > 3 && (
-      <div
-        onClick={() => handleImgSlick(info2[3])} 
-        className=" py-3 w-full flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 font-semibold hover:bg-gray-200 transition cursor-pointer"
-      >
-        +{info2.length - 3} More
       </div>
     )}
   </div>
 )}
 
 
-            {/* Main Image */}
+
+  {/* Product Content */}
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+    {/* Left: Image Gallery */}
+    <div className={`flex flex-col sm:flex-row ${info2 && "gap-4"}`}>
+      {/* Thumbnails */}
+      {info2 && (
+        <div className="w-full sm:w-[25%] flex sm:flex-col flex-row gap-3 sm:gap-4 mb-4 sm:mb-0">
+          {info2.slice(0, 3).map(
+            (img, i) =>
+              img && (
+                <div
+                  key={i}
+                  className="aspect-square w-1/3 sm:w-full overflow-hidden rounded-lg"
+                  onClick={() => handleImgSlick(img)}
+                >
+                  <img
+                    src={img}
+                    alt={`Thumbnail ${i + 1}`}
+                    className="w-full h-full object-cover hover:scale-105 transition"
+                  />
+                </div>
+              )
+          )}
+
+          {info2.length > 3 && (
             <div
-              onClick={handleImgSlick}
-              className={`${info2 ? "w-[78%]" : "w-full"
-                } aspect-square ${""} cursor-pointer rounded-lg overflow-hidden`}
+              onClick={() => handleImgSlick(info2[3])}
+              className="w-1/3 sm:w-full py-2 sm:py-3 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 font-semibold hover:bg-gray-200 transition cursor-pointer text-sm sm:text-base"
             >
-              {info.imgurl ? (
-                <img
-                  src={info.imgurl}
-                  alt={info.Prodectname}
-                  className="w-full h-full object-cover hover:scale-105 transition"
-                />
-              ) : (
-                <Skeleton className="h-full w-full aspect-square" />
-              )}
+              +{info2.length - 3} More
             </div>
-          </div>
-
-
-
-          {/* Right: Product Details */}
-          <div className="flex flex-col gap-5">
-            {/* Title */}
-            {info.Prodectname ? (
-              <h1 className="text-2xl xl:text-4xl font-bold uppercase text-gray-900">
-                {info.Prodectname}
-              </h1>
-            ) : (
-              <Skeleton className="h-8 w-2/3" />
-            )}
-
-            {/* Price & Stock */}
-            <h2 className="text-lg xl:text-2xl font-semibold text-gray-800">
-              Price:{" "}
-              <span className="text-pink-600">
-                {modlePrice
-                  ? Number(modlePrice).toFixed(2)
-                  : info?.Price
-                    ? Number(info.Price).toFixed(2)
-                    : ""}
-                ৳
-              </span>
-            </h2>
-            {modleColor?.Stock > 0 && (
-              <div className="text-green-600 font-medium">
-                Stock: {modleColor.Stock}
-              </div>
-            )}
-
-  {/* Share & Wishlist */}
-  <div className="flex items-center justify-between border-b border-gray-200 pb-4">
-    <ShareProductsLink title={info.Prodectname} />
-    <Wishlist info={info} />
-  </div>
-            {/* Model Name */}
-            {info.ModelName && (
-              <h3 className="text-md xl:text-lg font-semibold text-gray-700">
-                {info.ModelName}
-              </h3>
-            )}
-
-            {/* Color Selector */}
-            {SelectColor && (
-              <div className="flex gap-3 mt-2">
-                {SelectColor.map(
-                  (item, idx) =>
-                    item.Stock > 0 && (
-                      <div
-                        key={idx}
-                        onClick={() => HandleGetColor(item, idx)}
-                        style={{ backgroundColor: item.Color }}
-                        className={`w-12 h-12 rounded-full cursor-pointer border-2 ${InColor === idx ? "border-black" : "border-gray-200"
-                          }`}
-                        title={item.Color}
-                      />
-                    )
-                )}
-              </div>
-            )}
-
-            {/* Extra Models */}
-            {info3?.length > 0 && (
-              <div className="flex flex-wrap gap-3">
-                {info3.map((m, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleModel({ index: idx, addModle: m })}
-                    className={`px-4 py-2 rounded-md border transition ${modleaddicon === m.Model
-                        ? "bg-black text-white border-black"
-                        : "bg-white text-black border-gray-300 hover:bg-gray-100"
-                      }`}
-                  >
-                    {m.Model}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Video Button */}
-            {info.VideoURL && (
-              <button
-                onClick={() => setShow(true)}
-                className="flex items-center justify-center gap-2 w-full h-12 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-              >
-                <FaYoutube className="text-2xl" /> Watch Video
-              </button>
-            )}
-
-            {/* Actions */}
-            <div className="flex gap-4">
-              <button
-                onClick={handleBuyNow}
-                className="flex-1 bg-green-900 text-white py-3 rounded-lg shadow hover:bg-green-800 transition"
-              >
-                Buy Now
-              </button>
-              <button
-                onClick={handleAddTocart}
-                className="flex-1 bg-green-900 text-white py-3 rounded-lg shadow hover:bg-green-800 transition flex items-center justify-center gap-2"
-              >
-                {addsucess ? <IoCheckmarkDoneCircle size={22} /> : "Add to Cart"}
-              </button>
-            </div>
-          </div>
+          )}
         </div>
+      )}
 
-        {/* Description */}
-{/* Description */}
-<div className="mt-12">
-  <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">
-    Description
-  </h2>
-  {info?.description ? (
-    info.description.split(". ").map((txt, i) => (
-      <p
-        key={i}
-        className="text-gray-700 text-base leading-relaxed mb-3 italic"
+      {/* Main Image */}
+      <div
+        onClick={handleImgSlick}
+        className={`${info2 ? "w-full sm:w-[75%]" : "w-full"} aspect-square cursor-pointer rounded-lg overflow-hidden`}
       >
-        {txt.trim()}.
-      </p>
-    ))
-  ) : (
-    <p className="text-gray-400 italic">Loading description...</p>
-  )}
-</div>
-{/* Specifications */}
-{info?.SpecificationValue && (
-  <div className="my-10">
-    <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b pb-4">
-      Specifications
-    </h2>
-    <div className="overflow-hidden">
-      {/* Data Rows */}
-      {info.SpecificationValue.map((item, i) => (
-        <div
-          key={i}
-          className="grid grid-cols-[35%_55%] border-b last:border-b-0"
-        >
-          <span className="px-4 py-3 font-medium text-gray-800 bg-gray-50">
-            {item.First}
-          </span>
-          <span className="px-4 py-3 text-gray-700">
-            {item.Second}
-          </span>
+        {info.imgurl ? (
+          <img
+            src={info.imgurl}
+            alt={info.Prodectname}
+            className="w-full h-full object-cover hover:scale-105 transition"
+          />
+        ) : (
+          <Skeleton className="h-full w-full aspect-square" />
+        )}
+      </div>
+    </div>
+
+    {/* Right: Product Details */}
+    <div className="flex flex-col gap-4 sm:gap-6">
+      {/* Title */}
+      {info.Prodectname ? (
+        <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold uppercase text-gray-900">
+          {info.Prodectname}
+        </h1>
+      ) : (
+        <Skeleton className="h-8 w-2/3" />
+      )}
+
+      {/* Price & Stock */}
+      <h2 className="text-base sm:text-lg lg:text-2xl font-semibold text-gray-800">
+        Price:{" "}
+        <span className="text-pink-600">
+          {modlePrice
+            ? Number(modlePrice).toFixed(2)
+            : info?.Price
+            ? Number(info.Price).toFixed(2)
+            : ""}
+          ৳
+        </span>
+      </h2>
+      {modleColor?.Stock > 0 && (
+        <div className="text-green-600 font-medium text-sm sm:text-base">
+          Stock: {modleColor.Stock}
         </div>
-      ))}
+      )}
+
+      {/* Share & Wishlist */}
+      <div className="flex items-center justify-between border-b border-gray-200 pb-3 sm:pb-4">
+        <ShareProductsLink title={info.Prodectname} />
+        <Wishlist info={info} />
+      </div>
+
+      {/* Model Name */}
+      {info.ModelName && (
+        <h3 className="text-sm sm:text-md lg:text-lg font-semibold text-gray-700">
+          {info.ModelName}
+        </h3>
+      )}
+
+      {/* Color Selector */}
+      {SelectColor && (
+        <div className="flex gap-2 sm:gap-3 mt-2 flex-wrap">
+          {SelectColor.map(
+            (item, idx) =>
+              item.Stock > 0 && (
+                <div
+                  key={idx}
+                  onClick={() => HandleGetColor(item, idx)}
+                  style={{ backgroundColor: item.Color }}
+                  className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full cursor-pointer border-2 ${
+                    InColor === idx ? "border-black" : "border-gray-200"
+                  }`}
+                  title={item.Color}
+                />
+              )
+          )}
+        </div>
+      )}
+
+      {/* Extra Models */}
+      {info3?.length > 0 && (
+        <div className="flex flex-wrap gap-2 sm:gap-3">
+          {info3.map((m, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleModel({ index: idx, addModle: m })}
+              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md border text-sm sm:text-base transition ${
+                modleaddicon === m.Model
+                  ? "bg-black text-white border-black"
+                  : "bg-white text-black border-gray-300 hover:bg-gray-100"
+              }`}
+            >
+              {m.Model}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Video Button */}
+      {info.VideoURL && (
+        <button
+          onClick={() => setShow(true)}
+          className="flex items-center justify-center gap-2 w-full h-10 sm:h-12 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+        >
+          <FaYoutube className="text-xl sm:text-2xl" /> Watch Video
+        </button>
+      )}
+
+      {/* Actions */}
+      <div className="flex flex-row gap-2">
+        <button
+          onClick={handleBuyNow}
+          className="flex-1 bg-green-900 text-white py-2 sm:py-3 rounded-lg shadow hover:bg-green-800 transition text-sm sm:text-base"
+        >
+          Buy Now
+        </button>
+        <button
+          onClick={handleAddTocart}
+          className="flex-1 bg-green-900 text-white py-2 sm:py-3 rounded-lg shadow hover:bg-green-800 transition flex items-center justify-center gap-2 text-sm sm:text-base"
+        >
+          {addsucess ? <IoCheckmarkDoneCircle size={20} /> : "Add to Cart"}
+        </button>
+      </div>
     </div>
   </div>
-)}
 
+  {/* Description */}
+  <div className="mt-8 sm:mt-12">
+    <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 border-b pb-2">
+      Description
+    </h2>
+    {info?.description ? (
+      info.description.split(". ").map((txt, i) => (
+        <p
+          key={i}
+          className="text-gray-700 text-sm sm:text-base leading-relaxed mb-2 sm:mb-3 italic"
+        >
+          {txt.trim()}.
+        </p>
+      ))
+    ) : (
+      <p className="text-gray-400 italic">Loading description...</p>
+    )}
+  </div>
 
-
+  {/* Specifications */}
+  {info?.SpecificationValue && (
+    <div className="my-8 sm:my-10">
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 border-b pb-2 sm:pb-4">
+        Specifications
+      </h2>
+      <div className="overflow-hidden">
+        {info.SpecificationValue.map((item, i) => (
+          <div
+            key={i}
+            className="grid grid-cols-1 sm:grid-cols-[35%_65%] border-b last:border-b-0"
+          >
+            <span className="px-3 sm:px-4 py-2 sm:py-3 font-medium text-gray-800 bg-gray-50 text-sm sm:text-base">
+              {item.First}
+            </span>
+            <span className="px-3 sm:px-4 py-2 sm:py-3 text-gray-700 text-sm sm:text-base">
+              {item.Second}
+            </span>
+          </div>
+        ))}
       </div>
-
+    </div>
+  )}
+</div>
 
 
       {/* Video Modal */}
