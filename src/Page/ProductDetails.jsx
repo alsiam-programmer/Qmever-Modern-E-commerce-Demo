@@ -18,18 +18,18 @@ import Wishlist from '../Componat/Wishlist';
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
-    <div className=' hidden lg:block'
+    <div className=''
       onClick={onClick}
-    ><h2 className='flex justify-center items-center rounded-[10%] text-[27px] transition hover:text-[#000] text-[#fff] w-[30px] h-[50px] absolute top-[50%] translate-y-[-50%] z-[990] left-[20px] bg-[#ffffff49] hover:bg-[#fff]'><IoIosArrowBack /></h2></div>
+    ><h2 className=' shadow-lg flex justify-center items-center rounded-[10%] text-[27px] transition text-[#000]/50 w-[30px] h-[50px] absolute top-[50%] translate-y-[-50%] z-[990] left-[20px] bg-[#ffffff49] hover:bg-[#fff]'><IoIosArrowBack /></h2></div>
   );
 }
 
 function SamplePrevArrow(props) {
   const { onClick } = props;
   return (
-    <div className=' hidden lg:block'
+    <div className=''
       onClick={onClick}
-    ><h2 className='  flex justify-center items-center rounded-[10%] text-[27px] transition hover:text-[#000] text-[#fff] w-[30px] h-[50px] absolute top-[50%] translate-y-[-50%] z-[990] right-[20px] bg-[#ffffff49] hover:bg-[#fff]'><IoIosArrowForward /></h2></div>
+    ><h2 className=' shadow-lg flex justify-center items-center rounded-[10%] text-[27px] transition text-[#000]/50 w-[30px] h-[50px] absolute top-[50%] translate-y-[-50%] z-[990] right-[20px] bg-[#ffffff49] hover:bg-[#fff]'><IoIosArrowForward /></h2></div>
   );
 }
 
@@ -216,20 +216,20 @@ const settings = {
   speed: 500,
   swipe: true,
   draggable: true,
-  touchMove: true,
+  touchMove: false,
   initialSlide: imgSlickIndex,
   nextArrow: <SampleNextArrow />,
   prevArrow: <SamplePrevArrow />,
 
   appendDots: dots => (
     <div style={{ bottom: "20px" }}>
-      <ul className="flex justify-center gap-3">{dots}</ul>
+      <ul className="flex justify-center">{dots}</ul>
     </div>
   ),
 
   customPaging: i => (
     <div
-      className="w-6 h-3 rounded-full bg-gray-400/50 
+      className="w-2 h-2 rounded-full bg-gray-400/50 
                  hover:bg-white/80 transition-all duration-300"
     ></div>
   ),

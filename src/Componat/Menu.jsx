@@ -8,7 +8,8 @@ import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { IoSearchOutline, IoCloseOutline, IoCameraOutline } from "react-icons/io5";
 import axios from 'axios';
 import { useNavigate, Link, useLocation, useMatch } from 'react-router-dom';
-import { FaSnowflake } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { FiLogOut } from "react-icons/fi";
 
 const Menu = () => {
   let userLoginUid = useSelector((item) => item.counter.user)
@@ -318,93 +319,157 @@ const handleSearch = async (e) => {
       )
 }
             <div ref={MenuRef} onKeyDown={handleKeysystem} className="MenuBar cursor-pointer absolute top-[50%] right-[0px] translate-y-[-50%]">
-              <div className='text-[38px] text-[#fff]' ><FaBars /></div>
+              <div className='text-[38px] text-[#fff]/80' ><FaBars /></div>
             </div>
           </div>
         </div>
       </section>
       
-       <aside
-    className={`fixed top-0 right-0 h-full bg-white shadow-2xl transform transition-transform duration-300 z-[1000]
-      ${MenuShow ? "translate-x-0" : "translate-x-full"}
-    `}
-    style={{ width: "80%", maxWidth: "400px" }}
-  >
-    <ul className="flex flex-col h-full justify-between py-10 px-6 space-y-4">
+<aside
+  className={`fixed top-0 right-0 h-full shadow-2xl transform transition-transform duration-300 z-[1000]
+    ${MenuShow ? "translate-x-0" : "translate-x-full"}
+  `}
+  style={{ width: "80%", maxWidth: "400px" }}
+>
+  <div className="h-full bg-gradient-to-b from-[#062919] to-[#062919]/30 backdrop-blur-xl border-l border-white/20">
+    <ul className="flex flex-col h-full justify-between py-8 px-6">
       {useruid === "" ? (
-        <div className="flex justify-center">
-          <img
-            src="https://i.ibb.co/vC8zmqHv/low-self-esteem-1-1.jpg"
-            alt="Guest"
-            className="w-[70%] rounded-lg mt-20"
-          />
+        <div className="flex flex-col gap-8">
+          {/* Placeholder / Welcome */}
+          <div className="flex flex-col items-center text-center">
+            <div className="w-20 h-20 flex items-center justify-center bg-white/10 rounded-full shadow-lg">
+              <span className="text-white font-bold text-xl">👋</span>
+            </div>
+            <p className="mt-4 text-white/80 font-medium">
+              Welcome, guest! <br />
+              Sign in to unlock more features.
+            </p>
+          </div>
+
+          {/* Nav Links */}
+          <nav className="space-y-2">
+            {navLinks.slice(0,1).map((link, index) =>
+              link.path ? (
+                <li key={index}>
+                  <Link
+                    to={link.path}
+                    className={`block px-5 py-3 rounded-xl font-semibold transition shadow-sm
+                      ${
+                        location.pathname === link.path
+                          ? "bg-green-600/80 text-white shadow-inner"
+                          : "text-white/90 hover:bg-white/10 hover:text-white"
+                      }`}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ) : (
+                <li
+                  key={index}
+                  className="px-5 py-3 rounded-xl font-semibold text-white/80 hover:bg-white/10 transition cursor-pointer"
+                >
+                  {link.name}
+                </li>
+              )
+            )}
+          </nav>
         </div>
       ) : (
-    <div className="flex flex-col gap-6">
-      {/* Profile */}
-      <Link to={"/my-account"}>
-        <div className="flex items-center gap-3 px-4 py-3 bg-green-900 rounded-xl hover:bg-green-800 transition cursor-pointer">
-          <img
-            src={userData?.profile_picture || ""}
-            alt="User"
-            className="w-12 h-12 rounded-full border-2 border-yellow-400"
-          />
-          <h2 className="text-yellow-400 font-semibold text-lg">
-            {userData?.username
-              ? userData.username.slice(0, 8) +
-                (userData.username.length > 8 ? "..." : "")
-              : ""}
-          </h2>
-        </div>
-      </Link>
-
-      {/* Nav Links */}
-      <nav className="space-y-2">
-        {navLinks.map((link, index) =>
-          link.path ? (
-            <li key={index}>
-              <Link
-                to={link.path}
-                className={`block px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700 ${
-                  location.pathname === link.path ? "bg-[#002400] text-white" : ""
-                }`}
-              >
-                {link.name}
-              </Link>
-            </li>
-          ) : (
-            <li
-              key={index}
-              className="px-4 py-3 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 hover:text-green-700"
-            >
-              {link.name}
-            </li>
-          )
-        )}
-      </nav>
+        <div className="flex flex-col gap-8">
+          {/* Profile */}
+          <Link to={"/my-account"}>
+  <div className="group overflow-hidden relative flex items-center gap-4 px-4 py-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl hover:bg-white/10 transition cursor-pointer shadow-lg hover:shadow-green-500/20 hover:scale-[1.02] duration-300">
+    
+    {/* Avatar with gradient border */}
+    <div className="relative">
+      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-green-400 via-blue-500 to-purple-600 p-[2px]">
+        <div className="w-12 h-12 rounded-full bg-gray-900"></div>
+      </div>
+      <img
+        src={
+          userData?.profile_picture ||
+          "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+        }
+        className="relative w-12 h-12 rounded-full border-2 border-white/20 object-cover"
+      />
     </div>
+
+    {/* User info */}
+    <div className="flex flex-col overflow-hidden">
+      <h2 className="text-white font-semibold text-lg truncate">
+        {userData?.username
+          ? userData.username.slice(0, 12) +
+            (userData.username.length > 12 ? "..." : "")
+          : ""}
+      </h2>
+      <p className="text-sm text-white/60 truncate">
+        {userData?.email || "View profile"}
+      </p>
+    </div>
+
+  </div>
+</Link>
+
+
+          {/* Nav Links */}
+ <nav className="space-y-3">
+  {navLinks.map((link, index) =>
+    link.path ? (
+      <li key={index}>
+        <Link
+          to={link.path}
+          className={`
+            block px-5 py-3 rounded-2xl font-semibold transition 
+            backdrop-blur-md border border-white/20 shadow-md
+            ${
+              location.pathname === link.path
+                ? " bg-green-500 text-white shadow-inner"
+                : "bg-white/20 text-gray-100 hover:bg-white/40 hover:text-gray-50"
+            }
+          `}
+        >
+          {link.name}
+        </Link>
+      </li>
+    ) : (
+      <li
+        key={index}
+        className="px-5 py-3 rounded-2xl font-semibold text-gray-800/90 
+          hover:bg-white/30 backdrop-blur-md transition cursor-pointer shadow-sm"
+      >
+        {link.name}
+      </li>
+    )
+  )}
+</nav>
+
+        </div>
       )}
 
       {/* Auth Button */}
       <div>
         {useruid === "" ? (
-          <li
+          <button
             onClick={handleLogin}
-            className="w-full text-center bg-green-600 text-white py-2 rounded-lg font-bold hover:bg-green-700 cursor-pointer transition"
+            className="flex items-center justify-center gap-3 w-full bg-white text-gray-900 py-3 rounded-xl font-bold shadow-md hover:bg-gray-100 transition border border-gray-300"
           >
-            Login
-          </li>
+            <FcGoogle className="text-xl" />
+            Sign in with Google
+          </button>
         ) : (
-          <li
+          <button
             onClick={handleLogout}
-            className="w-full text-center bg-red-600 text-white py-2 rounded-lg font-bold hover:bg-red-700 cursor-pointer transition"
+            className="flex items-center justify-center gap-3 w-full bg-red-600/90 text-white py-3 rounded-xl font-bold hover:bg-red-700 transition shadow-md"
           >
+            <FiLogOut className="text-lg" />
             Logout
-          </li>
+          </button>
         )}
       </div>
     </ul>
-  </aside>
+  </div>
+</aside>
+
 
     </section>
   )
