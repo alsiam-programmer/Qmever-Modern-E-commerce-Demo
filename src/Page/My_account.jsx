@@ -60,21 +60,16 @@ const My_account = () => {
 
 
   return (
-<div className="min-h-screen py-6 bg-gray-50">
-  <div className="sm:rounded-[10px] overflow-hidden">
+<div className="min-h-screen py-6 px-2 md:px-0 bg-gray-50">
+  <div className="md:rounded-[10px] overflow-hidden">
     {/* Cover Section */}
 <div
-  className={`relative w-full rounded-full sm:rounded-none h-72 ${
-    userData?.gender?.toLowerCase() === "male"
-      ? "bg-gradient-to-r from-blue-600 to-indigo-700"
-      : userData?.gender?.toLowerCase() === "female"
-      ? "bg-gradient-to-r from-pink-500 to-purple-600"
-      : "bg-gradient-to-r from-gray-400 to-gray-600"
-  }`}
+  className={`relative rounded-3xl p-2 md:rounded-none h-72 md:bg-gradient-to-r md:from-[#062919] md:to-[#062919]/90 bg-gradient-to-r from-[#04180f] to-[#062919]`}
+      
 >
 
       {/* Avatar & Info Card */}
-      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 sm:w-4/5 backdrop-blur-xl bg-white/25 border border-white/20 rounded-3xl shadow-lg p-6 flex flex-col sm:flex-row items-center gap-6 transition-transform duration-300 hover:scale-[1.02]">
+      <div className="absolute h-full md:h-auto left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full md:w-4/5 backdrop-blur-xl bg-white/10 border border-white/5 rounded-3xl shadow-lg p-6 flex flex-col sm:flex-row items-center gap-6 transition-transform duration-300 hover:scale-[1.02]">
         <img
           src={
             userData?.profile_picture ||

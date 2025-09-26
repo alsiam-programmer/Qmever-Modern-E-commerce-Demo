@@ -240,7 +240,7 @@ const settings = {
     <section className="relative">
       <Helmet>
         <title>
-          {info.Prodectname ? `${info.Prodectname} - Price in Bangladesh` : ""}
+          {info.Prodectname ? `${info.Prodectname} Price in Bangladesh` : ""}
         </title>
         <meta
           name="description"

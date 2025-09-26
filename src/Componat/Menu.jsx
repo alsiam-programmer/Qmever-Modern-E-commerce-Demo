@@ -324,7 +324,12 @@ const handleSearch = async (e) => {
           </div>
         </div>
       </section>
-      
+      {MenuShow && (
+  <div
+    onClick={() => setMenuShow(false)}
+    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[900] transition-opacity duration-300"
+  />
+)}
 <aside
   className={`fixed top-0 right-0 h-full shadow-2xl transform transition-transform duration-300 z-[1000]
     ${MenuShow ? "translate-x-0" : "translate-x-full"}
@@ -382,9 +387,6 @@ const handleSearch = async (e) => {
     
     {/* Avatar with gradient border */}
     <div className="relative">
-      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-green-400 via-blue-500 to-purple-600 p-[2px]">
-        <div className="w-12 h-12 rounded-full bg-gray-900"></div>
-      </div>
       <img
         src={
           userData?.profile_picture ||
@@ -398,13 +400,10 @@ const handleSearch = async (e) => {
     <div className="flex flex-col overflow-hidden">
       <h2 className="text-white font-semibold text-lg truncate">
         {userData?.username
-          ? userData.username.slice(0, 12) +
-            (userData.username.length > 12 ? "..." : "")
+          ? userData.username.slice(0, 10) +
+            (userData.username.length > 10 ? "..." : "")
           : ""}
       </h2>
-      <p className="text-sm text-white/60 truncate">
-        {userData?.email || "View profile"}
-      </p>
     </div>
 
   </div>

@@ -20,9 +20,9 @@ export default defineConfig({
         name: 'Qmever',
         short_name: 'Qmever',
         description: 'A stylish shopping experience!',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
-        display: 'standalone',
+        theme_color: '#062919',          // ✅ Top & bottom bars color
+        background_color: '#ffffff',     // ✅ Splash screen color
+        display: 'standalone',           // ✅ Fullscreen like an app
         start_url: '/',
         scope: '/',
         icons: [
