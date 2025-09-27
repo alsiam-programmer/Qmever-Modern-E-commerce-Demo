@@ -1,81 +1,107 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
+import CryptoJS from "crypto-js";
 
+// ===========================
+// 1. Strong hardcoded secret key
+// ===========================
+const SECRET_KEY = "S3curee322R@nd0mK3y12ForeeL0calSt0rage123!"; // 32+ chars
+
+// ===========================
+// 2. Helper functions
+// ===========================
+const saveEncrypted = (key, data) => {
+  const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), SECRET_KEY).toString();
+  localStorage.setItem(key, ciphertext);
+};
+
+const getDecrypted = (key) => {
+  const ciphertext = localStorage.getItem(key);
+  if (!ciphertext) return [];
+  try {
+    const bytes = CryptoJS.AES.decrypt(ciphertext, SECRET_KEY);
+    return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  } catch {
+    return [];
+  }
+};
+
+// ===========================
+// 3. Initial state
+// ===========================
+const initialState = {
+  user: getDecrypted("user"),
+  BuyItem: getDecrypted("BuyItem"),
+  cartItem: getDecrypted("cartItem"),
+};
+
+// ===========================
+// 4. Redux slice
+// ===========================
 export const counterSlice = createSlice({
   name: 'counter',
-  initialState: {
-    user: localStorage.getItem("user")? JSON.parse(localStorage.getItem("user")) :[],
-    BuyItem: localStorage.getItem("BuyItem")? JSON.parse(localStorage.getItem("BuyItem")) :[],
-    cartItem: localStorage.getItem("cartItem")? JSON.parse(localStorage.getItem("cartItem")) :[],
-  },
+  initialState,
   reducers: {
-    userUidLogin:(state , action) => {
-        state.user = [action.payload]
-        localStorage.setItem("user" , JSON.stringify(state.user))
+    userUidLogin: (state, action) => {
+      state.user = [action.payload];
+      saveEncrypted("user", state.user);
     },
-    userLogout:(state , action)=>{
-      state.user.splice(action.payload)
-      localStorage.setItem("user" , JSON.stringify(state.user))
+    userLogout: (state) => {
+      state.user = [];
+      saveEncrypted("user", state.user);
     },
-    userBuyItem:(state , action) => {
-      state.BuyItem = [action.payload]
-      localStorage.setItem("BuyItem" , JSON.stringify(state.BuyItem))
+    userBuyItem: (state, action) => {
+      state.BuyItem = [action.payload];
+      saveEncrypted("BuyItem", state.BuyItem);
     },
-    BuyItemDelete:(state , action)=>{
-      state.BuyItem.splice(action.payload)
-      localStorage.setItem("BuyItem" , JSON.stringify(state.BuyItem))
+    BuyItemDelete: (state, action) => {
+      state.BuyItem.splice(action.payload, 1);
+      saveEncrypted("BuyItem", state.BuyItem);
     },
-    
-    AddToCart:(state , action) => {      
-      let FindProduct = state.cartItem.findIndex((item)=> item.ProdectId === action.payload.ProdectId)
-      let FindProductModel = state.cartItem.findIndex((item)=> item.size === action.payload.size)
-      let FindProductmodleColor = state.cartItem.findIndex((item)=> item.modleColor.Color === action.payload.modleColor.Color)
-
-      if (FindProduct !== -1 && FindProductModel !== -1  && FindProductmodleColor !== -1 ) {
-        
-        
-        if (action.payload.modleColor.Color !== undefined) {
-          state.cartItem[FindProductmodleColor].ProdectQun += 1
-          localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
-          return          
-        }
-        
-
-        if (action.payload.size !== undefined) {
-          state.cartItem[FindProductModel].ProdectQun += 1
-          localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
-          return          
-        } 
-
-        state.cartItem[FindProduct].ProdectQun += 1
-        localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
-      } else {
-        state.cartItem = [ ...state.cartItem , action.payload ]
-        localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
+    AddToCart: (state, action) => {
+      const index = state.cartItem.findIndex(
+        item =>
+          item.ProdectId === action.payload.ProdectId &&
+          item.size === action.payload.size &&
+          item.modleColor?.Color === action.payload.modleColor?.Color
+      );
+      if (index !== -1) state.cartItem[index].ProdectQun += 1;
+      else state.cartItem.push(action.payload);
+      saveEncrypted("cartItem", state.cartItem);
+    },
+    removeCartPro: (state, action) => {
+      state.cartItem.splice(action.payload, 1);
+      saveEncrypted("cartItem", state.cartItem);
+    },
+    qunIncrement: (state, action) => {
+      state.cartItem[action.payload].ProdectQun += 1;
+      saveEncrypted("cartItem", state.cartItem);
+    },
+    qunDecrement: (state, action) => {
+      if (state.cartItem[action.payload].ProdectQun > 1) {
+        state.cartItem[action.payload].ProdectQun -= 1;
+        saveEncrypted("cartItem", state.cartItem);
       }
     },
-    removeCartPro:(state , action) => {
-      state.cartItem.splice(action.payload , 1)
-      localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
+    removeAllcartPro: (state) => {
+      state.cartItem = [];
+      saveEncrypted("cartItem", state.cartItem);
     },
-    qunIncrement:(state , action) =>{
-      state.cartItem[action.payload].ProdectQun += 1
-      localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
-    },
-    qunDecrement:(state , action) =>{
-      if (state.cartItem[action.payload ].ProdectQun > 1) {
-        state.cartItem[action.payload ].ProdectQun -= 1
-        localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
-      }
-    },
-    removeAllcartPro:(state , action) => {
-      state.cartItem.splice(action.payload)
-      localStorage.setItem("cartItem" , JSON.stringify(state.cartItem))
-    },
-
   },
-})
+});
 
-// Action creators are generated for each case reducer function
-export const { userUidLogin , userLogout , userBuyItem , BuyItemDelete , AddToCart , removeCartPro , qunIncrement , qunDecrement , removeAllcartPro } = counterSlice.actions
+// ===========================
+// 5. Export actions & reducer
+// ===========================
+export const {
+  userUidLogin,
+  userLogout,
+  userBuyItem,
+  BuyItemDelete,
+  AddToCart,
+  removeCartPro,
+  qunIncrement,
+  qunDecrement,
+  removeAllcartPro
+} = counterSlice.actions;
 
-export default counterSlice.reducer
+export default counterSlice.reducer;

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, set, onValue } from 'firebase/database';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { IoIosDoneAll } from 'react-icons/io';
+import React, { useEffect, useState } from "react";
+import { getDatabase, ref, set, onValue } from "firebase/database";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { IoIosDoneAll } from "react-icons/io";
+import SocialIcons from "../Componat/SocialIcons";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -11,12 +12,13 @@ const EditProfile = () => {
 
   const [userData, setUserData] = useState({});
   const [deliveryAddress, setDeliveryAddress] = useState({});
-  const [selectedGender, setSelectedGender] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [bio, setBio] = useState(''); // <-- New state for user bio
+  const [selectedGender, setSelectedGender] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [bio, setBio] = useState("");
+  const [allValues, setAllValues] = useState([]); // Social links state
 
-  const genderOptions = ['Male', 'Female', 'Transgender'];
+  const genderOptions = ["Male", "Female", "Transgender"];
 
   useEffect(() => {
     userLoginUid.forEach((uid) => {
@@ -27,7 +29,8 @@ const EditProfile = () => {
         const data = snapshot.val();
         if (data) {
           setUserData(data);
-          setBio(data.bio || ''); // <-- Populate bio from Firebase
+          setBio(data.bio || "");
+          setAllValues(data.socialLinks || []);
         }
       }, { onlyOnce: true });
 
@@ -40,6 +43,7 @@ const EditProfile = () => {
 
   useEffect(() => window.scrollTo(0, 0), []);
 
+  // utils: age calculation
   const calculateAge = (dob) => {
     const today = new Date();
     const birth = new Date(dob);
@@ -63,30 +67,51 @@ const EditProfile = () => {
     if (/^01[3-9][0-9]{8}$/.test(value)) setPhoneNumber(value);
   };
 
-  const handleUpdate = () => {
-    if (!phoneNumber && !deliveryAddress.Phone_Number) return alert("Enter a valid Bangladeshi phone number.");
-    if (!birthDate && !userData.dateOfBirth) return alert("Enter your birth date.");
-    if (!selectedGender && !userData.gender) return alert("Select your gender.");
+const handleUpdate = () => {
+  if (!phoneNumber && !deliveryAddress.Phone_Number)
+    return alert("Enter a valid Bangladeshi phone number.");
+  if (!birthDate && !userData.dateOfBirth)
+    return alert("Enter your birth date.");
+  if (!selectedGender && !userData.gender)
+    return alert("Select your gender.");
 
-    const updatedUser = {
-      ...userData,
-      gender: selectedGender || userData.gender || '',
-      dateOfBirth: birthDate || userData.dateOfBirth || '',
-      bio: bio || userData.bio || '', // <-- Add bio here
-      Delivery_address: {
-        ...deliveryAddress,
-        Phone_Number: phoneNumber ? `+88${phoneNumber}` : deliveryAddress.Phone_Number,
-      },
-    };
+  // Merge socialLinks safely
+  let mergedLinks = [];
+  if (allValues.length < (userData.socialLinks?.length || 0)) {
+    // Use only current allValues if smaller than existing links
+    mergedLinks = [...allValues];
+  } else {
+    // Merge existing and new links
+    mergedLinks = [...(userData.socialLinks || []), ...allValues];
+  }
 
-    set(ref(db, `users/${userData.uid}`), updatedUser)
-      .then(() => navigate("/my-account"))
-      .catch((error) => console.error("Update failed:", error));
+  // Remove duplicates by name, keeping the latest
+  const uniqueLinks = Array.from(
+    new Map(mergedLinks.map((item) => [item.name, item])).values()
+  );
+
+  const updatedUser = {
+    ...userData,
+    gender: selectedGender || userData.gender || "",
+    dateOfBirth: birthDate || userData.dateOfBirth || "",
+    bio: bio || userData.bio || "",
+    socialLinks: uniqueLinks,
+    Delivery_address: {
+      ...deliveryAddress,
+      Phone_Number: phoneNumber
+        ? `+88${phoneNumber}`
+        : deliveryAddress.Phone_Number,
+    },
   };
 
+  set(ref(db, `users/${userData.uid}`), updatedUser)
+    .then(() => navigate("/my-account"))
+    .catch((error) => console.error("Update failed:", error));
+};
+
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gray-50 p-4 sm:p-6">
-      <div className="w-full max-w-md bg-white/25 backdrop-blur-xl border border-white/20 rounded-3xl shadow-lg p-6 sm:p-8">
+    <section className="min-h-[95vh] flex items-center justify-center bg-gray-50 p-4 sm:p-6">
+      <div className="w-full max-w-xl bg-white/25 backdrop-blur-xl border border-white/20 rounded-3xl shadow-lg p-6 sm:p-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">
           Edit Profile
         </h1>
@@ -94,7 +119,10 @@ const EditProfile = () => {
         {/* Profile Picture */}
         <div className="flex justify-center mb-6">
           <img
-            src={userData.profile_picture || "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"}
+            src={
+              userData.profile_picture ||
+              "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+            }
             alt="Profile"
             className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md object-cover"
           />
@@ -103,10 +131,9 @@ const EditProfile = () => {
         {/* Username */}
         <input
           type="text"
-          value={userData.username || ''}
+          value={userData.username || ""}
           disabled
           className="w-full mb-3 px-4 py-2 rounded-2xl border border-white/20 bg-white/25 font-semibold text-gray-600 placeholder-gray-400"
-          placeholder="Username"
         />
 
         {/* Email */}
@@ -115,7 +142,7 @@ const EditProfile = () => {
           <IoIosDoneAll className="text-green-600 text-2xl" />
         </div>
 
-        {/* User Bio */}
+        {/* Bio */}
         <textarea
           value={bio}
           onChange={(e) => setBio(e.target.value)}
@@ -124,14 +151,25 @@ const EditProfile = () => {
           rows={3}
         />
 
+        {/* Social Links */}
+        <div className="mb-3">
+          <SocialIcons AllValues={allValues} setAllValues={setAllValues} />
+        </div>
+
         {/* Phone */}
         <div className="flex items-center mb-3">
-          <span className="bg-white/25 border border-white/20 px-4 py-2 rounded-l-2xl font-semibold text-gray-800">+88</span>
+          <span className="bg-white/25 border border-white/20 px-4 py-2 rounded-l-2xl font-semibold text-gray-800">
+            +88
+          </span>
           <input
             type="text"
             onChange={handlePhoneChange}
             className="flex-1 py-2 px-4 rounded-r-2xl border border-l-0 border-white/20 bg-white/25 outline-none text-gray-900 placeholder-gray-400"
-placeholder={deliveryAddress?.Phone_Number ? `${deliveryAddress.Phone_Number.slice(-11)}` : "01XXXXXXXXX"}
+            placeholder={
+              deliveryAddress?.Phone_Number
+                ? `${deliveryAddress.Phone_Number.slice(-11)}`
+                : "01XXXXXXXXX"
+            }
           />
         </div>
 
@@ -149,18 +187,17 @@ placeholder={deliveryAddress?.Phone_Number ? `${deliveryAddress.Phone_Number.sli
             <button
               key={gender}
               onClick={() => handleGenderSelect(gender)}
-              className={`px-4 py-2 rounded-full border transition ${
-                selectedGender === gender || userData?.gender === gender
+              className={`px-4 py-2 rounded-full border transition ${selectedGender === gender || userData?.gender === gender
                   ? "bg-green-600 text-white"
                   : "border-white/20 text-gray-800 bg-white/25"
-              }`}
+                }`}
             >
               {gender}
             </button>
           ))}
         </div>
 
-        {/* Submit */}
+        {/* Save */}
         <button
           onClick={handleUpdate}
           className="w-full mt-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-semibold hover:scale-105 hover:shadow-lg transition"

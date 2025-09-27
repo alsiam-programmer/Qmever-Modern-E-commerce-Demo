@@ -6,7 +6,7 @@ import { getDatabase, ref, get } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Order from "./Order";
 import { useNavigate } from "react-router-dom";
-
+import {getIcon , brandColors} from "../Componat/SocialIcons"
 
 const My_account = () => {
   const navigate = useNavigate();
@@ -51,12 +51,27 @@ const My_account = () => {
     return () => unsubscribe();
   }, [loggedInUID]);
 
-  const handleCopyLink = () => {
-    const link = `${window.location.origin}/watch/${loggedInUID}`;
-    navigator.clipboard.writeText(link).then(() => {
+  
+ const handleCopyLink = () => {
+  if (!loggedInUID) {
+    alert("User ID not available!");
+    return;
+  }
+
+  // Encode UID to hide it in URL
+  const encodedUID = btoa(loggedInUID); // Base64 encode
+  const link = `${window.location.origin}/watch/${encodedUID}?email=${userData.email}&name=${userData.username}`;
+
+  navigator.clipboard.writeText(link)
+    .then(() => {
       alert("Profile link copied to clipboard!");
+    })
+    .catch((err) => {
+      console.error("Failed to copy: ", err);
+      alert("Failed to copy link. Try manually.");
     });
-  };
+};
+
 
 
   return (
@@ -64,33 +79,52 @@ const My_account = () => {
   <div className="md:rounded-[10px] overflow-hidden">
     {/* Cover Section */}
 <div
-  className={`relative rounded-3xl p-2 md:rounded-none h-72 md:bg-gradient-to-r md:from-[#062919] md:to-[#062919]/90 bg-gradient-to-r from-[#04180f] to-[#062919]`}
+  className={`relative rounded-3xl p-2 md:rounded-none md:bg-gradient-to-r md:from-[#062919] md:to-[#062919]/90 bg-gradient-to-r from-[#04180f] to-[#062919]`}
       
 >
 
-      {/* Avatar & Info Card */}
-      <div className="absolute h-full md:h-auto left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full md:w-4/5 backdrop-blur-xl bg-white/10 border border-white/5 rounded-3xl shadow-lg p-6 flex flex-col sm:flex-row items-center gap-6 transition-transform duration-300 hover:scale-[1.02]">
-        <img
-          src={
-            userData?.profile_picture ||
-            "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
-          }
-          className="rounded-full w-28 sm:w-32 md:w-36 h-28 sm:h-32 md:h-36 object-cover border-4 border-white shadow-md"
-          alt="Profile"
-        />
-        <div className="text-white text-center sm:text-left">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold drop-shadow-lg truncate">
-            {userData?.username || "Unknown User"}
-          </h1>
-          <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
-            {userData?.email || "No email provided"}
-          </p>
-          <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
-            {userData?.bio || "No bio provided"}
-          </p>
-        </div>
-      </div>
+    <div className="w-full md:w-4/5 backdrop-blur-xl md:m-6 xl:m-10 bg-white/10 border border-white/5 rounded-3xl shadow-lg p-6 flex flex-col md:flex-row items-center gap-6 transition-transform duration-300 hover:scale-[1.02]">
+      
+      {/* Avatar */}
+      <img
+        src={
+          userData?.profile_picture ||
+          "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+        }
+        className="rounded-full w-28 sm:w-32 md:w-36 h-28 sm:h-32 md:h-36 object-cover border-4 border-white shadow-md"
+        alt="Profile"
+      />
 
+      {/* User Info */}
+      <div className="text-white text-center sm:text-left flex-1">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold drop-shadow-lg truncate">
+          {userData?.username || "Unknown User"}
+        </h1>
+        <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
+          {userData?.email || "No email provided"}
+        </p>
+        <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
+          {userData?.bio || "No bio provided"}
+        </p>
+
+        {/* Social Links */}
+        {userData?.socialLinks?.length > 0 && (
+          <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3 mt-2 sm:mt-3">
+            {userData.socialLinks.map((item, index) => (
+              <a
+                key={index}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center text-lg md:text-xl p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-white backdrop-blur-md text-white transition-all duration-300 shadow-md hover:scale-110"
+              >
+                {getIcon(item.iconName, brandColors[item.name])}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
       {/* Action Buttons */}
       <div className="absolute top-4 right-4 flex items-center gap-3 bg-white/15 backdrop-blur-md rounded-full p-2 shadow-md transition-all duration-300">
         {showbaritem ? (

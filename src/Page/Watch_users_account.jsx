@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import {getIcon , brandColors} from "../Componat/SocialIcons"
 
 const Watch_users_account = () => {
   const { id } = useParams();
@@ -11,13 +12,20 @@ const Watch_users_account = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+   const decodedId = (() => {
+    try {
+      return atob(id);
+    } catch {
+      return null;
+    }
+  })();
   // Fetch user and orders
   useEffect(() => {
     const fetchUser = async () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/users/${id}.json`
+          `https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/users/${decodedId}.json`
         );
 
         if (res.data?.type === "public") {
@@ -39,7 +47,7 @@ const Watch_users_account = () => {
     const fetchOrders = async () => {
       try {
         const res = await axios.get(
-          `https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${id}.json`
+          `https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${decodedId}.json`
         );
         const orders = Object.values(res.data || []);
 
@@ -90,53 +98,66 @@ const Watch_users_account = () => {
     );
 
   return (
-<div className="min-h-screen bg-gray-50 py-6">
-  <div className="sm:rounded-[10px] overflow-hidden">
+<div className="min-h-screen py-6 px-2 md:px-0 bg-gray-50">
+  <div className="md:rounded-[10px] overflow-hidden">
 
-    {/* Profile Header */}
-    <div className="relative w-full h-72">
+    {/* Cover Section */}
 <div
-  className={`relative w-full rounded-full sm:rounded-none h-72 ${
-    userData?.gender?.toLowerCase() === "male"
-      ? "bg-gradient-to-r from-blue-600 to-indigo-700"
-      : userData?.gender?.toLowerCase() === "female"
-      ? "bg-gradient-to-r from-pink-500 to-purple-600"
-      : "bg-gradient-to-r from-gray-400 to-gray-600"
-  }`}
-/>
+  className={`relative rounded-3xl p-2 md:rounded-none md:bg-gradient-to-r md:from-[#062919] md:to-[#062919]/90 bg-gradient-to-r from-[#04180f] to-[#062919]`}
+      
+>
 
+    <div className="w-full md:w-4/5 backdrop-blur-xl md:m-6 xl:m-10 bg-white/10 border border-white/5 rounded-3xl shadow-lg p-6 flex flex-col md:flex-row items-center gap-6 transition-transform duration-300 hover:scale-[1.02]">
+      
+      {/* Avatar */}
+      <img
+        src={
+          userData?.profile_picture ||
+          "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+        }
+        className="rounded-full w-28 sm:w-32 md:w-36 h-28 sm:h-32 md:h-36 object-cover border-4 border-white shadow-md"
+        alt="Profile"
+      />
 
-      {/* Floating Glass Profile */}
-      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 sm:w-4/5 backdrop-blur-xl bg-white/25 border border-white/20 rounded-3xl shadow-lg p-6 flex flex-col sm:flex-row items-center gap-6 transition-all duration-300 hover:scale-[1.02]">
-        <img
-          src={
-            userData?.profile_picture ||
-            "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
-          }
-          alt="Profile"
-          className="rounded-full w-28 sm:w-32 md:w-36 h-28 sm:h-32 md:h-36 object-cover border-4 border-white shadow-md"
-        />
-        <div className="text-white text-center sm:text-left">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold drop-shadow-lg truncate">
-            {userData?.username || "Unknown User"}
-          </h1>
-          <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
-            {userData?.email || "No email provided"}
-          </p>
-          <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
-            {userData?.bio || "No bio provided"}
-          </p>
-        </div>
+      {/* User Info */}
+      <div className="text-white text-center sm:text-left flex-1">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold drop-shadow-lg truncate">
+          {userData?.username || "Unknown User"}
+        </h1>
+        <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
+          {userData?.email || "No email provided"}
+        </p>
+        <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
+          {userData?.bio || "No bio provided"}
+        </p>
+
+        {/* Social Links */}
+        {userData?.socialLinks?.length > 0 && (
+          <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3 mt-2 sm:mt-3">
+            {userData.socialLinks.map((item, index) => (
+              <a
+                key={index}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center text-lg md:text-xl p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-white backdrop-blur-md text-white transition-all duration-300 shadow-md hover:scale-110"
+              >
+                {getIcon(item.iconName, brandColors[item.name])}
+              </a>
+            ))}
+          </div>
+        )}
       </div>
+    </div>
     </div>
 
     {/* Buy Items Section */}
     <section className="container mx-auto px-4 sm:px-6 my-8">
+      {userbuyData?.length > 0 ? (
       <div className="bg-white/50 backdrop-blur-lg rounded-3xl shadow-lg p-4 sm:p-6">
       <h2 className="text-lg sm:text-xl bg-gray-100 font-bold mb-4 px-4 py-2 rounded-3xl text-gray-600 flex justify-center items-center shadow-sm">
         Buy Items
       </h2>
-      {userbuyData?.length > 0 ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-5">
           {userbuyData.map((item) => (
             <div
@@ -158,11 +179,10 @@ const Watch_users_account = () => {
               </div>
             </div>
           ))}
+      </div>
         </div>
       ) : (
-        <p className="text-center text-gray-400 text-sm mt-2">No delivered items</p>
-      )}
-      </div>
+""      )}
     </section>
 
     {/* Wishlist Section */}
