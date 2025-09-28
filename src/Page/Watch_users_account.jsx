@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {getIcon , brandColors} from "../Componat/SocialIcons"
+import { Helmet } from "react-helmet";
 
 const Watch_users_account = () => {
   const { id } = useParams();
@@ -99,6 +100,27 @@ const Watch_users_account = () => {
 
   return (
 <div className="min-h-screen py-6 px-2 md:px-0 bg-gray-50">
+   {/* 🔥 SEO Header */}
+      <Helmet>
+        <title>{userData?.username || "User Profile"} | Qmever</title>
+        <meta
+          name="description"
+          content={userData?.bio || "View user profile and products on Qmever"}
+        />
+        <meta property="og:title" content={userData?.username || "User Profile"} />
+        <meta
+          property="og:description"
+          content={userData?.bio || "Check out this profile on Qmever"}
+        />
+        <meta
+          property="og:image"
+          content={
+            userData?.profile_picture ||
+            "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+          }
+        />
+        <meta property="og:type" content="profile" />
+      </Helmet>
   <div className="md:rounded-[10px] overflow-hidden">
 
     {/* Cover Section */}

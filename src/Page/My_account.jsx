@@ -52,7 +52,7 @@ const My_account = () => {
   }, [loggedInUID]);
 
   
- const handleCopyLink = () => {
+const handleCopyLink = () => {
   if (!loggedInUID) {
     alert("User ID not available!");
     return;
@@ -60,7 +60,10 @@ const My_account = () => {
 
   // Encode UID to hide it in URL
   const encodedUID = btoa(loggedInUID); // Base64 encode
-  const link = `${window.location.origin}/watch/${encodedUID}?email=${userData.email}&name=${userData.username}`;
+  const encodedEmail = encodeURIComponent(userData.email || "");
+  const encodedName = encodeURIComponent(userData.username || "");
+
+  const link = `${window.location.origin}/watch/${encodedUID}?email=${encodedEmail}&name=${encodedName}`;
 
   navigator.clipboard.writeText(link)
     .then(() => {
@@ -71,7 +74,6 @@ const My_account = () => {
       alert("Failed to copy link. Try manually.");
     });
 };
-
 
 
   return (

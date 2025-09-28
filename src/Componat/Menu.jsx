@@ -336,7 +336,7 @@ const handleSearch = async (e) => {
   `}
   style={{ width: "80%", maxWidth: "400px" }}
 >
-  <div className="h-full bg-gradient-to-b from-[#062919] to-[#062919]/30 backdrop-blur-xl border-l border-white/20">
+  <div className="h-full bg-gradient-to-b from-[#062919] to-[#062919]/30 rounded-l-xl backdrop-blur-xl border-l border-white/20">
     <ul className="flex flex-col h-full justify-between py-8 px-6">
       {useruid === "" ? (
         <div className="flex flex-col gap-8">
