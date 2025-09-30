@@ -76,36 +76,65 @@ let handleLogin = () => {
       // Check if user already exists
       const snapshot = await get(userRef);
 
-      
       if (!snapshot.exists()) {
-        setloader(true)
+        setloader(true);
+
         // User does not exist, create new data
-        await set(userRef, {
-          username: user.displayName,
-          email: user.email,
-          profile_picture: user.photoURL,
-          uid: user.uid,
-          role: "users",
-          type:"public",
-          gender: "",
-          dateOfBirth: "",
-          Wishlist: [],
-          Delivery_address: {
-            username: user.displayName,
-            email: user.email,
-            Phone_Number: "",
-            Division: "",
-            District: "",
-            local_address: "",
-          }
-        });
-        await new Promise(res => setTimeout(res, 2000)); window.location.href = '/my-account/user-edit_profile';
-        setloader(false)
+       const newUser = {
+  username: user.displayName,
+  email: user.email,
+  profile_picture: user.photoURL,
+  uid: user.uid,
+  role: "users",
+  type: "public", // general user type
+
+  // Contact Info section
+  Contact_Info: {
+    Phone_Number: "",
+    Home_Address: "",
+    socialLinks: [],
+    type: "public", // section type
+  },
+
+  // Personal Info section
+  Personal_Info: {
+    dateOfBirth: "",
+    gender: "",
+    education: "",
+    occupation: "",
+    maritalStatus: "",
+    bloodGroup: "",
+    healthInfo: "",
+    type: "public", // section type
+  },
+
+  // Delivery / Address section
+  Delivery_address: {
+    username: user.displayName,
+    email: user.email,
+    Phone_Number: "",
+    Division: "",
+    District: "",
+    local_address: "",
+    type: "public", // section type
+  },
+
+  Wishlist: [],
+  bio: "",
+};
+
+
+        await set(userRef, newUser);
+
+        // Small delay for UI/loader
+        await new Promise((res) => setTimeout(res, 2000));
+
+        window.location.href = '/my-account/user-edit_profile';
+        setloader(false);
       } else {
-        
+        // Existing user logic (optional)
       }
     })
-
     .catch((error) => {
       console.error("Auth Error:", error.code, error.message);
     });

@@ -166,6 +166,36 @@ const handleCopyLink = () => {
       </div>
     </div>
 
+
+<div className="container mx-auto px-4 sm:px-6 mt-8 lg:flex lg:gap-6">
+
+  {/* Contact Info */}
+  <div className="w-full lg:w-1/2 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 sm:p-6 text-gray-700 space-y-4 shadow-xl hover:shadow-2xl transition-shadow duration-300 my-3">
+    <h2 className="text-xl sm:text-2xl font-bold border-b border-white/20 pb-2 mb-4">Contact Information</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Phone:</span> {userData?.Contact_Info?.Phone_Number || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Home Address:</span> {userData?.Contact_Info?.Home_Address || "N/A"}</p>
+    </div>
+  </div>
+
+  {/* Personal Info */}
+  <div className="w-full lg:w-1/2 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 sm:p-6 text-gray-700 space-y-4 shadow-xl hover:shadow-2xl transition-shadow duration-300 my-3">
+    <h2 className="text-xl sm:text-2xl font-bold border-b border-white/20 pb-2 mb-4">Personal Information</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Date of Birth:</span> {userData?.Personal_Info?.dateOfBirth?.trim() || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Gender:</span> {userData?.Personal_Info?.gender?.trim() || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Blood Group:</span> {userData?.Personal_Info?.bloodGroup?.trim() || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Marital Status:</span> {userData?.Personal_Info?.maritalStatus?.trim() || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Education:</span> {userData?.Personal_Info?.education?.trim() || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Occupation:</span> {userData?.Personal_Info?.occupation?.trim() || "N/A"}</p>
+      <p className="sm:col-span-2 text-base sm:text-lg"><span className="font-semibold text-gray-800">Health Info:</span> {userData?.Personal_Info?.healthInfo?.trim() || "N/A"}</p>
+      <p className="sm:col-span-2 text-base sm:text-lg"><span className="font-semibold text-gray-800">Bio:</span> {userData?.Personal_Info?.bio?.trim() || "N/A"}</p>
+    </div>
+  </div>
+
+</div>
+
+
     {/* Main Content */}
     <div className="container mx-auto px-4 sm:px-6 my-8 space-y-6">
       {/* Wishlist Section */}
