@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa";
-
 // Store icon names instead of React elements
 export const socialLinks = [
   { name: "Facebook", iconName: "FaFacebook" },
@@ -9,6 +8,8 @@ export const socialLinks = [
   { name: "YouTube", iconName: "FaYoutube" },
   { name: "TikTok", iconName: "FaTiktok" },
   { name: "LinkedIn", iconName: "FaLinkedin" },
+  { name: "Google_Maps", iconName: "FaMapMarkerAlt" }, // ✅ underscore version
+  { name: "GitHub", iconName: "FaGithub" },
 ];
 
 // Map of brand colors
@@ -19,6 +20,8 @@ export const brandColors = {
   YouTube: "#FF0000",
   TikTok: "#000000",
   LinkedIn: "#0A66C2",
+  Google_Maps: "#34A853", // ✅ underscore key
+  GitHub: "#181717",
 };
 
 
@@ -72,7 +75,7 @@ const SocialIcons = ({ AllValues, setAllValues }) => {
   return (
     <div className="w-full">
       {/* Social Buttons */}
-      <div className="flex bg-gray-200 rounded-full p-2 gap-4 text-2xl justify-center mb-4">
+      <div className="flex flex-wrap bg-gray-200 justify-between rounded-xl p-2 gap-4 text-2xl mb-4">
         {socialLinks.map((item, index) => (
           <button
             key={index}

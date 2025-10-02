@@ -4,6 +4,11 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { IoIosDoneAll } from "react-icons/io";
 import SocialIcons from "../Componat/SocialIcons";
+import { 
+  FaUser, 
+  FaPhoneAlt, 
+  FaIdCard, 
+} from "react-icons/fa";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -172,158 +177,195 @@ Contact_Info: {
 };
 
   return (
-<section className="min-h-[95vh] flex items-center justify-center bg-gray-100 p-4 sm:p-6">
-  <div className="w-full max-w-3xl space-y-8">
-    {/* Profile Section */}
-    <div className="bg-white shadow-lg rounded-3xl p-8 space-y-6">
-      <h2 className="text-2xl font-bold text-gray-800">Edit Profile</h2>
+<section className="min-h-[95vh] flex items-center justify-center bg-gradient-to-br from-gray-100 via-gray-50 to-gray-200 p-4 sm:p-6">
+  <div className="w-full max-w-4xl space-y-10">
 
-      <div className="flex flex-col items-center gap-4">
+    {/* Profile Section */}
+    <div className="bg-white shadow-xl rounded-3xl p-6 sm:p-8 space-y-6 border border-gray-100">
+      <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+        <span className="p-2 bg-indigo-100 rounded-xl text-indigo-600">
+          <FaUser className="w-5 h-5" />
+        </span>
+        Edit Profile
+      </h2>
+
+      <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-6">
+        {/* Avatar */}
         <img
           src={userData.profile_picture || "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"}
           alt="Profile"
-          className="w-32 h-32 rounded-full border-4 border-indigo-500 shadow-md object-cover"
+          className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full border-4 border-indigo-500 shadow-lg object-cover mx-auto"
         />
 
-        <input
-          type="text"
-          value={userData.username || ""}
-          disabled
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-100 font-semibold text-gray-700"
-        />
+        <div className="flex-1 flex flex-col gap-4 w-full">
+          {/* Username */}
+          <input
+            type="text"
+            value={userData.username || ""}
+            disabled
+            className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-gray-100 font-semibold text-gray-700 shadow-sm focus:ring-2 focus:ring-indigo-400"
+          />
 
-        <div className="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-gray-300 bg-gray-100 font-semibold text-gray-700">
-          <span>{userData.email}</span>
-          <IoIosDoneAll className="text-green-600 text-2xl" />
+          {/* Email */}
+          <div className="w-full flex items-center justify-between px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 text-gray-700 font-medium shadow-sm">
+            <span className="truncate">{userData.email}</span>
+            <IoIosDoneAll className="text-green-600 text-2xl" />
+          </div>
+
+          {/* Bio */}
+          <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            placeholder="Write something about yourself..."
+            className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 resize-none shadow-sm focus:ring-2 focus:ring-indigo-400"
+            rows={3}
+          />
         </div>
-
-        <textarea
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-          placeholder="Write something about yourself..."
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-100 text-gray-800 resize-none"
-          rows={3}
-        />
       </div>
     </div>
 
     {/* Contact Info Section */}
-    <div className="bg-white shadow-lg rounded-3xl p-8 space-y-6">
-      <h2 className="text-2xl font-bold text-gray-800">Contact Info</h2>
+    <div className="bg-white shadow-xl rounded-3xl p-6 sm:p-8 space-y-6 border border-gray-100">
+      <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+        <span className="p-2 bg-blue-100 rounded-xl text-blue-600">
+          <FaPhoneAlt className="w-5 h-5" />
+        </span>
+        Contact Info
+      </h2>
 
+      {/* Social Icons */}
       <SocialIcons AllValues={allValues} setAllValues={setAllValues} />
 
-      <div className="flex items-center gap-2">
-        <span className="bg-indigo-100 px-4 py-3 rounded-l-xl text-gray-700 font-medium">+88</span>
-        <input
-          type="text"
-          value={phoneNumber ||""}
-          onChange={handlePhoneChange}
-          placeholder="01XXXXXXXXX"
-          className="flex-1 px-4 py-3 rounded-r-xl border border-gray-300 bg-gray-100 text-gray-800 outline-none"
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Phone Number */}
+        <div className="flex items-center gap-2">
+          <span className="bg-indigo-100 px-4 py-3 rounded-l-xl text-gray-700 font-medium border border-gray-200">+88</span>
+          <input
+            type="text"
+            value={phoneNumber || ""}
+            onChange={handlePhoneChange}
+            placeholder="01XXXXXXXXX"
+            className="flex-1 px-4 py-3 rounded-r-xl border border-gray-200 bg-gray-50 text-gray-800 outline-none shadow-sm focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+
+        {/* Address */}
+        <textarea
+          value={address || ""}
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder="Enter your home address..."
+          className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 resize-none shadow-sm focus:ring-2 focus:ring-indigo-400"
+          rows={2}
         />
       </div>
-
-      <textarea
-        value={address || ""}
-        onChange={(e) => setAddress(e.target.value)}
-        placeholder="Enter your home address..."
-        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-100 text-gray-800 resize-none"
-        rows={2}
-      />
     </div>
 
     {/* Personal Info Section */}
-    <div className="bg-white shadow-lg rounded-3xl p-8 space-y-6">
-      <h2 className="text-2xl font-bold text-gray-800">Personal Info</h2>
+    <div className="bg-white shadow-xl rounded-3xl p-6 sm:p-8 space-y-6 border border-gray-100">
+      <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+        <span className="p-2 bg-pink-100 rounded-xl text-pink-600">
+          <FaIdCard className="w-5 h-5" />
+        </span>
+        Personal Info
+      </h2>
 
-      <input
-        type="date"
-        value={birthDate}
-        onChange={handleDateChange}
-        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-100 text-gray-800"
-      />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Date of Birth */}
+        <input
+          type="date"
+          value={birthDate}
+          onChange={handleDateChange}
+          className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 shadow-sm focus:ring-2 focus:ring-indigo-400"
+        />
 
-      <div className="flex gap-3">
-        {genderOptions.map((gender) => (
-          <button
-            key={gender}
-            onClick={() => handleGenderSelect(gender)}
-            className={`flex-1 px-4 py-2 rounded-full border font-medium transition ${
-              selectedGender === gender 
-                ? "bg-indigo-600 text-white"
-                : "border-gray-300 text-gray-700 bg-gray-100"
-            }`}
-          >
-            {gender}
-          </button>
-        ))}
+        {/* Gender */}
+        <div className="flex gap-2 sm:gap-3">
+          {genderOptions.map((gender) => (
+            <button
+              key={gender}
+              onClick={() => handleGenderSelect(gender)}
+              className={`flex-1 px-3 sm:px-4 py-2 rounded-full border font-medium transition shadow-sm ${
+                selectedGender === gender
+                  ? "bg-indigo-600 text-white shadow-md"
+                  : "border-gray-200 text-gray-700 bg-gray-50"
+              }`}
+            >
+              {gender}
+            </button>
+          ))}
+        </div>
+
+        {/* Education */}
+        <input
+          type="text"
+          value={education}
+          onChange={(e) => setEducation(e.target.value)}
+          placeholder="Your highest education"
+          className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 shadow-sm focus:ring-2 focus:ring-indigo-400"
+        />
+
+        {/* Occupation */}
+        <input
+          type="text"
+          value={occupation}
+          onChange={(e) => setOccupation(e.target.value)}
+          placeholder="Your current occupation"
+          className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 shadow-sm focus:ring-2 focus:ring-indigo-400"
+        />
+
+        {/* Marital Status */}
+        <select
+          value={maritalStatus}
+          onChange={(e) => setMaritalStatus(e.target.value)}
+          className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 shadow-sm focus:ring-2 focus:ring-indigo-400"
+        >
+          <option value="">Select Marital Status</option>
+          <option value="Single">Single</option>
+          <option value="Married">Married</option>
+          <option value="Divorced">Divorced</option>
+          <option value="Widowed">Widowed</option>
+        </select>
+
+        {/* Blood Group */}
+        <select
+          value={bloodGroup}
+          onChange={(e) => setBloodGroup(e.target.value)}
+          className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 shadow-sm focus:ring-2 focus:ring-indigo-400"
+        >
+          <option value="">Select Blood Group</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+        </select>
+
+        {/* Health Info */}
+        <textarea
+          value={healthInfo}
+          onChange={(e) => setHealthInfo(e.target.value)}
+          placeholder="Health details (e.g. allergies, conditions)"
+          className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 resize-none shadow-sm focus:ring-2 focus:ring-indigo-400"
+          rows={2}
+        />
       </div>
-
-      <input
-        type="text"
-        value={education}
-        onChange={(e) => setEducation(e.target.value)}
-        placeholder="Your highest education (e.g. B.Sc in CSE)"
-        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-100 text-gray-800"
-      />
-
-      <input
-        type="text"
-        value={occupation}
-        onChange={(e) => setOccupation(e.target.value)}
-        placeholder="Your current occupation (e.g. Software Engineer)"
-        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-100 text-gray-800"
-      />
-
-      <select
-        value={maritalStatus}
-        onChange={(e) => setMaritalStatus(e.target.value)}
-        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-100 text-gray-800"
-      >
-        <option value="">Select Marital Status</option>
-        <option value="Single">Single</option>
-        <option value="Married">Married</option>
-        <option value="Divorced">Divorced</option>
-        <option value="Widowed">Widowed</option>
-      </select>
-
-      <select
-        value={bloodGroup}
-        onChange={(e) => setBloodGroup(e.target.value)}
-        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-100 text-gray-800"
-      >
-        <option value="">Select Blood Group</option>
-        <option value="A+">A+</option>
-        <option value="A-">A-</option>
-        <option value="B+">B+</option>
-        <option value="B-">B-</option>
-        <option value="O+">O+</option>
-        <option value="O-">O-</option>
-        <option value="AB+">AB+</option>
-        <option value="AB-">AB-</option>
-      </select>
-
-      <textarea
-        value={healthInfo}
-        onChange={(e) => setHealthInfo(e.target.value)}
-        placeholder="Health details (e.g. allergies, conditions)"
-        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-100 text-gray-800 resize-none"
-        rows={2}
-      />
     </div>
 
     {/* Save Button */}
-    <div className="text-center">
+    <div className="text-center !mb-6">
       <button
         onClick={handleUpdate}
-        className="w-full py-4 rounded-3xl bg-gradient-to-r from-indigo-600 to-blue-500 text-white font-bold text-lg hover:scale-105 hover:shadow-xl transition"
+        className="w-full py-4 rounded-3xl bg-gradient-to-r from-indigo-600 via-blue-500 to-indigo-500 text-white font-bold text-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition"
       >
         Save All Changes
       </button>
     </div>
   </div>
 </section>
+
 
   );
 };

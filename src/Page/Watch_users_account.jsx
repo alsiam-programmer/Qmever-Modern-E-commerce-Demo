@@ -125,11 +125,11 @@ const Watch_users_account = () => {
 
     {/* Cover Section */}
 <div
-  className={`relative rounded-3xl p-2 md:rounded-none md:bg-gradient-to-r md:from-[#062919] md:to-[#062919]/90 bg-gradient-to-r from-[#04180f] to-[#062919]`}
+  className={`relative rounded-[20%] md:p-2 md:rounded-none  md:bg-gradient-to-r md:from-[#04180f] md:to-[#062919]/95 bg-gradient-to-r from-[#04180f] to-[#062919]`}
       
 >
 
-    <div className="w-full md:w-4/5 backdrop-blur-xl md:m-6 xl:m-10 bg-white/10 border border-white/5 rounded-3xl shadow-lg p-6 flex flex-col md:flex-row items-center gap-6 transition-transform duration-300 hover:scale-[1.02]">
+    <div className="w-full md:w-4/5 backdrop-blur-xl md:m-6 xl:m-10 bg-white/10 border border-white/5 rounded-3xl shadow-lg p-6 flex flex-col md:flex-row items-center gap-6 transition-transform duration-300">
       
       {/* Avatar */}
       <img
@@ -137,26 +137,26 @@ const Watch_users_account = () => {
           userData?.profile_picture ||
           "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
         }
-        className="rounded-full w-28 sm:w-32 md:w-36 h-28 sm:h-32 md:h-36 object-cover border-4 border-white shadow-md"
+        className="rounded-[30%] w-28 sm:w-32 md:w-36 h-28 sm:h-32 md:h-36 object-cover border-2 md:border-4 border-white shadow-md"
         alt="Profile"
       />
 
       {/* User Info */}
       <div className="text-white text-center sm:text-left flex-1">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold drop-shadow-lg truncate">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-lg truncate">
           {userData?.username || "Unknown User"}
         </h1>
-        <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
+        {/* <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
           {userData?.email || "No email provided"}
-        </p>
-        <p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
-          {userData?.bio || "No bio provided"}
-        </p>
+        </p> */}
+<p className="text-sm sm:text-base opacity-90 mt-1 drop-shadow-lg break-words">
+  {(userData?.bio || "").slice(0, 40) || "No bio provided"}
+</p>
 
         {/* Social Links */}
-        {userData?.Contact_Info.socialLinks?.length > 0 && (
+        {userData?.Contact_Info?.socialLinks?.length > 0 && (
           <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3 mt-2 sm:mt-3">
-            {userData?.Contact_Info.socialLinks.map((item, index) => (
+            {userData?.Contact_Info?.socialLinks.map((item, index) => (
               <a
                 key={index}
                 href={item.url}
@@ -175,26 +175,26 @@ const Watch_users_account = () => {
 <div className="container mx-auto px-4 sm:px-6 mt-8 lg:flex lg:gap-6">
 
   {/* Contact Info */}
-  <div className="w-full lg:w-1/2 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 sm:p-6 text-gray-700 space-y-4 shadow-xl hover:shadow-2xl transition-shadow duration-300 my-3">
-    <h2 className="text-xl sm:text-2xl font-bold border-b border-white/20 pb-2 mb-4">Contact Information</h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Phone:</span> {userData?.Contact_Info?.Phone_Number || "N/A"}</p>
-      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Home Address:</span> {userData?.Contact_Info?.Home_Address || "N/A"}</p>
+  <div className="w-full lg:w-1/2 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-6 sm:p-8 text-gray-800 space-y-5 shadow-lg my-3">
+    <h2 className="text-2xl font-semibold border-b border-gray-300/40 pb-3">Contact Information</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <p className="text-base sm:text-lg"><span className="font-medium text-gray-900">Phone:</span> {userData?.Contact_Info?.Phone_Number || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-medium text-gray-900">Home Address:</span> {userData?.Contact_Info?.Home_Address || "N/A"}</p>
     </div>
   </div>
 
   {/* Personal Info */}
-  <div className="w-full lg:w-1/2 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 sm:p-6 text-gray-700 space-y-4 shadow-xl hover:shadow-2xl transition-shadow duration-300 my-3">
-    <h2 className="text-xl sm:text-2xl font-bold border-b border-white/20 pb-2 mb-4">Personal Information</h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Date of Birth:</span> {userData?.Personal_Info?.dateOfBirth?.trim() || "N/A"}</p>
-      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Gender:</span> {userData?.Personal_Info?.gender?.trim() || "N/A"}</p>
-      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Blood Group:</span> {userData?.Personal_Info?.bloodGroup?.trim() || "N/A"}</p>
-      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Marital Status:</span> {userData?.Personal_Info?.maritalStatus?.trim() || "N/A"}</p>
-      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Education:</span> {userData?.Personal_Info?.education?.trim() || "N/A"}</p>
-      <p className="text-base sm:text-lg"><span className="font-semibold text-gray-800">Occupation:</span> {userData?.Personal_Info?.occupation?.trim() || "N/A"}</p>
-      <p className="sm:col-span-2 text-base sm:text-lg"><span className="font-semibold text-gray-800">Health Info:</span> {userData?.Personal_Info?.healthInfo?.trim() || "N/A"}</p>
-      <p className="sm:col-span-2 text-base sm:text-lg"><span className="font-semibold text-gray-800">Bio:</span> {userData?.Personal_Info?.bio?.trim() || "N/A"}</p>
+  <div className="w-full lg:w-1/2 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-6 sm:p-8 text-gray-800 space-y-5 shadow-lg my-3">
+    <h2 className="text-2xl font-semibold border-b border-gray-300/40 pb-3">Personal Information</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <p className="text-base sm:text-lg"><span className="font-medium text-gray-900">Date of Birth:</span> {userData?.Personal_Info?.dateOfBirth?.trim() || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-medium text-gray-900">Gender:</span> {userData?.Personal_Info?.gender?.trim() || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-medium text-gray-900">Blood Group:</span> {userData?.Personal_Info?.bloodGroup?.trim() || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-medium text-gray-900">Marital Status:</span> {userData?.Personal_Info?.maritalStatus?.trim() || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-medium text-gray-900">Education:</span> {userData?.Personal_Info?.education?.trim() || "N/A"}</p>
+      <p className="text-base sm:text-lg"><span className="font-medium text-gray-900">Occupation:</span> {userData?.Personal_Info?.occupation?.trim() || "N/A"}</p>
+      <p className="sm:col-span-2 text-base sm:text-lg"><span className="font-medium text-gray-900">Health Info:</span> {userData?.Personal_Info?.healthInfo?.trim() || "N/A"}</p>
+      <p className="sm:col-span-2 text-base sm:text-lg"><span className="font-medium text-gray-900">Bio:</span>{(userData?.bio) || "No bio provided"}</p>
     </div>
   </div>
 
