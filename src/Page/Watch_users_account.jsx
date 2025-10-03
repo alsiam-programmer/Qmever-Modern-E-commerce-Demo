@@ -100,27 +100,60 @@ const Watch_users_account = () => {
 
   return (
 <div className="min-h-screen py-6 px-2 md:px-0 bg-gray-50">
-   {/* 🔥 SEO Header */}
-      <Helmet>
-        <title>{userData?.username || "User Profile"} | Qmever</title>
-        <meta
-          name="description"
-          content={userData?.bio || "View user profile and products on Qmever"}
-        />
-        <meta property="og:title" content={userData?.username || "User Profile"} />
-        <meta
-          property="og:description"
-          content={userData?.bio || "Check out this profile on Qmever"}
-        />
-        <meta
-          property="og:image"
-          content={
-            userData?.profile_picture ||
-            "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
-          }
-        />
-        <meta property="og:type" content="profile" />
-      </Helmet>
+<Helmet>
+  {/* Page Title */}
+  <title>{userData?.username || "User Profile"} | Qmever</title>
+
+  {/* Meta Description */}
+  <meta
+    name="description"
+    content={userData?.bio || "View user profile and products on Qmever"}
+  />
+
+  {/* Canonical URL */}
+  <link
+    rel="canonical"
+    href={`https://qmever.com/user/${decodedId || "profile"}`}
+  />
+
+  {/* Open Graph (Facebook, LinkedIn, etc.) */}
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content={userData?.username || "User Profile"} />
+  <meta
+    property="og:description"
+    content={userData?.bio || "Check out this profile on Qmever"}
+  />
+  <meta
+    property="og:image"
+    content={
+      userData?.profile_picture ||
+      "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+    }
+  />
+  <meta
+    property="og:url"
+    content={`https://qmever.com/user/${decodedId || "profile"}`}
+  />
+
+  {/* Profile-specific OG */}
+  <meta property="profile:username" content={userData?.username || "user"} />
+
+  {/* Twitter Cards */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={userData?.username || "User Profile"} />
+  <meta
+    name="twitter:description"
+    content={userData?.bio || "Check out this profile on Qmever"}
+  />
+  <meta
+    name="twitter:image"
+    content={
+      userData?.profile_picture ||
+      "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+    }
+  />
+</Helmet>
+
   <div className="md:rounded-[10px] overflow-hidden">
 
     {/* Cover Section */}
