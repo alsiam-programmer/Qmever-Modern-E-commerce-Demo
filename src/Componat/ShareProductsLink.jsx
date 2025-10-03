@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import {
-  FaCopy
-} from "react-icons/fa";
+import { IoIosShareAlt } from "react-icons/io";
 
 const ShareProductsLink = ({ title }) => {
   const url = window.location.href;
@@ -34,9 +32,9 @@ const ShareProductsLink = ({ title }) => {
       <button
         onClick={handleNativeShare}
         disabled={disabled}
-        className="flex items-center gap-2 bg-gray-800 text-white px-3 py-2 rounded hover:bg-gray-700"
+        className="flex items-center gap-2 bg-black/20 text-white px-3 py-2 rounded hover:bg-gray-700"
       >
-        <FaCopy /> Copy/Share
+        <IoIosShareAlt />
       </button>
     </div>
   );
