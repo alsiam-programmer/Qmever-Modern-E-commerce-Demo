@@ -15,6 +15,7 @@ import ShareProductsLink from '../Componat/ShareProductsLink';
 import { FaYoutube } from "react-icons/fa";
 import SIMILAR_PRODUCTS from '../Componat/SIMILAR_PRODUCTS';
 import Wishlist from '../Componat/Wishlist';
+import Comment from '../Componat/comment';
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
@@ -518,6 +519,7 @@ const settings = {
           {addsucess ? <IoCheckmarkDoneCircle size={20} /> : "Add to Cart"}
         </button>
       </div>
+      <Comment id={id} />
     </div>
   </div>
 
