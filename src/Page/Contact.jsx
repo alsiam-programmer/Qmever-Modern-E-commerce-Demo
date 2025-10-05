@@ -6,7 +6,10 @@ import { Helmet } from "react-helmet";
 
 const Contact = () => {
   return (
+
     <section className="flex flex-col mb-[50px]">
+
+
        {/* SEO Header */}
       <Helmet>
         <title>Contact & About Qmever - Bangladesh E-commerce Platform</title>
@@ -31,8 +34,10 @@ const Contact = () => {
         <meta name="twitter:image" content="https://qmever.com/Qmever.png" />
       </Helmet>
 {/* About Company */}
+
+
 <article className="relative py-20 px-4 md:px-8 overflow-hidden mb-5">
-  <div className="container mx-auto flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-16 relative z-10">
+  <div className="container mx-auto flex flex-col md:flex-row !items-center md:items-start gap-10 md:gap-16 relative z-10">
     {/* Company Logo */}
     <div className="flex justify-center w-full md:w-1/3 mb-8 md:mb-0">
       <img
@@ -42,23 +47,74 @@ const Contact = () => {
       />
     </div>
 
-    {/* About Text */}
-    <div className="w-full md:w-2/3 text-center md:text-left">
-      <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-wide text-[#062919]">
-        About <span className="text-green-600">Qmever</span>
-      </h1>
-      <p className="text-base md:text-lg leading-relaxed text-gray-700 mb-4">
-        <strong>Qmever</strong> is a modern <em>Bangladesh e-commerce platform</em> designed to make online shopping simple, fast, and reliable. Our mission is to seamlessly connect buyers and sellers, offering quality products from trusted sources at competitive prices.
-      </p>
-      <p className="text-base md:text-lg leading-relaxed text-gray-600 mb-4">
-        Discover the latest trends, exclusive deals, and enjoy a smooth shopping experience. We prioritize <strong>security</strong>, <strong>fast delivery</strong>, and <strong>customer satisfaction</strong> to ensure every purchase is enjoyable and worry-free.
-      </p>
-      <p className="text-base md:text-lg leading-relaxed text-gray-600">
-        Whether you’re a casual shopper or a business, Qmever provides innovative tools and services for growth. We are committed to <strong>quality management</strong>, <strong>innovation</strong>, and <strong>trust</strong>.
+    {/* About Section */}
+<div className="bg-white rounded-2xl shadow-lg border p-8 w-full md:w-2/3 text-center md:text-left">
+  <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-wide text-[#062919]">
+    About <span className="text-green-600">Qmever</span>
+  </h1>
+
+  <p className="text-base md:text-lg leading-relaxed text-gray-700 mb-4 text-justify">
+    <strong>Qmever</strong> is a modern <em>Bangladesh e-commerce platform</em> designed 
+    to make online shopping simple, fast, and reliable. Our mission is to seamlessly 
+    connect buyers and sellers, offering quality products from trusted sources at 
+    competitive prices.
+  </p>
+
+  <p className="text-base md:text-lg leading-relaxed text-gray-600 mb-4 text-justify">
+    Discover the latest trends, exclusive deals, and enjoy a smooth shopping experience. 
+    We prioritize <strong>security</strong>, <strong>fast delivery</strong>, and 
+    <strong> customer satisfaction</strong> to ensure every purchase is enjoyable 
+    and worry-free.
+  </p>
+
+  <p className="text-base md:text-lg leading-relaxed text-gray-600 text-justify">
+    Whether you’re a casual shopper or a business, Qmever provides innovative tools 
+    and services for growth. We are committed to <strong>quality management</strong>, 
+    <strong> innovation</strong>, and <strong> trust</strong>.
+  </p>
+</div>
+
+  </div>
+</article>
+
+{/* Company Owner & Developer Section */}
+<div className="container mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  
+  {/* Company Owner Card */}
+  <div className="bg-white rounded-2xl shadow-lg border p-6 flex items-center gap-5">
+    <img
+      src="https://scontent.fjsr6-1.fna.fbcdn.net/v/t1.6435-1/123937614_3724063980987455_8619321234251465009_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=109&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeERBNxkfLQeFYF5klJWig16FV1eGpeDwQQVXV4al4PBBKiNrdinsuYJWGdEkJgwXvaYtZEnwxRDoJViypnFgBJd&_nc_ohc=P5bKVyYYuQsQ7kNvwGscG41&_nc_oc=AdnTaOjOkzAVbpULfvLfRCyorxDZL1CP5pQ6gMToy-kG0Se3hNHyv30YlJgfRNuDkrg&_nc_zt=24&_nc_ht=scontent.fjsr6-1.fna&_nc_gid=TtcrJ1meqN06EmQqyLBzqw&oh=00_Afe9Yh7McPoGwZhkwf0MEPxlXH1B3iAvICZPcBXe7rCT0A&oe=69099D44"
+      alt="Company Owner"
+      className="w-24 h-24 rounded-full object-cover shadow-md border-4 border-green-200"
+    />
+    <div>
+      <h3 className="text-xl font-bold text-[#062919]">Md. Shahidul Islam</h3>
+      <p className="text-green-600 font-semibold mb-1">Company Owner</p>
+      <p className="text-gray-600 text-sm leading-relaxed">
+        Visionary behind <span className="font-semibold text-green-700">Qmever</span>, 
+        working to make Bangladesh’s e-commerce safer, faster, and more reliable.
       </p>
     </div>
   </div>
-</article>
+
+  {/* Developer Card */}
+  <div className="bg-white rounded-2xl shadow-lg border p-6 flex items-center gap-5">
+    <img
+      src="https://scontent.fjsr6-1.fna.fbcdn.net/v/t39.30808-6/519426545_122144277692617820_4832374088053920404_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHsMC9gVKjHNYRvDS5z3fHOQMckR1eajytAxyRHV5qPK0_myKx6HRLr_twmudP5cdeIrNr4imUyNE-NEGhzS_1l&_nc_ohc=uaGRC42yef4Q7kNvwFlGhSt&_nc_oc=AdmZcbBc8S0WscXDaGad7Pld-X886WSNc8zwIXvsxuAbuoHHsS9A4LX7oupmUzOJGeM&_nc_zt=23&_nc_ht=scontent.fjsr6-1.fna&_nc_gid=-em2N8tE6Cgehj-OR3jswg&oh=00_AffZ7FYWqlWG96jEWrSY_5FESJei1tur0qYGTWm32bHx6w&oe=68E80EB0"
+      alt="Developer"
+      className="w-24 h-24 rounded-full object-cover shadow-md border-4 border-green-200"
+    />
+    <div>
+      <h3 className="text-xl font-bold text-[#062919]">Al Siam</h3>
+      <p className="text-green-600 font-semibold mb-1">Full Stack Developer</p>
+      <p className="text-gray-600 text-sm leading-relaxed">
+        Built and optimized <span className="font-semibold text-green-700">Qmever</span> 
+        platform with modern technologies ensuring smooth UI & fast performance.
+      </p>
+    </div>
+  </div>
+
+</div>
 
 
       {/* ভেঙে বোঝানো Section */}
