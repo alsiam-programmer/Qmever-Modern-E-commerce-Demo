@@ -20,7 +20,7 @@ const Comment = ({ id }) => {
     "https://via.placeholder.com/40"
   );
 
-  // ✅ Fetch comments live from Firebase
+  // ✅ Fetch comments live
   useEffect(() => {
     if (!id) return;
     const commentsRef = ref(db, `/Comments/${id}`);
