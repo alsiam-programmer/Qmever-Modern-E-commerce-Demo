@@ -1,6 +1,6 @@
 import { getDatabase, onValue, push, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
-import { IoIosSend } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 // ✅ Function to format timestamps
 const formatTime = (timestamp) => {
@@ -12,6 +12,7 @@ const formatTime = (timestamp) => {
 };
 
 const Comment = ({ id }) => {
+  const userLoginUid = useSelector((state) => state.counter.user);
   const db = getDatabase();
   const [showcom, setShowcom] = useState(10);
   const [comments, setComments] = useState([]);
@@ -20,6 +21,21 @@ const Comment = ({ id }) => {
   const [profilePicture, setProfilePicture] = useState(
     "https://via.placeholder.com/40"
   );
+
+  // ✅ Fetch logged-in user info
+  useEffect(() => {
+    if (userLoginUid && userLoginUid[0]) {
+      const userRef = ref(db, `/users/${userLoginUid[0]}`);
+      const unsubscribe = onValue(userRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const user = snapshot.val();
+          setUsername(user.username || "Anonymous");
+          setProfilePicture(user.profile_picture || "https://via.placeholder.com/40");
+        }
+      });
+      return () => unsubscribe();
+    }
+  }, [db, userLoginUid]);
 
   // ✅ Fetch comments live from Firebase
   useEffect(() => {
@@ -46,7 +62,7 @@ const Comment = ({ id }) => {
       message: input,
       username,
       profile_picture: profilePicture,
-      uid: "anonymous", // you can replace with real UID if you add auth
+      uid: userLoginUid?.[0] || "anonymous",
       time: Date.now(),
     });
     setInput("");
@@ -82,7 +98,7 @@ const Comment = ({ id }) => {
               disabled={!input.trim()}
               className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition"
             >
-              <IoIosSend/>
+              Send
             </button>
           </div>
         </div>
@@ -91,24 +107,19 @@ const Comment = ({ id }) => {
       {/* Comments List */}
       <div className="space-y-5 max-h-80 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
         {comments.length === 0 ? (
-          <p className="text-gray-500 text-center">
-            No comments yet. Be the first!
-          </p>
+          <p className="text-gray-500 text-center">No comments yet. Be the first!</p>
         ) : (
           comments.map((comment, index) => (
             <div key={index} className="flex items-start space-x-3">
               <img
-                src={comment.profile_picture || "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"}
+                src={comment.profile_picture || "https://via.placeholder.com/40"}
+                alt="user"
                 className="w-10 h-10 rounded-full border shadow-sm"
               />
               <div className="flex-1 bg-gray-50 p-3 rounded-xl shadow-sm">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-gray-800">
-                    {comment.username}
-                  </span>
-                  <span className="text-xs text-gray-500">
-                    {formatTime(comment.time)}
-                  </span>
+                  <span className="font-semibold text-gray-800">{comment.username}</span>
+                  <span className="text-xs text-gray-500">{formatTime(comment.time)}</span>
                 </div>
                 <p className="text-gray-700 mt-1">{comment.message}</p>
               </div>

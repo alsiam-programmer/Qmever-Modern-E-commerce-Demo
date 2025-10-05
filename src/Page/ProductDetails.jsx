@@ -519,7 +519,6 @@ const settings = {
           {addsucess ? <IoCheckmarkDoneCircle size={20} /> : "Add to Cart"}
         </button>
       </div>
-      <Comment id={id} />
     </div>
   </div>
 
@@ -565,6 +564,8 @@ const settings = {
       </div>
     </div>
   )}
+      <Comment id={id} />
+
 </div>
 
 
