@@ -1,5 +1,6 @@
 import { getDatabase, onValue, push, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
+import { IoIosSend } from "react-icons/io";
 
 // ✅ Function to format timestamps
 const formatTime = (timestamp) => {
@@ -81,7 +82,7 @@ const Comment = ({ id }) => {
               disabled={!input.trim()}
               className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition"
             >
-              Send
+              <IoIosSend/>
             </button>
           </div>
         </div>
