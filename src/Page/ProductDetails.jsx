@@ -15,7 +15,7 @@ import ShareProductsLink from '../Componat/ShareProductsLink';
 import { FaYoutube } from "react-icons/fa";
 import SIMILAR_PRODUCTS from '../Componat/SIMILAR_PRODUCTS';
 import Wishlist from '../Componat/Wishlist';
-import Comment from '../Componat/comment';
+import Comment from '../Componat/Comment';
 function SampleNextArrow(props) {
   const { onClick } = props;
   return (
