@@ -291,7 +291,7 @@ const handleSearch = async (e) => {
 
      (location.pathname === "/my-account" || location.pathname === "/my-account/user-edit_profile" || location.pathname === "/Orders" || location.pathname === "/CheckOut" || matchProduct)  ? "" :
       (
-        <div className="Search rounded-l-[40px] shadow-2xl lg:shadow-none rounded-r-[40px] lg:my-[0px] w-[100%] lg:w-[70%] h-[40px] justify-center flex lg:top-[50%] relative lg:translate-y-[-50%] lg:left-[50%] lg:translate-x-[-50%] lg:absolute">
+        <div className="Search rounded-l-[40px] shadow-2xl lg:shadow-none rounded-r-[40px] lg:my-[0px] w-[100%] !lg:w-[70%] h-[40px] justify-center flex lg:top-[50%] relative lg:translate-y-[-50%] lg:left-[50%] lg:translate-x-[-50%] lg:absolute">
 
 
 <div className="Search relative w-full lg:w-[50%] h-[40px] flex items-center my-3 lg:my-0 lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 shadow-2xl lg:shadow-none shadow-black rounded-full overflow-hidden bg-white">
