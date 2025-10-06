@@ -34,7 +34,7 @@ function App() {
   );
 
   return (
-    <div className="lg:w-[75%] container mx-auto">
+    <div className="lg:w-[90%] xl:w-[80%] container mx-auto">
 <Suspense 
   fallback={
     <div className=" h-[120px] lg:h-[170px] xl:h-[180px]">

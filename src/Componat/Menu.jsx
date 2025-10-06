@@ -283,7 +283,7 @@ const handleSearch = async (e) => {
 
       <section className={`w-[100%] h-[60px] lg:h-[70px] xl:h-[80px] ${(location.pathname === "/my-account" || location.pathname === "/my-account/user-edit_profile" || location.pathname === "/Orders" || location.pathname === "/CheckOut" || matchProduct) ? "" : "mb-[65px]" } lg:mb-3`}>
         <div className=' z-[990] px-[10px] bg-[#062919] fixed top-0 left-[50%] translate-x-[-50%] w-[100%] '>
-          <div className=" lg:w-[75%] relative container mx-auto h-[60px] lg:h-[70px] xl:h-[80px]">
+          <div className=" lg:w-[90%] xl:w-[80%] relative container mx-auto h-[60px] lg:h-[70px] xl:h-[80px]">
             <div className="webLogo cursor-pointer w-[100%] flex justify-center items-center h-[60px] lg:h-[70px] xl:h-[80px] lg:justify-start">
               <h1 className='text-[#fff] text-[30px] noselect italic font-[700]'>Qmever</h1>
             </div>
