@@ -1,21 +1,25 @@
 // src/Page/UserProfile.jsx
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaUserEdit, FaLink, FaTimes , FaEllipsisV } from "react-icons/fa";
 import { getDatabase, ref, get } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Order from "./Order";
 import { useNavigate } from "react-router-dom";
 import {getIcon , brandColors} from "../Componat/SocialIcons"
+import { userLogout } from "../Componat/slice/AllSlice";
 
 const My_account = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
-  const loggedInUID = useSelector((state) => state.counter.user);
+  const loggedInUID = useSelector((state) => state.counter.user[0]);
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(false);
   const [showbaritem, setshowbaritem] = useState(false)
   const [error, setError] = useState("");
 
+  // console.log(userData ,loggedInUID ,"hi");
+  
   useEffect(() => {
     const auth = getAuth();
     const db = getDatabase();
@@ -23,9 +27,10 @@ const My_account = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         setError("User not logged in");
+        dispatch(userLogout(loggedInUID))
         return;
       }
-
+      
       if (!loggedInUID) return;
 
       setLoading(true);
@@ -129,7 +134,7 @@ const handleCopyLink = () => {
       <div className="absolute top-4 right-4 flex items-center gap-3 bg-white/15 backdrop-blur-md rounded-full p-2 shadow-md transition-all duration-300">
         {showbaritem ? (
           <>
-            {userData?.uid === loggedInUID[0] && (
+            {userData?.uid === loggedInUID && (
               <button onClick={()=> navigate('/my-account/user-edit_profile')}
                 className={`w-20 h-10 flex items-center justify-center rounded-full shadow-md transition-all duration-200 hover:scale-110 ${
                   userData?.gender === "male"
