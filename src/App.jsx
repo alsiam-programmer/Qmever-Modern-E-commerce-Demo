@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 import RootLayout from "./Componat/RootLayout";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Home = lazy(() => import("./Page/Home"));
 const EditProfile = lazy(() => import("./Page/EditProfile"));

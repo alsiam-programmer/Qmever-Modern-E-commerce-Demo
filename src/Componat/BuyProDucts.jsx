@@ -1,7 +1,5 @@
 
 const BuyProDucts = ({ BuyItem, building_data, TotalBuild, HandleSendOTP }) => {  
-
-  console.log(BuyItem);
   
   return (
     <div className="w-full space-y-6">

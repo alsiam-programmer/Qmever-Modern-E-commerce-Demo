@@ -21,6 +21,8 @@ const Comment = ({ id }) => {
   const [profilePicture, setProfilePicture] = useState(
     "https://via.placeholder.com/40"
   );
+  
+  
 
   // ✅ Fetch logged-in user info
   useEffect(() => {
@@ -37,6 +39,8 @@ const Comment = ({ id }) => {
     }
   }, [db, userLoginUid]);
 
+  console.log(userLoginUid);
+  
   // ✅ Fetch comments live from Firebase
   useEffect(() => {
     if (!id) return;
@@ -77,6 +81,9 @@ const Comment = ({ id }) => {
   <h2 className="text-xl sm:text-2xl font-bold mb-5 text-gray-800">Comments</h2>
 
   {/* Comment Input */}
+
+{
+  userLoginUid?.[0] &&
   <div className="flex items-start mb-6 space-x-3">
     <img
       src={profilePicture}
@@ -103,6 +110,9 @@ const Comment = ({ id }) => {
       </div>
     </div>
   </div>
+}  
+
+  
 
   {/* Comments List */}
   <div className="space-y-5 max-h-80 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">

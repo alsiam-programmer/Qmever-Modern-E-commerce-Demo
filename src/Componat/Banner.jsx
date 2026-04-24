@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import axios from "axios";
 
 // Next Arrow
 function SampleNextArrow({ onClick }) {
@@ -16,6 +17,8 @@ function SampleNextArrow({ onClick }) {
     </div>
   );
 }
+
+
 
 // Prev Arrow
 function SamplePrevArrow({ onClick }) {
@@ -32,7 +35,39 @@ function SamplePrevArrow({ onClick }) {
 
 const Banner = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [arr, setArr] = useState([]);
+
   let sliderRef = React.useRef(null);
+
+
+  
+  
+  let category = async () => {
+    try {
+      const res = await axios.get("https://qmever-default-rtdb.asia-southeast1.firebasedatabase.app/products.json");
+      let info = Object.entries(res?.data || {}).map(([key , item]) =>({
+        category: {
+    main: item?.category?.main,
+    sub: item?.category?.sub,
+    subs: item?.category?.subs,
+      },
+      }))
+      console.log(info);
+      
+      if (!info) return;
+      let mapValue = [...new Set(info.map((i)=>i.category.main))]
+      setArr(mapValue)
+    } catch (error) {
+      console.log('err',error);
+      
+    }
+    }
+
+  useEffect(()=>{
+    
+  category()
+ },[])
+  
 
   const slides = [
 
@@ -66,8 +101,8 @@ const Banner = () => {
   };
 
   return (
-    <section className="w-full mb-1 relative">
-      <div className="container px-3 lg:px-0 mx-auto">
+    <section className="container flex gap-2 px-3 lg:px-0 mb-1 mx-auto relative">
+      <div className="lg:w-[75%] w-full">
         <div className="w-full relative">
           <Slider ref={sliderRef} {...settings}>
             {slides.map((slide, index) => (
@@ -117,6 +152,40 @@ const Banner = () => {
           </div>
         </div>
       </div>
+
+<div className="w-[25%] lg:block hidden h-full rounded-2xl 
+bg-gradient-to-b from-[#062919] via-[#041f14] to-[#02150d]
+p-4 sm:p-5 shadow-2xl border border-[#0b3d2a]/60">
+
+  {/* Title */}
+  <h2 className="text-white text-base sm:text-lg lg:text-xl font-semibold 
+  mb-4 sm:mb-5 tracking-wide border-b border-[#0b3d2a] pb-2">
+    Categories
+  </h2>
+
+  {/* Items */}
+  <div className="flex flex-col gap-2 sm:gap-3">
+    {arr.map((i, index) => (
+      <div
+        key={index}
+        className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg 
+        bg-[#0b3d2a]/90 text-gray-200 
+        text-sm sm:text-base
+        cursor-pointer
+        hover:bg-gradient-to-r hover:from-[#16a34a] hover:to-[#22c55e]
+        hover:text-white hover:translate-x-1
+        transition-all duration-300 
+        shadow-sm hover:shadow-lg"
+      >
+        {i}
+      </div>
+    ))}
+  </div>
+</div>
+
+
+
+
     </section>
   );
 };
